@@ -35,7 +35,12 @@ The Workflow Designer Agent takes a high-level project objective (e.g., "design 
 
 ### Default Agent
 
-The `opencode.json` file registers the workflow-orchestrator as a primary agent for this repo. In OpenCode, the agent is available via `@workflow-orchestrator` or automatically when using `/flowstart`.
+The `opencode.json` file sets `workflow-orchestrator` as the default agent (`default_agent` field) and registers it as `mode: primary`. In OpenCode, the agent is:
+- **Default**: automatically used when no agent is specified
+- **Primary**: available via `@workflow-orchestrator`
+- **Invocable via /flowstart**: the slash command loads the master prompt and fills `$ARGUMENTS` as the objective
+
+All other 8 agents (intake-analyst, domain-researcher, workflow-architect, skill-architect, implementation-planner, quality-reviewer, red-team-reviewer, final-packager) are registered as `mode: subagent` and can be invoked via `@<name>`.
 
 ### Manual Invocation (fallback)
 

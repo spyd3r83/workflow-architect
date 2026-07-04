@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "default_agent": "workflow-orchestrator",
   "agent": {
     "workflow-orchestrator": {
       "description": "Workflow Designer Agent — designs domain-specific agent workflows on demand. Use /flowstart to begin or invoke as @workflow-orchestrator.",
