@@ -1,0 +1,15 @@
+# Improvement snapshots (created by /update)
+.improvement-snapshot/
+
+# Validation reports (generated per run)
+validation-report.json
+
+# Generated workflow packages
+generated-workflows/
+
+# OpenCode runtime session registry
+.opencode/omo-session-registry.json
+
+# Python
+__pycache__/
+*.pyc

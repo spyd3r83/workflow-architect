@@ -1,0 +1,12 @@
+{
+  "agent": {
+    "workflow-orchestrator": {
+      "description": "Workflow Designer Agent — designs domain-specific agent workflows on demand. Use /flowstart to begin.",
+      "mode": "primary",
+      "prompt": "{file:./agent-packages/workflow-designer-agent/prompts/master-workflow-designer-prompt.md}"
+    }
+  },
+  "instructions": [
+    "AGENTS.md"
+  ]
+}
