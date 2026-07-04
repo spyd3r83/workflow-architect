@@ -143,9 +143,8 @@ def write_opencode_agents(agents: list):
     OPENCODE_AGENTS_OUT.mkdir(parents=True, exist_ok=True)
     for agent in agents:
         filepath = OPENCODE_AGENTS_OUT / f"{agent['name']}.md"
-        frontmatter = (
-            f"---\ndescription: {agent['description']}\nmode: subagent\n---\n\n"
-        )
+        mode = "primary" if agent["name"] == "workflow-orchestrator" else "subagent"
+        frontmatter = f"---\ndescription: {agent['description']}\nmode: {mode}\n---\n\n"
         filepath.write_text(frontmatter + agent["body"])
     print(f"  Agents: {len(agents)} files in .opencode/agents/")
 

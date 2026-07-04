@@ -1,6 +1,6 @@
 ---
 description: Primary coordinating agent. Receives the user's project objective and manages the entire workflow package generation process across all 18 phases.
-mode: subagent
+mode: primary
 ---
 
 # Agent: Workflow Orchestrator

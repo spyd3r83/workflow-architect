@@ -1,9 +1,42 @@
 {
+  "$schema": "https://opencode.ai/config.json",
   "agent": {
     "workflow-orchestrator": {
-      "description": "Workflow Designer Agent — designs domain-specific agent workflows on demand. Use /flowstart to begin.",
+      "description": "Workflow Designer Agent — designs domain-specific agent workflows on demand. Use /flowstart to begin or invoke as @workflow-orchestrator.",
       "mode": "primary",
       "prompt": "{file:./agent-packages/workflow-designer-agent/prompts/master-workflow-designer-prompt.md}"
+    },
+    "intake-analyst": {
+      "description": "Clarifies project objective, identifies missing information, creates labelled assumptions.",
+      "mode": "subagent"
+    },
+    "domain-researcher": {
+      "description": "Performs source-backed research for the project domain.",
+      "mode": "subagent"
+    },
+    "workflow-architect": {
+      "description": "Designs the workflow sequence and determines how work moves from agent to agent.",
+      "mode": "subagent"
+    },
+    "skill-architect": {
+      "description": "Designs specialized agents and reusable skills required for the workflow.",
+      "mode": "subagent"
+    },
+    "implementation-planner": {
+      "description": "Turns the workflow design into an implementation-ready folder/file package.",
+      "mode": "subagent"
+    },
+    "quality-reviewer": {
+      "description": "Checks completeness, consistency, correctness, and usability.",
+      "mode": "subagent"
+    },
+    "red-team-reviewer": {
+      "description": "Attacks the workflow from multiple stakeholder perspectives.",
+      "mode": "subagent"
+    },
+    "final-packager": {
+      "description": "Assembles the final package and produces the implementation summary.",
+      "mode": "subagent"
     }
   },
   "instructions": [
