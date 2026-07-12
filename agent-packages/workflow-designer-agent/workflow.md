@@ -2,6 +2,44 @@
 
 This file defines the end-to-end workflow that the Workflow Designer Agent executes to produce a complete workflow package. The orchestrator manages phase progression. No phase begins until the prior phase passes its validation criteria.
 
+## Subagent Dispatch
+
+The orchestrator dispatches work to subagents using tool calls, not prose descriptions. See `dispatch-protocol.md` for the full specification including tool signatures, examples, and platform fallbacks.
+
+**Two dispatch tools:**
+
+- **`task()`** — for custom subagents registered in `opencode.json` (intake-analyst, domain-researcher, workflow-architect, skill-architect, implementation-planner, quality-reviewer, red-team-reviewer, final-packager). Parameters: `description`, `prompt`, `subagent_type`, `task_id` (optional). Synchronous.
+- **`call_omo_agent()`** — for OMO built-in agents (oracle, explore, librarian, hephaestus, momus). Parameters: `description`, `prompt`, `subagent_type`, `run_in_background` (required), `session_id` (optional).
+
+**Dispatch table** (full version in `dispatch-protocol.md`):
+
+| Phase | Tool | Agent | Purpose |
+|-------|------|-------|---------|
+| 1-3 | `task()` | `intake-analyst` | Intake, requirements, domain |
+| 1.5 gate | `call_omo_agent()` | `oracle` | Requirements confirmation |
+| 3 gate | `call_omo_agent()` | `oracle` | Domain confirmation |
+| 4 | `task()` | `domain-researcher` | Source review |
+| 5 | `task()` | `domain-researcher` | External research |
+| 6 | `task()` | `workflow-architect` | Workflow decomposition |
+| 7-8 | `task()` | `skill-architect` | Agent/skill design |
+| 9-10 | `task()` | `implementation-planner` | File structure, draft |
+| 11 | `task()` | `quality-reviewer` | Internal QA |
+| 11.5 | `validate-package.py` | (deterministic) | Independent verification |
+| 12 | `task()` | `red-team-reviewer` | Adversarial review |
+| 12 gate | `call_omo_agent()` | `oracle` | Pre-finalization |
+| 14-15 | `task()` | `final-packager` | Final packaging |
+
+**Structured handoff format** (included in every dispatch prompt):
+
+```
+## Handoff
+- Phase: <phase number>
+- Deliverable: <what the subagent must produce>
+- Context: <prior phase outputs, intake, research>
+- Validation Criteria: <what constitutes a passing deliverable>
+- Escalation Path: <what to do if the subagent cannot proceed>
+```
+
 ## Reliability Mechanisms
 
 This workflow implements space-level reliability controls:
@@ -145,11 +183,11 @@ This workflow implements space-level reliability controls:
 
 | Field | Value |
 |-------|-------|
-| **Purpose** | Write all files to disk as a draft package, including slash commands and platform config. |
+| **Purpose** | Write all files to disk as a draft package, including slash commands and platform config. Then run `sync-platform-configs.py` to populate platform-native directories. |
 | **Inputs** | File tree from Phase 9. Agent definitions. Skill definitions. Research summary. Templates. Command templates. |
-| **Outputs** | Complete draft package on disk with all files populated, including: (a) all content files, (b) slash command files for all 5 platforms, (c) opencode.json with agent registration, (d) CLAUDE.md importing AGENTS.md, (e) platform-specific agent/skill files. |
+| **Outputs** | Complete draft package on disk with all files populated, including: (a) all content files, (b) slash command files for all 5 platforms, (c) opencode.json with agent registration, (d) CLAUDE.md importing AGENTS.md, (e) platform-specific agent/skill files in `.opencode/agents/`, `.claude/agents/`, `.codex/agents/`, `.github/agents/`, `.devin/agents/`, `.agents/skills/`, (f) platform command files in `.opencode/commands/`, `.claude/commands/`, `.codex/commands/`, `.github/commands/`, (g) Devin playbooks (`.devin.md`). |
 | **Responsible Agent** | implementation-planner |
-| **Validation Criteria** | (1) All files from the file tree exist on disk. (2) No file is empty or a placeholder. (3) All files follow their respective templates. (4) Cross-references between files are valid. (5) **Slash commands exist for all 5 platforms** (15 command files + 3 Devin playbooks). (6) **opencode.json registers the primary agent**. (7) **CLAUDE.md imports AGENTS.md**. (8) **Command files have no unresolved placeholders**. |
+| **Validation Criteria** | (1) All files from the file tree exist on disk. (2) No file is empty or a placeholder. (3) All files follow their respective templates. (4) Cross-references between files are valid. (5) **Slash commands exist for all 5 platforms** (`.opencode/commands/`, `.claude/commands/`, `.codex/commands/`, `.github/commands/`, `*.devin.md`). (6) **opencode.json registers the primary agent** as `default_agent` with all subagents as `mode: subagent`. (7) **CLAUDE.md imports AGENTS.md**. (8) **Command files have no unresolved placeholders**. (9) **Platform agent files exist** in `.opencode/agents/`, `.claude/agents/`, `.codex/agents/`, `.github/agents/`, `.devin/agents/`. (10) **Platform skill files exist** in `.agents/skills/<name>/SKILL.md`. (11) **`sync-platform-configs.py --package <path>` has been run** to populate all platform directories. |
 
 ## Phase 11: Internal QA
 

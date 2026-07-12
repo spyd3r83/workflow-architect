@@ -13,6 +13,7 @@ Every generated workflow package must have this structure:
   CLAUDE.md
   opencode.json
   workflow.md
+  dispatch-protocol.md
   intake.md
   research-protocol.md
   quality-control.md
@@ -106,6 +107,7 @@ Every generated workflow package must have this structure:
 | 5 | Skill architecture | skills/ | Yes |
 | 6 | Research protocol | research-protocol.md | Yes |
 | 7 | Execution flow | workflow.md | Yes |
+| 7b | Subagent dispatch protocol | dispatch-protocol.md | Yes |
 | 8 | File structure | README.md (file tree section) | Yes |
 | 9 | Quality-control loop (quantitative) | quality-control.md | Yes |
 | 10 | Red-team loop (FMEA-scored) | red-team-review.md | Yes |
@@ -122,15 +124,21 @@ Every generated workflow package must have this structure:
 | 21 | Idempotency protocol | workflow.md + reliability-plan.md | Yes |
 | 22 | Regression tests | tests/ | Yes |
 | 23 | Deterministic validation | scripts/validate-package.py | Yes |
+| 23b | Platform sync script | scripts/sync-platform-configs.py | Yes |
 | 24 | Slash commands (flowstart, resume, maintain) | commands/ + platform command dirs | Yes |
 | 25 | Platform config (opencode.json) | opencode.json | Yes |
+| 25b | opencode.json agent registration | opencode.json (default_agent + all agents with mode) | Yes |
 | 26 | Claude Code instructions | CLAUDE.md | Yes |
 | 27 | Cross-platform command files | .opencode/commands/, .claude/commands/, .codex/commands/, .github/commands/, *.devin.md | Yes |
+| 27b | Cross-platform agent files | .opencode/agents/, .claude/agents/, .codex/agents/, .github/agents/, .devin/agents/ | Yes |
+| 27c | Cross-platform skill files | .agents/skills/<name>/SKILL.md | Yes |
 | 28 | Command templates | templates/command-*-template.md, templates/platform-config-template.md | Yes |
+| 28b | Per-package template list | templates-required.txt | Yes |
 | 29 | Self-improvement protocol | improvement-protocol.md | Yes |
 | 30 | Changelog | CHANGELOG.md | Yes |
 | 31 | Defect patterns database | defect-patterns.md | Yes |
 | 32 | /update command (self-improvement) | commands/ + platform command dirs | Yes |
+| 33 | Git ignore for runtime artifacts | .gitignore | Yes |
 
 ## File Requirements
 
@@ -157,6 +165,55 @@ Must include:
 - **QC rules** — reference to quality-control.md.
 - **Red-team rules** — reference to red-team-review.md.
 - **Final packaging requirements** — what "done" looks like.
+
+### opencode.json (generated package)
+
+Must include:
+- **`default_agent`** — set to the package's primary orchestrator agent name.
+- **`agent` registry** — every agent in `agents/` registered with `description` and `mode` (`primary` for the orchestrator, `subagent` for all others).
+- **`instructions`** — list including `AGENTS.md`.
+- **`$schema`** — set to `https://opencode.ai/config.json`.
+
+Example:
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "<primary-agent-name>",
+  "agent": {
+    "<primary-agent-name>": {
+      "description": "<description>",
+      "mode": "primary",
+      "prompt": "{file:./prompts/master-prompt.md}"
+    },
+    "<subagent-1>": {
+      "description": "<description>",
+      "mode": "subagent"
+    }
+  },
+  "instructions": ["AGENTS.md"]
+}
+```
+
+### .gitignore (generated package)
+
+Must ignore:
+- `.opencode/node_modules/`
+- `.opencode/bun.lock`
+- `.opencode/package.json`
+- `.opencode/omo-session-registry.json`
+- `__pycache__/`
+- `*.pyc`
+- `validation-report.json`
+
+### scripts/ (generated package)
+
+Must include:
+- **`sync-platform-configs.py`** — copy of the meta-package's sync script, for re-syncing platform files after editing source files.
+- **`validate-package.py`** — copy of the meta-package's validator, for validating the package structure.
+
+### templates-required.txt (generated package)
+
+A text file listing the template filenames required by this specific package. One filename per line. Lines starting with `#` are comments. If absent, the validator falls back to the meta-package's default template list (which may not match domain-specific templates).
 
 ### workflow.md (generated package)
 
@@ -266,10 +323,13 @@ Must include at least one example showing the workflow applied to a specific use
 Before a generated package is considered complete:
 
 1. **File existence check** — all files in the structure above exist.
-2. **Section completeness check** — all required sections present in each file.
-3. **QC pass** — quality-control.md checklist completed, all items pass.
-4. **Red-team pass** — red-team-review.md review completed, PASS recommendation.
-5. **Final summary** — produced using final-summary-template.md.
+2. **Platform directory check** — `.opencode/agents/`, `.claude/agents/`, `.codex/agents/`, `.github/agents/`, `.devin/agents/` each contain one file per agent. `.agents/skills/` contains one `SKILL.md` per skill. `.opencode/commands/`, `.claude/commands/`, `.codex/commands/`, `.github/commands/` each contain one file per command. Devin playbooks (`*.devin.md`) exist at package root.
+3. **opencode.json check** — registers the primary agent as `default_agent` and all other agents as `mode: subagent`.
+4. **Section completeness check** — all required sections present in each file.
+5. **Sync verification** — `python3 scripts/sync-platform-configs.py --package <path>` has been run and produces no errors.
+6. **QC pass** — quality-control.md checklist completed, all items pass.
+7. **Red-team pass** — red-team-review.md review completed, PASS recommendation.
+8. **Final summary** — produced using final-summary-template.md.
 
 ## Naming Conventions
 

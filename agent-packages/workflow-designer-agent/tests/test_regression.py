@@ -30,6 +30,7 @@ def test_required_files_exist():
         "README.md",
         "AGENTS.md",
         "workflow.md",
+        "dispatch-protocol.md",
         "intake.md",
         "research-protocol.md",
         "quality-control.md",

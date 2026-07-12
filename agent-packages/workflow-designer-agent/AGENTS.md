@@ -22,7 +22,7 @@ workflow-orchestrator (coordinator)
   └── final-packager          (assembles final package + summary)
 ```
 
-The orchestrator is the only agent that talks to the user. All other agents communicate through the orchestrator via structured handoffs.
+The orchestrator is the only agent that talks to the user. All other agents communicate through the orchestrator via structured tool dispatch calls (`task()` for custom subagents, `call_omo_agent()` for OMO built-in agents). See `dispatch-protocol.md` for the full dispatch specification.
 
 ## Collaboration Model
 
@@ -34,6 +34,8 @@ Every agent handoff includes:
 2. **Deliverable** — the structured output from the upstream agent.
 3. **Context** — intake document, research summaries, and prior phase outputs relevant to the receiving agent.
 4. **Validation status** — whether the upstream output passed its validation criteria.
+
+The orchestrator dispatches to subagents using `task()` (for custom agents) or `call_omo_agent()` (for OMO built-in agents like oracle, explore, librarian). Each dispatch call includes the phase number, deliverable, context, and validation criteria in the prompt. See `dispatch-protocol.md` for tool signatures, examples, and the full dispatch table.
 
 Agents do not skip phases. Agents do not improvise inputs. If an agent lacks required inputs, it escalates to the orchestrator rather than guessing.
 
