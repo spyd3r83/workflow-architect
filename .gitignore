@@ -7,8 +7,9 @@ validation-report.json
 # Generated workflow packages
 generated-workflows/
 
-# OpenCode runtime session registry
+# OpenCode runtime session registry and workflow state
 .opencode/omo-session-registry.json
+.opencode/workflow-state.json
 
 # Python
 __pycache__/

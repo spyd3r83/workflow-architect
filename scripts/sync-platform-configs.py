@@ -300,6 +300,54 @@ def sync_package(package_dir: Path, output_root: Path, label: str):
         write_codex_agents(agents, output_root)
     if command_names:
         sync_commands(commands_src, command_names, output_root)
+    sync_enforcement(package_dir, output_root)
+
+
+def sync_enforcement(package_dir: Path, output_root: Path):
+    enforcement_src = package_dir / "enforcement"
+    if not enforcement_src.exists():
+        enforcement_src = (
+            REPO_ROOT / "agent-packages" / "workflow-designer-agent" / "enforcement"
+        )
+    if not enforcement_src.exists():
+        return
+
+    plugins_dir = output_root / ".opencode" / "plugins"
+    plugins_dir.mkdir(parents=True, exist_ok=True)
+    plugin_src = enforcement_src / "workflow-enforcer.ts"
+    if plugin_src.exists():
+        shutil.copy2(plugin_src, plugins_dir / "workflow-enforcer.ts")
+
+    hooks_dir = output_root / ".claude" / "hooks"
+    hooks_dir.mkdir(parents=True, exist_ok=True)
+    for hook in ["pre-tool-use.sh", "pre-compact.sh"]:
+        src = enforcement_src / hook
+        if src.exists():
+            shutil.copy2(src, hooks_dir / hook)
+            os.chmod(hooks_dir / hook, 0o755)
+
+    settings_src = enforcement_src / "settings.json"
+    settings_dest = output_root / ".claude" / "settings.json"
+    if settings_src.exists():
+        shutil.copy2(settings_src, settings_dest)
+
+    scripts_dir = output_root / "scripts" / "enforcement"
+    scripts_dir.mkdir(parents=True, exist_ok=True)
+    enforce_src = enforcement_src / "workflow-enforce.sh"
+    if enforce_src.exists():
+        shutil.copy2(enforce_src, scripts_dir / "workflow-enforce.sh")
+        os.chmod(scripts_dir / "workflow-enforce.sh", 0o755)
+
+    config_src = enforcement_src / "workflow-config.json"
+    config_dest = output_root / ".opencode" / "workflow-config.json"
+    if not config_dest.exists() and config_src.exists():
+        shutil.copy2(config_src, config_dest)
+
+    docs_src = enforcement_src / "enforcement.md"
+    if docs_src.exists():
+        shutil.copy2(docs_src, output_root / "enforcement.md")
+
+    print(f"  Enforcement: plugin + hooks + state manager synced")
 
 
 def main():
