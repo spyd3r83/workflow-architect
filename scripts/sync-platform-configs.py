@@ -1,62 +1,53 @@
 #!/usr/bin/env python3
 """
-sync-platform-configs.py — Generate platform-native skill and agent files
-from the canonical Workflow Designer Agent package.
+sync-platform-configs.py — Generate platform-native skill, agent, and command files
+from a canonical agent package.
 
-Canonical source:
-  agent-packages/workflow-designer-agent/skills/*.md
-  agent-packages/workflow-designer-agent/agents/*.md
+Supports two modes:
+  1. Meta-package (default): syncs agent-packages/workflow-designer-agent/ to repo-level
+     platform directories (.opencode/, .claude/, .codex/, .github/, .devin/, .agents/).
+  2. Any package: syncs <package-dir>/ to platform directories WITHIN that package.
 
-Generated outputs:
+Usage:
+  python3 scripts/sync-platform-configs.py                          # meta-package (default)
+  python3 scripts/sync-platform-configs.py --package <path>         # any package
+  python3 scripts/sync-platform-configs.py generated-workflows/backend-repo-maintenance-workflow
+
+Canonical source (per package):
+  <package>/skills/*.md      — skill definitions
+  <package>/agents/*.md      — agent definitions
+  <package>/commands/*.md     — slash command definitions (excluding README.md)
+
+Generated outputs (within the package or at repo root for meta-package):
   .agents/skills/<name>/SKILL.md          (Codex, Copilot, OpenCode, Devin)
-  .claude/skills/<name>/SKILL.md          (Claude Code — symlinked)
+  .claude/skills/                         (Claude Code — symlinked to .agents/skills/)
   .claude/agents/<name>.md                (Claude Code)
   .opencode/agents/<name>.md              (OpenCode)
   .github/agents/<name>.agent.md          (Copilot CLI)
   .devin/agents/<name>/AGENT.md           (Devin)
   .codex/agents/<name>.toml               (Codex CLI)
-
-Usage:
-  python3 scripts/sync-platform-configs.py
+  .opencode/commands/<cmd>.md             (OpenCode)
+  .claude/commands/<cmd>.md               (Claude Code)
+  .codex/commands/<cmd>.md                (Codex CLI)
+  .github/commands/<cmd>.md               (Copilot CLI)
+  <cmd>.devin.md                           (Devin playbooks, at package root)
 """
 
+import argparse
+import json
 import os
 import re
 import shutil
+import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-PACKAGE_DIR = REPO_ROOT / "agent-packages" / "workflow-designer-agent"
-SKILLS_SRC = PACKAGE_DIR / "skills"
-AGENTS_SRC = PACKAGE_DIR / "agents"
-
-SKILLS_OUT = REPO_ROOT / ".agents" / "skills"
-CLAUDE_SKILLS_OUT = REPO_ROOT / ".claude" / "skills"
-CLAUDE_AGENTS_OUT = REPO_ROOT / ".claude" / "agents"
-OPENCODE_AGENTS_OUT = REPO_ROOT / ".opencode" / "agents"
-GITHUB_AGENTS_OUT = REPO_ROOT / ".github" / "agents"
-DEVIN_AGENTS_OUT = REPO_ROOT / ".devin" / "agents"
-CODEX_AGENTS_OUT = REPO_ROOT / ".codex" / "agents"
-
-COMMANDS = ["flowstart", "resume", "maintain", "update"]
-COMMAND_DIRS = {
-    "opencode": REPO_ROOT / ".opencode" / "commands",
-    "claude": REPO_ROOT / ".claude" / "commands",
-    "codex": REPO_ROOT / ".codex" / "commands",
-    "github": REPO_ROOT / ".github" / "commands",
-}
 
 
 def extract_section(markdown: str, header: str) -> str:
     """Extract the content under a markdown H2 header."""
     pattern = rf"^## {re.escape(header)}\s*\n(.*?)(?=^## |\Z)"
     match = re.search(pattern, markdown, re.MULTILINE | re.DOTALL)
-    return match.group(1).strip() if match else ""
-
-
-def extract_h1_title(markdown: str) -> str:
-    """Extract the first H1 title."""
-    match = re.match(r"^#\s+(.+)$", markdown, re.MULTILINE)
     return match.group(1).strip() if match else ""
 
 
@@ -96,14 +87,51 @@ def parse_agent_file(filepath: Path) -> dict:
     }
 
 
-def write_skill_files(skills: list):
+def detect_primary_agent(package_dir: Path) -> str:
+    """Detect the primary agent from the package's opencode.json."""
+    opencode_json = package_dir / "opencode.json"
+    if opencode_json.exists():
+        try:
+            config = json.loads(opencode_json.read_text())
+            default_agent = config.get("default_agent")
+            if default_agent:
+                return default_agent
+        except (json.JSONDecodeError, KeyError):
+            pass
+    agents_dir = package_dir / "agents"
+    if agents_dir.exists():
+        for f in sorted(agents_dir.glob("*.md")):
+            if "orchestrator" in f.stem.lower():
+                return f.stem
+    if agents_dir.exists():
+        files = sorted(agents_dir.glob("*.md"))
+        if files:
+            return files[0].stem
+    return "workflow-orchestrator"
+
+
+def discover_commands(commands_dir: Path) -> list[str]:
+    """Discover command names from a commands/ directory (excluding README.md)."""
+    if not commands_dir.exists():
+        return []
+    commands = []
+    for f in sorted(commands_dir.glob("*.md")):
+        if f.stem.lower() != "readme":
+            commands.append(f.stem)
+    return commands
+
+
+def write_skill_files(skills: list, output_root: Path):
     """Write SKILL.md files to .agents/skills/<name>/ and symlink .claude/skills/."""
-    if SKILLS_OUT.exists():
-        shutil.rmtree(SKILLS_OUT)
-    SKILLS_OUT.mkdir(parents=True, exist_ok=True)
+    skills_out = output_root / ".agents" / "skills"
+    claude_skills_out = output_root / ".claude" / "skills"
+
+    if skills_out.exists():
+        shutil.rmtree(skills_out)
+    skills_out.mkdir(parents=True, exist_ok=True)
 
     for skill in skills:
-        skill_dir = SKILLS_OUT / skill["name"]
+        skill_dir = skills_out / skill["name"]
         skill_dir.mkdir(parents=True, exist_ok=True)
         skill_file = skill_dir / "SKILL.md"
         frontmatter = (
@@ -111,26 +139,29 @@ def write_skill_files(skills: list):
         )
         skill_file.write_text(frontmatter + skill["body"])
 
-    claude_skills = CLAUDE_SKILLS_OUT
-    if claude_skills.is_symlink() or claude_skills.exists():
-        if claude_skills.is_symlink() or claude_skills.is_dir():
+    if claude_skills_out.is_symlink() or claude_skills_out.exists():
+        if claude_skills_out.is_symlink() or claude_skills_out.is_dir():
             try:
-                claude_skills.unlink()
+                claude_skills_out.unlink()
             except OSError:
-                shutil.rmtree(claude_skills, ignore_errors=True)
-                claude_skills.unlink(missing_ok=True)
-    claude_skills.parent.mkdir(parents=True, exist_ok=True)
-    os.symlink(os.path.relpath(SKILLS_OUT, CLAUDE_SKILLS_OUT.parent), CLAUDE_SKILLS_OUT)
+                shutil.rmtree(claude_skills_out, ignore_errors=True)
+                claude_skills_out.unlink(missing_ok=True)
+    claude_skills_out.parent.mkdir(parents=True, exist_ok=True)
+    os.symlink(
+        os.path.relpath(skills_out, claude_skills_out.parent),
+        claude_skills_out,
+    )
 
     print(f"  Skills: {len(skills)} SKILL.md files in .agents/skills/")
     print(f"  Skills: .claude/skills/ -> .agents/skills/ (symlink)")
 
 
-def write_claude_agents(agents: list):
+def write_claude_agents(agents: list, output_root: Path):
     """Write .claude/agents/<name>.md with YAML frontmatter."""
-    CLAUDE_AGENTS_OUT.mkdir(parents=True, exist_ok=True)
+    out_dir = output_root / ".claude" / "agents"
+    out_dir.mkdir(parents=True, exist_ok=True)
     for agent in agents:
-        filepath = CLAUDE_AGENTS_OUT / f"{agent['name']}.md"
+        filepath = out_dir / f"{agent['name']}.md"
         frontmatter = (
             f"---\nname: {agent['name']}\ndescription: {agent['description']}\n---\n\n"
         )
@@ -138,22 +169,26 @@ def write_claude_agents(agents: list):
     print(f"  Agents: {len(agents)} files in .claude/agents/")
 
 
-def write_opencode_agents(agents: list):
+def write_opencode_agents(agents: list, output_root: Path, primary_agent: str):
     """Write .opencode/agents/<name>.md with YAML frontmatter."""
-    OPENCODE_AGENTS_OUT.mkdir(parents=True, exist_ok=True)
+    out_dir = output_root / ".opencode" / "agents"
+    out_dir.mkdir(parents=True, exist_ok=True)
     for agent in agents:
-        filepath = OPENCODE_AGENTS_OUT / f"{agent['name']}.md"
-        mode = "primary" if agent["name"] == "workflow-orchestrator" else "subagent"
+        filepath = out_dir / f"{agent['name']}.md"
+        mode = "primary" if agent["name"] == primary_agent else "subagent"
         frontmatter = f"---\ndescription: {agent['description']}\nmode: {mode}\n---\n\n"
         filepath.write_text(frontmatter + agent["body"])
-    print(f"  Agents: {len(agents)} files in .opencode/agents/")
+    print(
+        f"  Agents: {len(agents)} files in .opencode/agents/ (primary: {primary_agent})"
+    )
 
 
-def write_github_agents(agents: list):
+def write_github_agents(agents: list, output_root: Path):
     """Write .github/agents/<name>.agent.md for Copilot CLI."""
-    GITHUB_AGENTS_OUT.mkdir(parents=True, exist_ok=True)
+    out_dir = output_root / ".github" / "agents"
+    out_dir.mkdir(parents=True, exist_ok=True)
     for agent in agents:
-        filepath = GITHUB_AGENTS_OUT / f"{agent['name']}.agent.md"
+        filepath = out_dir / f"{agent['name']}.agent.md"
         frontmatter = (
             f"---\nname: {agent['name']}\ndescription: {agent['description']}\n---\n\n"
         )
@@ -161,11 +196,12 @@ def write_github_agents(agents: list):
     print(f"  Agents: {len(agents)} files in .github/agents/")
 
 
-def write_devin_agents(agents: list):
+def write_devin_agents(agents: list, output_root: Path):
     """Write .devin/agents/<name>/AGENT.md for Devin."""
-    DEVIN_AGENTS_OUT.mkdir(parents=True, exist_ok=True)
+    out_dir = output_root / ".devin" / "agents"
+    out_dir.mkdir(parents=True, exist_ok=True)
     for agent in agents:
-        agent_dir = DEVIN_AGENTS_OUT / agent["name"]
+        agent_dir = out_dir / agent["name"]
         agent_dir.mkdir(parents=True, exist_ok=True)
         filepath = agent_dir / "AGENT.md"
         frontmatter = (
@@ -175,11 +211,12 @@ def write_devin_agents(agents: list):
     print(f"  Agents: {len(agents)} files in .devin/agents/")
 
 
-def write_codex_agents(agents: list):
+def write_codex_agents(agents: list, output_root: Path):
     """Write .codex/agents/<name>.toml for Codex CLI with full agent body."""
-    CODEX_AGENTS_OUT.mkdir(parents=True, exist_ok=True)
+    out_dir = output_root / ".codex" / "agents"
+    out_dir.mkdir(parents=True, exist_ok=True)
     for agent in agents:
-        filepath = CODEX_AGENTS_OUT / f"{agent['name']}.toml"
+        filepath = out_dir / f"{agent['name']}.toml"
         desc = agent["description"].replace('"', '\\"')
         body = agent["body"].replace('"""', '\\"\\"\\"')
         toml_content = (
@@ -192,67 +229,125 @@ def write_codex_agents(agents: list):
     print(f"  Agents: {len(agents)} files in .codex/agents/")
 
 
-def sync_commands():
-    canonical = COMMAND_DIRS["opencode"]
+def sync_commands(commands_src: Path, command_names: list[str], output_root: Path):
+    """Sync command files to all platform command directories + Devin playbooks."""
+    command_dirs = {
+        "opencode": output_root / ".opencode" / "commands",
+        "claude": output_root / ".claude" / "commands",
+        "codex": output_root / ".codex" / "commands",
+        "github": output_root / ".github" / "commands",
+    }
+
     total = 0
-    for platform, cmd_dir in COMMAND_DIRS.items():
+    for platform, cmd_dir in command_dirs.items():
         cmd_dir.mkdir(parents=True, exist_ok=True)
-        for cmd in COMMANDS:
-            cmd_file = cmd_dir / f"{cmd}.md"
-            if platform != "opencode":
-                src = canonical / f"{cmd}.md"
-                if src.exists():
-                    shutil.copy2(src, cmd_file)
-                    total += 1
-            elif cmd_file.exists():
+        for cmd in command_names:
+            src_file = commands_src / f"{cmd}.md"
+            if not src_file.exists():
+                print(f"  WARNING: {platform}/commands/{cmd}.md source missing")
+                continue
+            dest_file = cmd_dir / f"{cmd}.md"
+            if src_file.resolve() == dest_file.resolve():
                 total += 1
-            else:
-                print(
-                    f"  WARNING: {platform}/commands/{cmd}.md missing — create manually"
-                )
-    devin_playbooks = [REPO_ROOT / f"{cmd}.devin.md" for cmd in COMMANDS]
-    for pb in devin_playbooks:
-        if pb.exists():
+                continue
+            shutil.copy2(src_file, dest_file)
             total += 1
-    print(f"  Commands: {total} command files synced across all platforms")
+
+    for cmd in command_names:
+        src_file = commands_src / f"{cmd}.md"
+        if src_file.exists():
+            dest_file = output_root / f"{cmd}.devin.md"
+            shutil.copy2(src_file, dest_file)
+            total += 1
+
+    print(
+        f"  Commands: {total} command files synced across all platforms ({len(command_names)} commands)"
+    )
+
+
+def sync_package(package_dir: Path, output_root: Path, label: str):
+    """Sync a single package's agents, skills, and commands to platform directories."""
+    skills_src = package_dir / "skills"
+    agents_src = package_dir / "agents"
+    commands_src = package_dir / "commands"
+
+    skills = []
+    if skills_src.exists():
+        for filepath in sorted(skills_src.glob("*.md")):
+            skills.append(parse_skill_file(filepath))
+    print(f"Parsed {len(skills)} skills from {label}.")
+
+    agents = []
+    if agents_src.exists():
+        for filepath in sorted(agents_src.glob("*.md")):
+            agents.append(parse_agent_file(filepath))
+    print(f"Parsed {len(agents)} agents from {label}.")
+
+    primary_agent = detect_primary_agent(package_dir)
+    print(f"Primary agent: {primary_agent}")
+
+    command_names = discover_commands(commands_src)
+    print(f"Discovered {len(command_names)} commands: {command_names}")
+
+    print(f"\nGenerating platform-native files for {label}:")
+    if skills:
+        write_skill_files(skills, output_root)
+    if agents:
+        write_claude_agents(agents, output_root)
+        write_opencode_agents(agents, output_root, primary_agent)
+        write_github_agents(agents, output_root)
+        write_devin_agents(agents, output_root)
+        write_codex_agents(agents, output_root)
+    if command_names:
+        sync_commands(commands_src, command_names, output_root)
 
 
 def main():
-    print("Syncing platform configs from canonical package...")
+    parser = argparse.ArgumentParser(
+        description="Sync platform-native files from a canonical agent package."
+    )
+    parser.add_argument(
+        "package",
+        nargs="?",
+        default=None,
+        help="Path to the package to sync (default: meta-package at agent-packages/workflow-designer-agent)",
+    )
+    parser.add_argument(
+        "--package",
+        dest="package_flag",
+        default=None,
+        help="Path to the package to sync (alternative to positional argument)",
+    )
+    args = parser.parse_args()
 
-    skills = []
-    if SKILLS_SRC.exists():
-        for filepath in sorted(SKILLS_SRC.glob("*.md")):
-            skills.append(parse_skill_file(filepath))
-    print(f"Parsed {len(skills)} skills from canonical source.")
+    package_arg = args.package_flag or args.package
 
-    agents = []
-    if AGENTS_SRC.exists():
-        for filepath in sorted(AGENTS_SRC.glob("*.md")):
-            agents.append(parse_agent_file(filepath))
-    print(f"Parsed {len(agents)} agents from canonical source.")
-
-    print("\nGenerating platform-native files:")
-    write_skill_files(skills)
-    write_claude_agents(agents)
-    write_opencode_agents(agents)
-    write_github_agents(agents)
-    write_devin_agents(agents)
-    write_codex_agents(agents)
-    sync_commands()
+    if package_arg:
+        package_dir = Path(package_arg).resolve()
+        if not package_dir.exists():
+            print(f"ERROR: Package directory does not exist: {package_dir}")
+            sys.exit(1)
+        print(f"Syncing package: {package_dir}")
+        sync_package(package_dir, package_dir, package_dir.name)
+    else:
+        package_dir = REPO_ROOT / "agent-packages" / "workflow-designer-agent"
+        if not package_dir.exists():
+            print(f"ERROR: Default meta-package not found at {package_dir}")
+            sys.exit(1)
+        print(f"Syncing meta-package: {package_dir}")
+        sync_package(package_dir, REPO_ROOT, "meta-package")
 
     print("\nDone. Platform configs synced.")
     print("\nNext steps:")
     print(
-        "  - Verify: ls .agents/skills/ .claude/agents/ .opencode/agents/ .github/agents/ .devin/agents/ .codex/agents/"
+        "  - Verify agents: ls .opencode/agents/ .claude/agents/ .github/agents/ .devin/agents/ .codex/agents/"
     )
+    print("  - Verify skills: ls .agents/skills/")
     print(
         "  - Verify commands: ls .opencode/commands/ .claude/commands/ .codex/commands/ .github/commands/"
     )
     print("  - Devin playbooks: ls *.devin.md")
-    print(
-        "  - Re-run this script after editing canonical files in agent-packages/workflow-designer-agent/"
-    )
+    print("  - Re-run after editing canonical source files.")
 
 
 if __name__ == "__main__":

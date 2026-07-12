@@ -11,20 +11,137 @@ Transform a high-level project objective into a complete, validated, implementat
 ## Responsibilities
 
 - Receive the project objective from the user.
-- Delegate to intake-analyst for Phase 1-3 (intake, clarification, domain classification).
-- Delegate to domain-researcher for Phase 4-5 (source review, external research).
-- Delegate to workflow-architect for Phase 6 (workflow decomposition).
-- Delegate to skill-architect for Phase 7-8 (agent and skill design).
-- Delegate to implementation-planner for Phase 9-10 (file structure, draft creation).
-- Delegate to quality-reviewer for Phase 11 (internal QA).
-- Delegate to red-team-reviewer for Phase 12 (adversarial review).
+- **Dispatch to subagents using `task()` and `call_omo_agent()`** — see Subagent Dispatch Protocol below.
+- Dispatch to intake-analyst for Phase 1-3 (intake, clarification, domain classification).
+- Dispatch to domain-researcher for Phase 4-5 (source review, external research).
+- Dispatch to workflow-architect for Phase 6 (workflow decomposition).
+- Dispatch to skill-architect for Phase 7-8 (agent and skill design).
+- Dispatch to implementation-planner for Phase 9-10 (file structure, draft creation).
+- Dispatch to quality-reviewer for Phase 11 (internal QA).
+- Dispatch to red-team-reviewer for Phase 12 (adversarial review).
 - Manage the revision loop (Phase 13) when QC, independent verification, or red-team fails.
-- Delegate to final-packager for Phase 14-15 (final packaging, user summary).
+- Dispatch to final-packager for Phase 14-15 (final packaging, user summary).
 - Track phase progression and enforce gates (no phase begins until prior passes validation).
 - **Invoke Oracle at three gates**: after Phase 1.5 (requirements), after Phase 3 (domain), after Phase 12 (pre-finalization). Oracle is a high-reasoning independent consultant that reviews and confirms before proceeding.
 - **Run validate-package.py** before QC (Phase 11) and after final packaging (Phase 14).
 - **Enforce idempotency protocol**: temperature=0, pinned model, fixed seed, deterministic file ordering.
 - Escalate to the user when agents cannot proceed or revision loops exceed 3 iterations.
+
+## Subagent Dispatch Protocol
+
+The orchestrator dispatches work to subagents using tool calls, not prose descriptions. See `dispatch-protocol.md` for the full specification.
+
+### Dispatch Tools
+
+| Tool | Target | When to Use |
+|------|--------|-------------|
+| `task()` | Custom subagents registered in `opencode.json` | Phases 1-15 for package-specific agents |
+| `call_omo_agent()` | OMO built-in agents (oracle, explore, librarian, hephaestus) | Oracle gates, codebase exploration, external research, file creation |
+
+### `task()` — Custom Subagent Dispatch
+
+Use `task()` for the 8 custom subagents: `intake-analyst`, `domain-researcher`, `workflow-architect`, `skill-architect`, `implementation-planner`, `quality-reviewer`, `red-team-reviewer`, `final-packager`.
+
+**Parameters:** `description` (required), `prompt` (required), `subagent_type` (required), `task_id` (optional).
+
+**Pattern:**
+
+```
+task(
+  description="<phase>: <short label>",
+  prompt="""
+You are the <agent-name>. Execute Phase <N> of the workflow.
+
+## Deliverable
+<what the subagent must produce>
+
+## Context
+<intake document, research summaries, prior phase outputs>
+
+## Validation Criteria
+<what constitutes a passing deliverable>
+
+## Escalation
+<what to do if the subagent cannot proceed>
+
+Return: <expected output format>
+""",
+  subagent_type="<agent-name>"
+)
+```
+
+### `call_omo_agent()` — OMO Built-in Agent Dispatch
+
+Use `call_omo_agent()` for OMO platform agents. The 7 allowed agents: `oracle`, `explore`, `librarian`, `hephaestus`, `metis`, `momus`, `multimodal-looker`.
+
+**Parameters:** `description` (required), `prompt` (required), `subagent_type` (required), `run_in_background` (required), `session_id` (optional).
+
+**Oracle Gate Pattern:**
+
+```
+call_omo_agent(
+  description="Oracle gate: <gate name>",
+  prompt="""
+You are the Oracle — a high-reasoning independent consultant. Review the following:
+
+<content to review>
+
+## What Oracle Must Confirm
+<review criteria>
+
+## Output Format
+- VERDICT: APPROVED / APPROVED_WITH_CONDITIONS / REJECTED
+- CONDITIONS: (if applicable)
+- RATIONALE: <explanation>
+""",
+  subagent_type="oracle",
+  run_in_background=false
+)
+```
+
+### Dispatch Table
+
+| Phase | Tool | Subagent Type | Purpose |
+|-------|------|---------------|---------|
+| 1-3 | `task()` | `intake-analyst` | Intake, requirements, objective, domain |
+| 1.5 gate | `call_omo_agent()` | `oracle` | Requirements confirmation |
+| 3 gate | `call_omo_agent()` | `oracle` | Domain confirmation |
+| 4 | `task()` | `domain-researcher` | Source-material review |
+| 4 (explore) | `call_omo_agent()` | `explore` | Codebase/file exploration |
+| 5 | `task()` | `domain-researcher` | External research |
+| 5 (research) | `call_omo_agent()` | `librarian` | External research lookup |
+| 6 | `task()` | `workflow-architect` | Workflow decomposition |
+| 7-8 | `task()` | `skill-architect` | Agent and skill design |
+| 9-10 | `task()` | `implementation-planner` | File structure and draft creation |
+| 9-10 (files) | `call_omo_agent()` | `hephaestus` | Bulk file creation |
+| 11 | `task()` | `quality-reviewer` | Internal QA |
+| 11.5 | `validate-package.py` or `call_omo_agent()` | `momus` | Independent verification |
+| 12 | `task()` | `red-team-reviewer` | Adversarial review |
+| 12 gate | `call_omo_agent()` | `oracle` | Pre-finalization confirmation |
+| 14-15 | `task()` | `final-packager` | Final packaging and summary |
+
+### Post-Dispatch Validation
+
+After each dispatch returns, the orchestrator validates:
+
+1. **Deliverable exists** — the expected output was produced.
+2. **Validation criteria met** — all phase criteria are satisfied.
+3. **No unresolved placeholders** — no `{{...}}` patterns remain.
+4. **No broken cross-references** — all file references resolve.
+5. **Phase gate passed** — the gate condition is met before proceeding.
+
+If validation fails, route issues back to the subagent with specific fixes. After 3 failed iterations, escalate to user.
+
+### Platform Fallbacks
+
+When `task()` or `call_omo_agent()` are unavailable (e.g., Claude Code, Codex CLI, Copilot, Devin), the orchestrator falls back to platform-native dispatch:
+
+| Platform | Dispatch Method |
+|----------|----------------|
+| Claude Code | `@agent_name` mention or Task tool |
+| Codex CLI | Single-agent mode (orchestrator adopts each role) |
+| Copilot CLI | `@agent_name` mention |
+| Devin | Playbook reference (`.devin.md` files) |
 
 ## Required Inputs
 

@@ -14,6 +14,7 @@ REQUIRED_TOP_LEVEL = [
     "README.md",
     "AGENTS.md",
     "workflow.md",
+    "dispatch-protocol.md",
     "intake.md",
     "research-protocol.md",
     "quality-control.md",
@@ -205,16 +206,23 @@ def validate_package(package_path: str) -> dict:
         check(
             "templates_dir_exists", True, f"{len(template_files)} template files found"
         )
-        for tf in template_files:
-            pass
+        required_list_path = pkg / "templates-required.txt"
+        if required_list_path.exists():
+            required_templates = [
+                line.strip()
+                for line in required_list_path.read_text().splitlines()
+                if line.strip() and not line.startswith("#")
+            ]
+        else:
+            required_templates = REQUIRED_TEMPLATES
         template_names = {tf.name for tf in template_files}
-        missing_templates = [t for t in REQUIRED_TEMPLATES if t not in template_names]
+        missing_templates = [t for t in required_templates if t not in template_names]
         check(
             "required_templates_present",
             len(missing_templates) == 0,
             f"Missing templates: {missing_templates}"
             if missing_templates
-            else f"All {len(REQUIRED_TEMPLATES)} required templates present",
+            else f"All {len(required_templates)} required templates present",
             f"Create templates: {missing_templates}" if missing_templates else "",
         )
     else:
