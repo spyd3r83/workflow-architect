@@ -233,6 +233,45 @@ def validate_package(package_path: str) -> dict:
             "Create templates/ directory",
         )
 
+    dispatch_files = [
+        pkg / "dispatch-protocol.md",
+        pkg / "workflow.md",
+        pkg / "AGENTS.md",
+        pkg / "agents" / "workflow-orchestrator.md",
+        pkg / "agents" / "maintenance-orchestrator.md",
+    ]
+    dual_path_hits = []
+    for f in dispatch_files:
+        if not f.exists():
+            continue
+        text = f.read_text()
+        if "call_omo_agent" not in text:
+            continue
+        primary_markers = [
+            "Two dispatch tools",
+            "`call_omo_agent()` — for OMO",
+            "Use `call_omo_agent()` for",
+            "using `task()` and `call_omo_agent()`",
+            "or `call_omo_agent()` (for OMO",
+            "| `call_omo_agent()` | `oracle`",
+            "| `call_omo_agent()` | `explore`",
+            "| `call_omo_agent()` | `librarian`",
+            "| `call_omo_agent()` | `hephaestus`",
+            "| `call_omo_agent()` | `momus`",
+        ]
+        if any(m in text for m in primary_markers):
+            dual_path_hits.append(str(f.relative_to(pkg)))
+    check(
+        "single_dispatch_primitive",
+        len(dual_path_hits) == 0,
+        "Dispatch protocol uses task()-only"
+        if not dual_path_hits
+        else f"call_omo_agent authorized as primary path in: {dual_path_hits}",
+        "Rewrite dispatch docs to task()-only; see dispatch-protocol.md"
+        if dual_path_hits
+        else "",
+    )
+
     all_md = list(pkg.rglob("*.md"))
     placeholder_files = []
     placeholder_exempt = {

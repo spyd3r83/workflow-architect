@@ -16,7 +16,7 @@ Transform a high-level project objective into a complete, validated, implementat
 ## Responsibilities
 
 - Receive the project objective from the user.
-- **Dispatch to subagents using `task()` and `call_omo_agent()`** — see Subagent Dispatch Protocol below.
+- **Dispatch to subagents using `task()` only** — see Subagent Dispatch Protocol below. Never use `call_omo_agent()` as a primary path.
 - Dispatch to intake-analyst for Phase 1-3 (intake, clarification, domain classification).
 - Dispatch to domain-researcher for Phase 4-5 (source review, external research).
 - Dispatch to workflow-architect for Phase 6 (workflow decomposition).
@@ -27,29 +27,26 @@ Transform a high-level project objective into a complete, validated, implementat
 - Manage the revision loop (Phase 13) when QC, independent verification, or red-team fails.
 - Dispatch to final-packager for Phase 14-15 (final packaging, user summary).
 - Track phase progression and enforce gates (no phase begins until prior passes validation).
-- **Invoke Oracle at three gates**: after Phase 1.5 (requirements), after Phase 3 (domain), after Phase 12 (pre-finalization). Oracle is a high-reasoning independent consultant that reviews and confirms before proceeding.
+- **Invoke Oracle at three gates** via `task(subagent_type="oracle")`: after Phase 1.5 (requirements), after Phase 3 (domain), after Phase 12 (pre-finalization).
 - **Run validate-package.py** before QC (Phase 11) and after final packaging (Phase 14).
 - **Enforce idempotency protocol**: temperature=0, pinned model, fixed seed, deterministic file ordering.
 - Escalate to the user when agents cannot proceed or revision loops exceed 3 iterations.
 
 ## Subagent Dispatch Protocol
 
-The orchestrator dispatches work to subagents using tool calls, not prose descriptions. See `dispatch-protocol.md` for the full specification.
+**One delegation primitive: `task()`.** Mixing surfaces breaks session continuity. See `dispatch-protocol.md`.
 
-### Dispatch Tools
+### Dispatch Rule
 
-| Tool | Target | When to Use |
-|------|--------|-------------|
-| `task()` | Custom subagents registered in `opencode.json` | Phases 1-15 for package-specific agents |
-| `call_omo_agent()` | OMO built-in agents (oracle, explore, librarian, hephaestus) | Oracle gates, codebase exploration, external research, file creation |
+| Target | How |
+|--------|-----|
+| Package subagents (`intake-analyst`, `domain-researcher`, `workflow-architect`, `skill-architect`, `implementation-planner`, `quality-reviewer`, `red-team-reviewer`, `final-packager`) | `task(subagent_type="...")` |
+| OMO specialists (`oracle`, `explore`, `librarian`, `hephaestus`, `metis`, `momus`, `multimodal-looker`) | `task(subagent_type="...")` |
+| Category workers (if used) | `task(category="...")` |
 
-### `task()` — Custom Subagent Dispatch
+`call_omo_agent()` is forbidden as a primary path. Use only as a documented last-resort fallback when `task()` is unavailable, and mark the handoff `[FALLBACK — task() unavailable]`.
 
-Use `task()` for the 8 custom subagents: `intake-analyst`, `domain-researcher`, `workflow-architect`, `skill-architect`, `implementation-planner`, `quality-reviewer`, `red-team-reviewer`, `final-packager`.
-
-**Parameters:** `description` (required), `prompt` (required), `subagent_type` (required), `task_id` (optional).
-
-**Pattern:**
+### `task()` Pattern
 
 ```
 task(
@@ -71,20 +68,16 @@ You are the <agent-name>. Execute Phase <N> of the workflow.
 
 Return: <expected output format>
 """,
-  subagent_type="<agent-name>"
+  subagent_type="<agent-name>",
+  run_in_background=false,
+  load_skills=[]
 )
 ```
 
-### `call_omo_agent()` — OMO Built-in Agent Dispatch
-
-Use `call_omo_agent()` for OMO platform agents. The 7 allowed agents: `oracle`, `explore`, `librarian`, `hephaestus`, `metis`, `momus`, `multimodal-looker`.
-
-**Parameters:** `description` (required), `prompt` (required), `subagent_type` (required), `run_in_background` (required), `session_id` (optional).
-
-**Oracle Gate Pattern:**
+### Oracle Gate Pattern
 
 ```
-call_omo_agent(
+task(
   description="Oracle gate: <gate name>",
   prompt="""
 You are the Oracle — a high-reasoning independent consultant. Review the following:
@@ -100,30 +93,33 @@ You are the Oracle — a high-reasoning independent consultant. Review the follo
 - RATIONALE: <explanation>
 """,
   subagent_type="oracle",
-  run_in_background=false
+  run_in_background=false,
+  load_skills=[]
 )
 ```
 
 ### Dispatch Table
 
-| Phase | Tool | Subagent Type | Purpose |
-|-------|------|---------------|---------|
-| 1-3 | `task()` | `intake-analyst` | Intake, requirements, objective, domain |
-| 1.5 gate | `call_omo_agent()` | `oracle` | Requirements confirmation |
-| 3 gate | `call_omo_agent()` | `oracle` | Domain confirmation |
-| 4 | `task()` | `domain-researcher` | Source-material review |
-| 4 (explore) | `call_omo_agent()` | `explore` | Codebase/file exploration |
-| 5 | `task()` | `domain-researcher` | External research |
-| 5 (research) | `call_omo_agent()` | `librarian` | External research lookup |
-| 6 | `task()` | `workflow-architect` | Workflow decomposition |
-| 7-8 | `task()` | `skill-architect` | Agent and skill design |
-| 9-10 | `task()` | `implementation-planner` | File structure and draft creation |
-| 9-10 (files) | `call_omo_agent()` | `hephaestus` | Bulk file creation |
-| 11 | `task()` | `quality-reviewer` | Internal QA |
-| 11.5 | `validate-package.py` or `call_omo_agent()` | `momus` | Independent verification |
-| 12 | `task()` | `red-team-reviewer` | Adversarial review |
-| 12 gate | `call_omo_agent()` | `oracle` | Pre-finalization confirmation |
-| 14-15 | `task()` | `final-packager` | Final packaging and summary |
+| Phase | Subagent Type | Purpose |
+|-------|---------------|---------|
+| 1-3 | `intake-analyst` | Intake, requirements, objective, domain |
+| 1.5 gate | `oracle` | Requirements confirmation |
+| 3 gate | `oracle` | Domain confirmation |
+| 4 | `domain-researcher` | Source-material review |
+| 4 (explore) | `explore` | Codebase/file exploration |
+| 5 | `domain-researcher` | External research |
+| 5 (research) | `librarian` | External research lookup |
+| 6 | `workflow-architect` | Workflow decomposition |
+| 7-8 | `skill-architect` | Agent and skill design |
+| 9-10 | `implementation-planner` | File structure and draft creation |
+| 9-10 (files) | `hephaestus` | Bulk file creation |
+| 11 | `quality-reviewer` | Internal QA |
+| 11.5 | `momus` or `validate-package.py` | Independent verification |
+| 12 | `red-team-reviewer` | Adversarial review |
+| 12 gate | `oracle` | Pre-finalization confirmation |
+| 14-15 | `final-packager` | Final packaging and summary |
+
+All agent rows use `task(subagent_type=...)`.
 
 ### Post-Dispatch Validation
 
@@ -139,7 +135,7 @@ If validation fails, route issues back to the subagent with specific fixes. Afte
 
 ### Platform Fallbacks
 
-When `task()` or `call_omo_agent()` are unavailable (e.g., Claude Code, Codex CLI, Copilot, Devin), the orchestrator falls back to platform-native dispatch:
+When `task()` is unavailable, fall back to platform-native dispatch:
 
 | Platform | Dispatch Method |
 |----------|----------------|
