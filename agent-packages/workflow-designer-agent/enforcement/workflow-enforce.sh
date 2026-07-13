@@ -83,8 +83,10 @@ with open(os.environ["STATE_PATH"]) as f:
     state = json.load(f)
 
 write_tools = set(config.get("write_tools", ["write", "edit", "apply_patch", "str_replace_editor"]))
-impl_phases = set(config.get("implementation_phases", [9, 10]))
+impl_phases = set(int(x) for x in config.get("implementation_phases", [9, 10]))
+revision_phases = set(int(x) for x in config.get("revision_phases", list(impl_phases) + [11, 12, 13]))
 bash_conditional = config.get("bash_is_conditional", True)
+revision_mode = bool(state.get("revision_mode", False))
 
 MUTATING_BASH = re.compile(
     r"(?:"
@@ -100,36 +102,84 @@ MUTATING_BASH = re.compile(
     re.IGNORECASE,
 )
 
+# External / destructive actions always need explicit approval, even in revision mode.
+APPROVAL_REQUIRED = re.compile(
+    r"(?:"
+    r"\bgit\s+push\b|"
+    r"\bgit\s+push\s+--force\b|"
+    r"\bgh\s+release\b|"
+    r"\bgh\s+pr\s+create\b|"
+    r"\bnpm\s+publish\b|"
+    r"\bbun\s+publish\b|"
+    r"\bpnpm\s+publish\b|"
+    r"\bdocker\s+push\b|"
+    r"\brm\s+-rf\s+/"
+    r")",
+    re.IGNORECASE,
+)
+
 def is_write_tool(name: str, arg: str) -> bool:
     if name in write_tools:
         return True
     if name == "bash":
         if not bash_conditional:
             return True
-        # Fail open when command text is unavailable (older plugin callers
-        # pass only tool name). Block only when a mutating command is visible.
         if not arg.strip():
             return False
         return bool(MUTATING_BASH.search(arg))
     return False
 
+def is_approval_required(name: str, arg: str) -> bool:
+    if name == "bash" and arg.strip() and APPROVAL_REQUIRED.search(arg):
+        return True
+    return False
+
+def has_failed_gates(st: dict) -> bool:
+    for v in st.get("phases", {}).values():
+        if v.get("gate") == "failed":
+            return True
+    return False
+
+def local_mutation_allowed(st: dict, cfg_impl, cfg_rev) -> bool:
+    current = int(st.get("current_phase", 1))
+    phase = st.get("phases", {}).get(str(current), {})
+    status = phase.get("status", "pending")
+    gate = phase.get("gate", "pending")
+    rev_mode = bool(st.get("revision_mode", False)) or has_failed_gates(st)
+
+    if rev_mode and current in cfg_rev and status in ("in_progress", "completed", "pending"):
+        return True
+    if current in cfg_impl and status == "in_progress":
+        return True
+    if status == "completed" and gate == "passed" and current in cfg_impl:
+        return True
+    return False
+
+if is_approval_required(tool, tool_arg):
+    approvals = state.get("approvals", {})
+    if not approvals.get("external_actions"):
+        print(
+            "block:External/destructive action requires approval. "
+            "Run: workflow-enforce.sh approve external_actions <evidence>"
+        )
+        sys.exit(0)
+
 if not is_write_tool(tool, tool_arg):
     print("allow")
     sys.exit(0)
 
-current = state.get("current_phase", 1)
+current = int(state.get("current_phase", 1))
 phase_key = str(current)
 phase = state.get("phases", {}).get(phase_key, {})
 
-if phase.get("status") == "completed" and phase.get("gate") == "passed":
-    print("allow")
-elif current in impl_phases and phase.get("status") == "in_progress":
+if local_mutation_allowed(state, impl_phases, revision_phases):
     print("allow")
 else:
     print(
-        f"block:Phase {current} gate not passed (status={phase.get('status', 'unknown')}). "
-        "Mutating tools blocked until gate passes with evidence. "
-        "Use workflow_status action=status, then pass_gate with evidence, then advance."
+        f"block:Phase {current} is read-only/review (status={phase.get('status', 'unknown')}, "
+        f"gate={phase.get('gate', 'pending')}, revision_mode={revision_mode}). "
+        "Local mutation tools blocked outside implementation/revision phases. "
+        "Use enter_revision or recover, or pass_gate/advance with evidence."
     )
 PY
 }
@@ -255,6 +305,9 @@ if key not in state.get("phases", {}):
 state["phases"][key]["gate"] = "failed"
 state["phases"][key]["fail_reason"] = reason
 state["phases"][key]["timestamp"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+state["phases"][key]["status"] = "in_progress"
+state["revision_mode"] = True
+state["revision_target_phase"] = phase
 
 rev = state.get("revision_count", 0) + 1
 state["revision_count"] = rev
@@ -266,7 +319,110 @@ state["updated_at"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 with open(os.environ["STATE_PATH"], "w") as f:
     json.dump(state, f, indent=2)
 
-print(f"Gate FAILED for phase {phase}: {reason}. Revision count: {rev}/{max_rev}")
+print(f"Gate FAILED for phase {phase}: {reason}. Revision count: {rev}/{max_rev}. revision_mode=true")
+PY
+}
+
+enter_revision() {
+  local phase="${1:-}"
+  local evidence="${2:-}"
+  PHASE="$phase" EVIDENCE="$evidence" CONFIG_PATH="$CONFIG_FILE" STATE_PATH="$STATE_FILE" python3 - <<'PY'
+import json, os, sys
+from datetime import datetime, timezone
+
+with open(os.environ["CONFIG_PATH"]) as f:
+    config = json.load(f)
+with open(os.environ["STATE_PATH"]) as f:
+    state = json.load(f)
+
+min_chars = int(config.get("min_evidence_chars", 20))
+phase_raw = os.environ.get("PHASE", "").strip()
+evidence = os.environ.get("EVIDENCE", "").strip()
+phase = int(phase_raw) if phase_raw else state.get("current_phase", 1)
+if not evidence or len(evidence) < min_chars:
+    print(f"error:enter_revision requires evidence (>= {min_chars} chars)")
+    sys.exit(1)
+
+key = str(phase)
+if key not in state.get("phases", {}):
+    state.setdefault("phases", {})[key] = {"status": "pending", "gate": "pending"}
+state["revision_mode"] = True
+state["revision_target_phase"] = phase
+state["current_phase"] = phase
+state["phases"][key]["status"] = "in_progress"
+state["phases"][key]["gate"] = "pending"
+state["phases"][key]["revision_evidence"] = evidence
+state["updated_at"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+with open(os.environ["STATE_PATH"], "w") as f:
+    json.dump(state, f, indent=2)
+print(f"Entered revision mode at phase {phase}")
+PY
+}
+
+recover() {
+  local evidence="${1:-}"
+  EVIDENCE="$evidence" CONFIG_PATH="$CONFIG_FILE" STATE_PATH="$STATE_FILE" python3 - <<'PY'
+import json, os, sys
+from datetime import datetime, timezone
+
+with open(os.environ["CONFIG_PATH"]) as f:
+    config = json.load(f)
+with open(os.environ["STATE_PATH"]) as f:
+    state = json.load(f)
+
+min_chars = int(config.get("min_evidence_chars", 20))
+evidence = os.environ.get("EVIDENCE", "").strip()
+if not evidence or len(evidence) < min_chars:
+    print(f"error:recover requires evidence (>= {min_chars} chars) describing deadlock recovery")
+    sys.exit(1)
+
+impl = [int(x) for x in config.get("implementation_phases", [9, 10])]
+target = impl[0] if impl else int(state.get("current_phase", 1))
+key = str(target)
+if key not in state.get("phases", {}):
+    state.setdefault("phases", {})[key] = {"status": "pending", "gate": "pending"}
+state["revision_mode"] = True
+state["revision_target_phase"] = target
+state["current_phase"] = target
+state["phases"][key]["status"] = "in_progress"
+state["phases"][key]["gate"] = "pending"
+state["recovery_evidence"] = evidence
+state["updated_at"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+with open(os.environ["STATE_PATH"], "w") as f:
+    json.dump(state, f, indent=2)
+print(f"Recovered deadlock: revision_mode=true at phase {target}")
+PY
+}
+
+approve() {
+  local key="${1:-}"
+  local evidence="${2:-}"
+  KEY="$key" EVIDENCE="$evidence" CONFIG_PATH="$CONFIG_FILE" STATE_PATH="$STATE_FILE" python3 - <<'PY'
+import json, os, sys
+from datetime import datetime, timezone
+
+with open(os.environ["CONFIG_PATH"]) as f:
+    config = json.load(f)
+with open(os.environ["STATE_PATH"]) as f:
+    state = json.load(f)
+
+min_chars = int(config.get("min_evidence_chars", 20))
+key = os.environ.get("KEY", "").strip() or "external_actions"
+evidence = os.environ.get("EVIDENCE", "").strip()
+if not evidence or len(evidence) < min_chars:
+    print(f"error:approve requires evidence (>= {min_chars} chars)")
+    sys.exit(1)
+approvals = state.setdefault("approvals", {})
+approvals[key] = {
+    "approved": True,
+    "evidence": evidence,
+    "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+}
+state["approvals"] = approvals
+state["updated_at"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+with open(os.environ["STATE_PATH"], "w") as f:
+    json.dump(state, f, indent=2)
+print(f"Approved: {key}")
 PY
 }
 
@@ -293,11 +449,12 @@ print(f"Completed Phases: {completed if completed else 'none'}")
 print(f"In Progress: {in_progress if in_progress else 'none'}")
 print(f"Failed Gates: {failed if failed else 'none'}")
 print(f"Revision Count: {state.get('revision_count', 0)}/3")
+print(f"Revision Mode: {state.get('revision_mode', False)}")
 print(f"Escalated: {state.get('escalated', False)}")
 print(f"Last Updated: {state.get('updated_at', 'unknown')}")
 print("IMPORTANT: Do not skip phases. pass_gate and advance require evidence.")
-print("Mutating tools (write/edit/apply_patch and mutating bash) are blocked until gate passes.")
-print("Read-only bash is allowed. Use workflow_status to inspect and update state.")
+print("Local mutations allowed in implementation/revision phases; external push/release needs approve.")
+print("Read-only bash is allowed. Use enter_revision/recover if deadlocked.")
 PY
 }
 
@@ -308,6 +465,9 @@ case "${1:-help}" in
   advance) shift; advance_phase "$@" ;;
   pass) shift; pass_gate "$@" ;;
   fail) shift; fail_gate "$@" ;;
+  enter_revision) shift; enter_revision "$@" ;;
+  recover) shift; recover "$@" ;;
+  approve) shift; approve "$@" ;;
   compaction) compaction_context ;;
   help|*)
     echo "Usage: workflow-enforce.sh <command> [args]"
@@ -318,7 +478,10 @@ case "${1:-help}" in
     echo "  check <tool> [arg]           Check if a tool is allowed"
     echo "  advance [phase] <evidence>   Advance one phase (requires current gate passed + evidence)"
     echo "  pass [phase] <evidence>      Mark a phase gate as passed (requires evidence)"
-    echo "  fail [phase] [reason]        Mark a phase gate as failed"
+    echo "  fail [phase] [reason]        Mark a phase gate as failed (enters revision_mode)"
+    echo "  enter_revision [phase] <evidence>  Authorize local mutations for repair loop"
+    echo "  recover <evidence>           Recover from stale/deadlock into revision at impl phase"
+    echo "  approve <key> <evidence>     Approve external/destructive actions (e.g. external_actions)"
     echo "  compaction                   Print workflow state for compaction context injection"
     ;;
 esac

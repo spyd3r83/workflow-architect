@@ -1,5 +1,6 @@
 ---
-description: Checks the draft package for correctness, completeness, consistency, and implementation readiness. Runs the QC checklist and produces a structured pass/fail report.
+description: |
+  Checks the draft package for correctness, completeness, consistency, and implementation readiness. Runs the QC checklist and produces a structured pass/fail report.
 mode: subagent
 ---
 

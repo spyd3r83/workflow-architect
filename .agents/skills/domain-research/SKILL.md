@@ -1,8 +1,9 @@
 ---
 name: domain-research
-description: Identifies what research is needed for a given domain and how to gather it following the research protocol. Produces a structured research plan and executes it to produce a cited research summary. Use when: - Phase 5 (External Research) of the Workflow Designer Agent workflow.
-- Any time domain-specific or current information is needed to design an accurate workflow.
-- When the domain-researcher agent needs to determine what to research and how.
+description: |
+  Identifies what research is needed for a given domain and how to gather it following the research protocol. Produces a structured research plan and executes it to produce a cited research summary. Use when: - Phase 5 (External Research) of the Workflow Designer Agent workflow.
+  - Any time domain-specific or current information is needed to design an accurate workflow.
+  - When the domain-researcher agent needs to determine what to research and how.
 ---
 
 # Skill: Domain Research

@@ -1,7 +1,8 @@
 ---
 name: red-team-analysis
-description: Performs adversarial review of a generated workflow package from multiple stakeholder perspectives. Finds weaknesses that QC misses and produces a structured report with severity and fix recommendations. Use when: - Phase 12 (Red-Team Review) of the Workflow Designer Agent workflow.
-- When the red-team-reviewer needs to challenge the package after QC passes.
+description: |
+  Performs adversarial review of a generated workflow package from multiple stakeholder perspectives. Finds weaknesses that QC misses and produces a structured report with severity and fix recommendations. Use when: - Phase 12 (Red-Team Review) of the Workflow Designer Agent workflow.
+  - When the red-team-reviewer needs to challenge the package after QC passes.
 ---
 
 # Skill: Red-Team Analysis

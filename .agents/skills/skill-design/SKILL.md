@@ -1,7 +1,8 @@
 ---
 name: skill-design
-description: Creates reusable skill definitions for a specific workflow. Produces skill files that follow the skill-file-template and contain all 8 required sections. Use when: - Phase 8 (Skill Design) of the Workflow Designer Agent workflow.
-- When the skill-architect needs to create reusable skills that agents will invoke.
+description: |
+  Creates reusable skill definitions for a specific workflow. Produces skill files that follow the skill-file-template and contain all 8 required sections. Use when: - Phase 8 (Skill Design) of the Workflow Designer Agent workflow.
+  - When the skill-architect needs to create reusable skills that agents will invoke.
 ---
 
 # Skill: Skill Design

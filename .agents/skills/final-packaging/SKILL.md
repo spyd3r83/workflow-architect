@@ -1,7 +1,8 @@
 ---
 name: final-packaging
-description: Assembles the final, validated workflow package and produces the implementation summary. Ensures all files are present, all gates have passed, and the package is immediately usable. Use when: - Phase 14 (Final Packaging) and Phase 15 (User-Facing Summary) of the Workflow Designer Agent workflow.
-- When the final-packager needs to assemble the deliverable after QC and red-team pass.
+description: |
+  Assembles the final, validated workflow package and produces the implementation summary. Ensures all files are present, all gates have passed, and the package is immediately usable. Use when: - Phase 14 (Final Packaging) and Phase 15 (User-Facing Summary) of the Workflow Designer Agent workflow.
+  - When the final-packager needs to assemble the deliverable after QC and red-team pass.
 ---
 
 # Skill: Final Packaging

@@ -11,6 +11,10 @@ generated-workflows/
 .opencode/omo-session-registry.json
 .opencode/workflow-state.json
 
+# Generated enforcement artifacts (produced by sync-platform-configs.py)
+scripts/enforcement/workflow-enforce.sh
+.opencode/workflow-config.json
+
 # Python
 __pycache__/
 *.pyc

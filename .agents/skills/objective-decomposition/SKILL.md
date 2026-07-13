@@ -1,8 +1,9 @@
 ---
 name: objective-decomposition
-description: Breaks a high-level project goal into actionable workstreams that can be assigned to agents and sequenced into a workflow. Use when: - Phase 6 (Workflow Decomposition) of the Workflow Designer Agent workflow.
-- Any time a project objective needs to be broken into manageable pieces before agent design.
-- When the workflow-architect needs to determine what agents and phases are required.
+description: |
+  Breaks a high-level project goal into actionable workstreams that can be assigned to agents and sequenced into a workflow. Use when: - Phase 6 (Workflow Decomposition) of the Workflow Designer Agent workflow.
+  - Any time a project objective needs to be broken into manageable pieces before agent design.
+  - When the workflow-architect needs to determine what agents and phases are required.
 ---
 
 # Skill: Objective Decomposition

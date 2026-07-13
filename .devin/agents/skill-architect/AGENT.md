@@ -1,6 +1,7 @@
 ---
 name: skill-architect
-description: Designs the specialized agents and reusable skills required for the workflow. Produces agent definition files and skill definition files following the package templates.
+description: |
+  Designs the specialized agents and reusable skills required for the workflow. Produces agent definition files and skill definition files following the package templates.
 ---
 
 # Agent: Skill Architect

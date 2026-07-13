@@ -1,5 +1,6 @@
 ---
-description: Clarifies the project objective, identifies missing information, and creates labelled assumptions where needed. Produces the structured intake document that drives the rest of the workflow.
+description: |
+  Clarifies the project objective, identifies missing information, and creates labelled assumptions where needed. Produces the structured intake document that drives the rest of the workflow.
 mode: subagent
 ---
 

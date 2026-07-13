@@ -1,5 +1,6 @@
 ---
-description: Turns the workflow design, agent definitions, and skill definitions into an implementation-ready folder/file package. Maps the design to a concrete file structure and writes all files to disk.
+description: |
+  Turns the workflow design, agent definitions, and skill definitions into an implementation-ready folder/file package. Maps the design to a concrete file structure and writes all files to disk.
 mode: subagent
 ---
 
