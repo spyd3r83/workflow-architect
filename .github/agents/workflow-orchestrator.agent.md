@@ -1,6 +1,7 @@
 ---
 name: workflow-orchestrator
-description: Primary coordinating agent. Receives the user's project objective and manages the entire workflow package generation process across all 18 phases.
+description: |
+  Primary coordinating agent. Receives the user's project objective and manages the entire workflow package generation process across all 18 phases.
 ---
 
 # Agent: Workflow Orchestrator

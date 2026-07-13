@@ -121,6 +121,14 @@ def discover_commands(commands_dir: Path) -> list[str]:
     return commands
 
 
+def yaml_block_scalar(value: str) -> str:
+    text = (value or "").replace("\r\n", "\n").strip("\n")
+    if not text:
+        return '""'
+    lines = text.split("\n")
+    return "|\n" + "\n".join(f"  {line}" for line in lines)
+
+
 def write_skill_files(skills: list, output_root: Path):
     """Write SKILL.md files to .agents/skills/<name>/ and symlink .claude/skills/."""
     skills_out = output_root / ".agents" / "skills"
@@ -134,9 +142,8 @@ def write_skill_files(skills: list, output_root: Path):
         skill_dir = skills_out / skill["name"]
         skill_dir.mkdir(parents=True, exist_ok=True)
         skill_file = skill_dir / "SKILL.md"
-        frontmatter = (
-            f"---\nname: {skill['name']}\ndescription: {skill['description']}\n---\n\n"
-        )
+        desc = yaml_block_scalar(skill["description"])
+        frontmatter = f"---\nname: {skill['name']}\ndescription: {desc}\n---\n\n"
         skill_file.write_text(frontmatter + skill["body"])
 
     if claude_skills_out.is_symlink() or claude_skills_out.exists():
@@ -157,26 +164,24 @@ def write_skill_files(skills: list, output_root: Path):
 
 
 def write_claude_agents(agents: list, output_root: Path):
-    """Write .claude/agents/<name>.md with YAML frontmatter."""
     out_dir = output_root / ".claude" / "agents"
     out_dir.mkdir(parents=True, exist_ok=True)
     for agent in agents:
         filepath = out_dir / f"{agent['name']}.md"
-        frontmatter = (
-            f"---\nname: {agent['name']}\ndescription: {agent['description']}\n---\n\n"
-        )
+        desc = yaml_block_scalar(agent["description"])
+        frontmatter = f"---\nname: {agent['name']}\ndescription: {desc}\n---\n\n"
         filepath.write_text(frontmatter + agent["body"])
     print(f"  Agents: {len(agents)} files in .claude/agents/")
 
 
 def write_opencode_agents(agents: list, output_root: Path, primary_agent: str):
-    """Write .opencode/agents/<name>.md with YAML frontmatter."""
     out_dir = output_root / ".opencode" / "agents"
     out_dir.mkdir(parents=True, exist_ok=True)
     for agent in agents:
         filepath = out_dir / f"{agent['name']}.md"
         mode = "primary" if agent["name"] == primary_agent else "subagent"
-        frontmatter = f"---\ndescription: {agent['description']}\nmode: {mode}\n---\n\n"
+        desc = yaml_block_scalar(agent["description"])
+        frontmatter = f"---\ndescription: {desc}\nmode: {mode}\n---\n\n"
         filepath.write_text(frontmatter + agent["body"])
     print(
         f"  Agents: {len(agents)} files in .opencode/agents/ (primary: {primary_agent})"
@@ -184,29 +189,25 @@ def write_opencode_agents(agents: list, output_root: Path, primary_agent: str):
 
 
 def write_github_agents(agents: list, output_root: Path):
-    """Write .github/agents/<name>.agent.md for Copilot CLI."""
     out_dir = output_root / ".github" / "agents"
     out_dir.mkdir(parents=True, exist_ok=True)
     for agent in agents:
         filepath = out_dir / f"{agent['name']}.agent.md"
-        frontmatter = (
-            f"---\nname: {agent['name']}\ndescription: {agent['description']}\n---\n\n"
-        )
+        desc = yaml_block_scalar(agent["description"])
+        frontmatter = f"---\nname: {agent['name']}\ndescription: {desc}\n---\n\n"
         filepath.write_text(frontmatter + agent["body"])
     print(f"  Agents: {len(agents)} files in .github/agents/")
 
 
 def write_devin_agents(agents: list, output_root: Path):
-    """Write .devin/agents/<name>/AGENT.md for Devin."""
     out_dir = output_root / ".devin" / "agents"
     out_dir.mkdir(parents=True, exist_ok=True)
     for agent in agents:
         agent_dir = out_dir / agent["name"]
         agent_dir.mkdir(parents=True, exist_ok=True)
         filepath = agent_dir / "AGENT.md"
-        frontmatter = (
-            f"---\nname: {agent['name']}\ndescription: {agent['description']}\n---\n\n"
-        )
+        desc = yaml_block_scalar(agent["description"])
+        frontmatter = f"---\nname: {agent['name']}\ndescription: {desc}\n---\n\n"
         filepath.write_text(frontmatter + agent["body"])
     print(f"  Agents: {len(agents)} files in .devin/agents/")
 

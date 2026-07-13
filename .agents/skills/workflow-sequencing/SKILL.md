@@ -1,7 +1,8 @@
 ---
 name: workflow-sequencing
-description: Defines the proper order of operations from intake to final output. Produces a phased, gated workflow that ensures work moves correctly from agent to agent. Use when: - Phase 6 (Workflow Decomposition) and Phase 7 (Agent Design) of the Workflow Designer Agent workflow.
-- When the workflow-architect needs to sequence workstreams into a phased workflow with gates.
+description: |
+  Defines the proper order of operations from intake to final output. Produces a phased, gated workflow that ensures work moves correctly from agent to agent. Use when: - Phase 6 (Workflow Decomposition) and Phase 7 (Agent Design) of the Workflow Designer Agent workflow.
+  - When the workflow-architect needs to sequence workstreams into a phased workflow with gates.
 ---
 
 # Skill: Workflow Sequencing

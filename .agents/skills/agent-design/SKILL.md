@@ -1,7 +1,8 @@
 ---
 name: agent-design
-description: Creates specialized agent definitions for a specific workflow. Produces agent files that follow the agent-file-template and contain all 10 required sections. Use when: - Phase 7 (Agent Design) of the Workflow Designer Agent workflow.
-- When the skill-architect needs to create agent definitions for the workstreams identified by the workflow-architect.
+description: |
+  Creates specialized agent definitions for a specific workflow. Produces agent files that follow the agent-file-template and contain all 10 required sections. Use when: - Phase 7 (Agent Design) of the Workflow Designer Agent workflow.
+  - When the skill-architect needs to create agent definitions for the workstreams identified by the workflow-architect.
 ---
 
 # Skill: Agent Design

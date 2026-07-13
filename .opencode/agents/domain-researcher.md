@@ -1,5 +1,6 @@
 ---
-description: Performs source-backed research for the project domain. Follows the research protocol to gather, validate, and record information that the workflow design depends on.
+description: |
+  Performs source-backed research for the project domain. Follows the research protocol to gather, validate, and record information that the workflow design depends on.
 mode: subagent
 ---
 

@@ -2,6 +2,7 @@
   "workflow_package": "workflow-designer-agent",
   "total_phases": 18,
   "implementation_phases": [9, 10],
+  "revision_phases": [9, 10, 11, 12, 13],
   "write_tools": ["write", "edit", "apply_patch", "str_replace_editor"],
   "bash_is_conditional": true,
   "max_revisions": 3,

@@ -1,5 +1,6 @@
 ---
-description: Assembles the final, validated package and produces the final implementation summary. Ensures all files are present, all gates have passed, and the package is immediately usable by another agent.
+description: |
+  Assembles the final, validated package and produces the final implementation summary. Ensures all files are present, all gates have passed, and the package is immediately usable by another agent.
 mode: subagent
 ---
 

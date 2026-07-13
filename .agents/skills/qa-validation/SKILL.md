@@ -1,7 +1,8 @@
 ---
 name: qa-validation
-description: Checks a generated workflow package for correctness and implementation readiness using the QC checklist. Produces a structured pass/fail report. Use when: - Phase 11 (Internal QA) of the Workflow Designer Agent workflow.
-- When the quality-reviewer needs to validate the draft package before red-team review.
+description: |
+  Checks a generated workflow package for correctness and implementation readiness using the QC checklist. Produces a structured pass/fail report. Use when: - Phase 11 (Internal QA) of the Workflow Designer Agent workflow.
+  - When the quality-reviewer needs to validate the draft package before red-team review.
 ---
 
 # Skill: QA Validation

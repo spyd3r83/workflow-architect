@@ -1,6 +1,7 @@
 ---
 name: red-team-reviewer
-description: Attacks the workflow package from the perspective of a critic, client, developer, auditor, end-user, and opposing stakeholder. Challenges the package for real-world viability, not just checklist compliance.
+description: |
+  Attacks the workflow package from the perspective of a critic, client, developer, auditor, end-user, and opposing stakeholder. Challenges the package for real-world viability, not just checklist compliance.
 ---
 
 # Agent: Red-Team Reviewer

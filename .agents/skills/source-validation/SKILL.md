@@ -1,8 +1,9 @@
 ---
 name: source-validation
-description: Evaluates whether sources are authoritative, current, and reliable. Used to validate research findings before they are incorporated into the workflow design. Use when: - During Phase 5 (External Research) after gathering sources.
-- Any time a claim's source needs to be verified for authority and freshness.
-- When the domain-researcher encounters conflicting sources and needs to determine which is more authoritative.
+description: |
+  Evaluates whether sources are authoritative, current, and reliable. Used to validate research findings before they are incorporated into the workflow design. Use when: - During Phase 5 (External Research) after gathering sources.
+  - Any time a claim's source needs to be verified for authority and freshness.
+  - When the domain-researcher encounters conflicting sources and needs to determine which is more authoritative.
 ---
 
 # Skill: Source Validation

@@ -1,7 +1,8 @@
 ---
 name: file-structure-design
-description: Creates a repo-ready folder and file structure for a generated workflow package. Maps the workflow design, agents, skills, and templates to a concrete file tree. Use when: - Phase 9 (Folder/File Structure Generation) of the Workflow Designer Agent workflow.
-- When the implementation-planner needs to produce the file tree before writing files.
+description: |
+  Creates a repo-ready folder and file structure for a generated workflow package. Maps the workflow design, agents, skills, and templates to a concrete file tree. Use when: - Phase 9 (Folder/File Structure Generation) of the Workflow Designer Agent workflow.
+  - When the implementation-planner needs to produce the file tree before writing files.
 ---
 
 # Skill: File Structure Design

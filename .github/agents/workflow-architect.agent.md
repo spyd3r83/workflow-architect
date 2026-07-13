@@ -1,6 +1,7 @@
 ---
 name: workflow-architect
-description: Designs the actual workflow sequence. Determines how work moves from agent to agent, what each phase produces, and what gates must pass before the next phase begins.
+description: |
+  Designs the actual workflow sequence. Determines how work moves from agent to agent, what each phase produces, and what gates must pass before the next phase begins.
 ---
 
 # Agent: Workflow Architect

@@ -540,6 +540,80 @@ def validate_package(package_path: str) -> dict:
             "Create source-log.md with retrieval IDs",
         )
 
+    try:
+        from validate_frontmatter import validate_package_frontmatter
+    except ImportError:
+        scripts_dir = Path(__file__).resolve().parent
+        if str(scripts_dir) not in sys.path:
+            sys.path.insert(0, str(scripts_dir))
+        from validate_frontmatter import validate_package_frontmatter
+
+    fm_report = validate_package_frontmatter(pkg)
+    fm_ok = fm_report.get("overall") == "PASS"
+    fm_evidence = (
+        f"frontmatter files={fm_report.get('files_with_frontmatter', 0)} "
+        f"ok={fm_report.get('passed', 0)} fail={fm_report.get('failed', 0)}"
+    )
+    fm_fix = ""
+    if not fm_ok:
+        sample = fm_report.get("errors", [])[:5]
+        details = "; ".join(f"{e.get('file')}: {e.get('error')}" for e in sample)
+        fm_fix = (
+            f"Fix YAML front matter ({details})" if details else "Fix YAML front matter"
+        )
+    check(
+        "frontmatter_yaml_valid",
+        fm_ok,
+        fm_evidence if fm_ok else f"{fm_evidence}; {fm_fix}",
+        fm_fix,
+    )
+
+    gen_candidates = []
+    cursor = pkg
+    for _ in range(4):
+        gen_candidates.append(cursor / "generated-workflows")
+        if cursor.parent == cursor:
+            break
+        cursor = cursor.parent
+    if pkg.name == "workflow-designer-agent":
+        gen_candidates.append(pkg.parent.parent / "generated-workflows")
+    candidate = next((p for p in gen_candidates if p.exists()), None)
+    if candidate is not None:
+        try:
+            from validate_frontmatter import validate_generated_workflows_tree
+        except ImportError:
+            scripts_dir = Path(__file__).resolve().parent
+            if str(scripts_dir) not in sys.path:
+                sys.path.insert(0, str(scripts_dir))
+            from validate_frontmatter import validate_generated_workflows_tree
+        gen_report = validate_generated_workflows_tree(candidate)
+        gen_ok = gen_report.get("overall") == "PASS"
+        gen_evidence = (
+            f"packages_pass={gen_report.get('passed', 0)} "
+            f"packages_fail={gen_report.get('failed', 0)}"
+        )
+        gen_fix = ""
+        if not gen_ok:
+            bad = [
+                p["name"]
+                for p in gen_report.get("packages", [])
+                if p.get("overall") != "PASS"
+            ]
+            gen_fix = f"Repair front matter in generated packages: {bad}"
+        check(
+            "generated_workflows_frontmatter",
+            gen_ok,
+            gen_evidence if gen_ok else f"{gen_evidence}; {gen_fix}",
+            gen_fix,
+        )
+    else:
+        check(
+            "generated_workflows_frontmatter",
+            True,
+            "generated-workflows/ absent (gitignored) — optional scan skipped",
+            "",
+        )
+
     results["overall"] = "PASS" if results["summary"]["failed"] == 0 else "FAIL"
     return results
 
