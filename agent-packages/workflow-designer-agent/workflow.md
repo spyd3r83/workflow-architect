@@ -4,30 +4,30 @@ This file defines the end-to-end workflow that the Workflow Designer Agent execu
 
 ## Subagent Dispatch
 
-The orchestrator dispatches work to subagents using tool calls, not prose descriptions. See `dispatch-protocol.md` for the full specification including tool signatures, examples, and platform fallbacks.
+**One delegation primitive: `task()`.** See `dispatch-protocol.md`.
 
-**Two dispatch tools:**
-
-- **`task()`** — for custom subagents registered in `opencode.json` (intake-analyst, domain-researcher, workflow-architect, skill-architect, implementation-planner, quality-reviewer, red-team-reviewer, final-packager). Parameters: `description`, `prompt`, `subagent_type`, `task_id` (optional). Synchronous.
-- **`call_omo_agent()`** — for OMO built-in agents (oracle, explore, librarian, hephaestus, momus). Parameters: `description`, `prompt`, `subagent_type`, `run_in_background` (required), `session_id` (optional).
+Use `task(subagent_type=...)` for package agents and OMO specialists (`oracle`, `explore`, `librarian`, `hephaestus`, `momus`). Never use `call_omo_agent()` as a primary path.
 
 **Dispatch table** (full version in `dispatch-protocol.md`):
 
-| Phase | Tool | Agent | Purpose |
-|-------|------|-------|---------|
-| 1-3 | `task()` | `intake-analyst` | Intake, requirements, domain |
-| 1.5 gate | `call_omo_agent()` | `oracle` | Requirements confirmation |
-| 3 gate | `call_omo_agent()` | `oracle` | Domain confirmation |
-| 4 | `task()` | `domain-researcher` | Source review |
-| 5 | `task()` | `domain-researcher` | External research |
-| 6 | `task()` | `workflow-architect` | Workflow decomposition |
-| 7-8 | `task()` | `skill-architect` | Agent/skill design |
-| 9-10 | `task()` | `implementation-planner` | File structure, draft |
-| 11 | `task()` | `quality-reviewer` | Internal QA |
-| 11.5 | `validate-package.py` | (deterministic) | Independent verification |
-| 12 | `task()` | `red-team-reviewer` | Adversarial review |
-| 12 gate | `call_omo_agent()` | `oracle` | Pre-finalization |
-| 14-15 | `task()` | `final-packager` | Final packaging |
+| Phase | Agent | Purpose |
+|-------|-------|---------|
+| 1-3 | `intake-analyst` | Intake, requirements, domain |
+| 1.5 gate | `oracle` | Requirements confirmation |
+| 3 gate | `oracle` | Domain confirmation |
+| 4 | `domain-researcher` | Source review |
+| 4 (explore) | `explore` | Codebase exploration |
+| 5 | `domain-researcher` | External research |
+| 5 (research) | `librarian` | External research lookup |
+| 6 | `workflow-architect` | Workflow decomposition |
+| 7-8 | `skill-architect` | Agent/skill design |
+| 9-10 | `implementation-planner` | File structure, draft |
+| 9-10 (files) | `hephaestus` | Bulk file creation |
+| 11 | `quality-reviewer` | Internal QA |
+| 11.5 | `validate-package.py` or `momus` | Independent verification |
+| 12 | `red-team-reviewer` | Adversarial review |
+| 12 gate | `oracle` | Pre-finalization |
+| 14-15 | `final-packager` | Final packaging |
 
 **Structured handoff format** (included in every dispatch prompt):
 

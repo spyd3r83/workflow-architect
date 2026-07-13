@@ -60,6 +60,12 @@ PY
 check_tool() {
   local tool_name="${1:-}"
   local tool_arg="${2:-}"
+
+  if [ "$tool_name" = "call_omo_agent" ] || [ "$tool_name" = "call-omo-agent" ]; then
+    echo "block:call_omo_agent is forbidden as a primary dispatch path. Use task(subagent_type=...) instead. See dispatch-protocol.md."
+    return 0
+  fi
+
   if [ ! -f "$STATE_FILE" ] || [ ! -f "$CONFIG_FILE" ]; then
     echo "allow"
     return 0
@@ -68,13 +74,14 @@ check_tool() {
   TOOL_NAME="$tool_name" TOOL_ARG="$tool_arg" CONFIG_PATH="$CONFIG_FILE" STATE_PATH="$STATE_FILE" python3 - <<'PY'
 import json, os, re, sys
 
+tool = os.environ.get("TOOL_NAME", "")
+tool_arg = os.environ.get("TOOL_ARG", "")
+
 with open(os.environ["CONFIG_PATH"]) as f:
     config = json.load(f)
 with open(os.environ["STATE_PATH"]) as f:
     state = json.load(f)
 
-tool = os.environ.get("TOOL_NAME", "")
-tool_arg = os.environ.get("TOOL_ARG", "")
 write_tools = set(config.get("write_tools", ["write", "edit", "apply_patch", "str_replace_editor"]))
 impl_phases = set(config.get("implementation_phases", [9, 10]))
 bash_conditional = config.get("bash_is_conditional", True)
