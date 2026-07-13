@@ -2,7 +2,7 @@ import type { Plugin } from "@opencode-ai/plugin"
 import { tool } from "@opencode-ai/plugin"
 import { existsSync } from "node:fs"
 import { join } from "node:path"
-import { execSync } from "node:child_process"
+import { execFileSync } from "node:child_process"
 
 function getStatePath(directory: string): string {
   return join(directory, ".opencode", "workflow-state.json")
@@ -12,25 +12,35 @@ function getEnforceScript(directory: string): string {
   return join(directory, "scripts", "enforcement", "workflow-enforce.sh")
 }
 
-function runEnforce(directory: string, ...args: string[]): string {
+function runEnforce(directory: string, args: string[]): string {
   const script = getEnforceScript(directory)
   if (!existsSync(script)) return ""
   try {
-    const result = execSync(`bash "${script}" ${args.map(a => a ? `"${a}"` : "").join(" ")}`, {
+    const result = execFileSync("bash", [script, ...args], {
       cwd: directory,
       encoding: "utf-8",
       timeout: 10000,
     })
     return result.trim()
   } catch (err: any) {
-    return err.stdout?.trim() || ""
+    const out = (err.stdout || err.stderr || err.message || "").toString().trim()
+    return out
   }
 }
 
 function ensureState(directory: string): void {
   if (!existsSync(getStatePath(directory))) {
-    runEnforce(directory, "init")
+    runEnforce(directory, ["init"])
   }
+}
+
+function extractToolArg(toolName: string, args: any): string {
+  if (!args || typeof args !== "object") return ""
+  if (toolName === "bash") return String(args.command ?? args.cmd ?? "")
+  if (toolName === "write" || toolName === "edit" || toolName === "apply_patch") {
+    return String(args.filePath ?? args.path ?? args.file ?? "")
+  }
+  return ""
 }
 
 export const WorkflowEnforcer: Plugin = async ({ directory, client }) => {
@@ -46,14 +56,15 @@ export const WorkflowEnforcer: Plugin = async ({ directory, client }) => {
 
   return {
     "tool.execute.before": async (input, output) => {
-      const result = runEnforce(directory, "check", input.tool)
+      const toolArg = extractToolArg(input.tool, output.args)
+      const result = runEnforce(directory, ["check", input.tool, toolArg])
       if (result.startsWith("block:")) {
         throw new Error(`[workflow-enforcer] ${result.slice(6)}`)
       }
     },
 
-    "experimental.session.compacting": async (input, output) => {
-      const context = runEnforce(directory, "compaction")
+    "experimental.session.compacting": async (_input, output) => {
+      const context = runEnforce(directory, ["compaction"])
       if (context) {
         output.context.push(context)
       }
@@ -68,24 +79,39 @@ export const WorkflowEnforcer: Plugin = async ({ directory, client }) => {
     tool: {
       workflow_status: tool({
         description:
-          "Check or update the workflow enforcement state. Use this to see which phase is current, whether gates have passed, and to advance phases or mark gates as passed/failed.",
+          "Check or update workflow enforcement state. pass_gate and advance REQUIRE evidence describing completed work. Mutating tools are blocked until the current phase gate is passed.",
         args: {
-          action: tool.schema.enum(["status", "advance", "pass_gate", "fail_gate"], {
-            description: "Action: 'status' to check state, 'advance' to move to next phase, 'pass_gate' to mark current gate passed, 'fail_gate' to mark current gate failed",
-          }),
-          phase: tool.schema.number().optional().describe("Phase number for pass_gate/fail_gate/advance (defaults to current phase)"),
-          reason: tool.schema.string().optional().describe("Reason for fail_gate"),
+          action: tool.schema.enum(["status", "advance", "pass_gate", "fail_gate"]),
+          phase: tool.schema.number().optional(),
+          reason: tool.schema.string().optional(),
+          evidence: tool.schema.string().optional(),
         },
         async execute(args) {
           switch (args.action) {
             case "status":
-              return runEnforce(directory, "status")
-            case "advance":
-              return runEnforce(directory, "advance", String(args.phase ?? ""))
-            case "pass_gate":
-              return runEnforce(directory, "pass", String(args.phase ?? ""))
-            case "fail_gate":
-              return runEnforce(directory, "fail", String(args.phase ?? ""), args.reason ?? "unspecified")
+              return runEnforce(directory, ["status"])
+            case "advance": {
+              const phase = args.phase != null ? String(args.phase) : ""
+              const evidence = args.evidence ?? args.reason ?? ""
+              const result = runEnforce(directory, ["advance", phase, evidence])
+              if (result.startsWith("error:")) {
+                throw new Error(`[workflow-enforcer] ${result.slice(6)}`)
+              }
+              return result
+            }
+            case "pass_gate": {
+              const phase = args.phase != null ? String(args.phase) : ""
+              const evidence = args.evidence ?? args.reason ?? ""
+              const result = runEnforce(directory, ["pass", phase, evidence])
+              if (result.startsWith("error:")) {
+                throw new Error(`[workflow-enforcer] ${result.slice(6)}`)
+              }
+              return result
+            }
+            case "fail_gate": {
+              const phase = args.phase != null ? String(args.phase) : ""
+              return runEnforce(directory, ["fail", phase, args.reason ?? "unspecified"])
+            }
             default:
               return `Unknown action: ${args.action}`
           }

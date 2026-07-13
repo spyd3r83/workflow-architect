@@ -3,9 +3,11 @@
 This package includes programmatic enforcement of the workflow process. The enforcement system ensures that:
 
 1. **Phases execute in order** — no phase begins until the prior phase passes its gate
-2. **Write tools are blocked** outside implementation phases until gates pass
+2. **Mutating tools are blocked** outside implementation phases until gates pass
 3. **State survives context compaction** — workflow state is injected into compaction context
 4. **Revision loops are tracked** — max 3 iterations before escalation
+5. **Gates require evidence** — `pass_gate` and `advance` reject empty self-approvals
+6. **Read-only bash is allowed** — only mutating bash is treated as a write tool
 
 ## Configuration
 
@@ -16,16 +18,20 @@ The enforcement system reads its configuration from `.opencode/workflow-config.j
   "workflow_package": "<package-name>",
   "total_phases": 18,
   "implementation_phases": [9, 10],
-  "write_tools": ["write", "edit", "bash", "str_replace_editor"],
-  "max_revisions": 3
+  "write_tools": ["write", "edit", "apply_patch", "str_replace_editor"],
+  "bash_is_conditional": true,
+  "max_revisions": 3,
+  "min_evidence_chars": 20
 }
 ```
 
 - `workflow_package` — name of the workflow package
 - `total_phases` — number of phases in the workflow
 - `implementation_phases` — phases where write tools are allowed while in progress
-- `write_tools` — tool names that are blocked outside implementation phases
+- `write_tools` — tool names blocked outside implementation phases (`apply_patch` included)
+- `bash_is_conditional` — if true, only mutating bash is blocked; read-only bash is allowed
 - `max_revisions` — revision loop limit before escalation
+- `min_evidence_chars` — minimum evidence length required for `pass_gate` and `advance`
 
 ## State File
 
@@ -33,8 +39,8 @@ The enforcement system tracks workflow progression in `.opencode/workflow-state.
 
 ## Enforcement Logic
 
-| Current Phase | Write Tools | Read Tools |
-|---------------|-------------|------------|
+| Current Phase | Mutating Tools (`write`/`edit`/`apply_patch`/mutating bash) | Read Tools / read-only bash |
+|---------------|--------------------------------------------------------------|-----------------------------|
 | Pre-implementation phases (gate not passed) | Blocked | Allowed |
 | Implementation phases (in progress) | Allowed | Allowed |
 | Post-implementation phases (gate not passed) | Blocked | Allowed |
@@ -67,9 +73,15 @@ The enforcement system tracks workflow progression in `.opencode/workflow-state.
 
 Agents can call the `workflow_status` tool to:
 - **`status`** — check current phase, completed phases, failed gates
-- **`advance`** — move to the next phase
-- **`pass_gate`** — mark current phase gate as passed
+- **`pass_gate`** — mark current phase gate as passed (**requires evidence**, min 20 chars)
+- **`advance`** — move one phase forward (**requires prior gate passed + evidence**)
 - **`fail_gate`** — mark current phase gate as failed (increments revision count)
+
+Evidence examples:
+- "Phase 2 discovery complete: read AGENTS.md, mapped 20 packages, git status clean"
+- "Phase 5 implementation complete: modified codex.ts, typecheck pass, 12 tests pass"
+
+Empty self-approval is rejected.
 
 ## Compaction Survival
 
