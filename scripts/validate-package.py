@@ -614,6 +614,16 @@ def validate_package(package_path: str) -> dict:
             "",
         )
 
+    matrix_file = pkg / "harness-compatibility-matrix.md"
+    check(
+        "harness_matrix_exists",
+        matrix_file.exists(),
+        "harness-compatibility-matrix.md present"
+        if matrix_file.exists()
+        else "missing",
+        "Create harness-compatibility-matrix.md documenting per-harness runtime/static status",
+    )
+
     results["overall"] = "PASS" if results["summary"]["failed"] == 0 else "FAIL"
     return results
 
