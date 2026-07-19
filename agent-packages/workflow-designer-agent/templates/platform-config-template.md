@@ -16,6 +16,10 @@ Every generated package must include these files at the package root:
     "{{PRIMARY_AGENT_NAME}}": {
       "description": "{{WORKFLOW_DESCRIPTION}}",
       "mode": "primary",
+      "permission": {
+        "task": "allow",
+        "call_omo_agent": "deny"
+      },
       "prompt": "{file:./prompts/master-prompt.md}"
     }
   },
@@ -72,6 +76,7 @@ Place command files in these directories (create them at the project root where 
 ## Validation Criteria
 
 - [ ] `opencode.json` exists with agent registration.
+- [ ] Primary agent has `"permission": {"task": "allow", "call_omo_agent": "deny"}`.
 - [ ] 3 command files exist per platform (15 total).
 - [ ] Agent files exist per platform.
 - [ ] Skill files exist in `.agents/skills/` with `SKILL.md` format.

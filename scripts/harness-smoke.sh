@@ -68,7 +68,6 @@ count=0
 for f in sorted(Path("/pkg/.codex/agents").glob("*.toml")):
     d=tomllib.loads(f.read_text()); assert "name" in d and "developer_instructions" in d; count+=1
 print(f"toml: ok={count}")
-print(f"agents: opencode=$(ls /pkg/.opencode/agents/*.md 2>/dev/null | wc -l) claude=$(ls /pkg/.claude/agents/*.md 2>/dev/null | wc -l) codex=$(ls /pkg/.codex/agents/*.toml 2>/dev/null | wc -l) github=$(ls /pkg/.github/agents/*.agent.md 2>/dev/null | wc -l) devin=$(ls /pkg/.devin/agents/*/AGENT.md 2>/dev/null | wc -l)")
 INNER
 '
 STATIC_RC=$?
@@ -81,60 +80,69 @@ echo "========================================"
 
 echo ""
 echo "=== OpenCode ==="
-if [ -f /home/jfi/.local/share/opencode/auth.json ]; then
+OC_AUTH="${HOME}/.local/share/opencode/auth.json"
+if [ -f "$OC_AUTH" ] && [ -f /usr/local/bin/opencode ]; then
   timeout 90 docker run --rm \
     -v "$PKG_COPY:/pkg:ro" \
-    -v "/home/jfi/.local/share/opencode/auth.json:/home/jfi/.local/share/opencode/auth.json:ro" \
+    -v "$OC_AUTH:/home/jfi/.local/share/opencode/auth.json:ro" \
     -v "/usr/local/bin/opencode:/usr/local/bin/opencode:ro" \
     -e OPENCODE_DISABLE_CHANNEL_DB=1 \
     node:22-slim \
-    bash -c 'cd /pkg && timeout 30 opencode run --dir /pkg --agent maintenance-orchestrator --format json "Reply with exactly: OC_OK" 2>&1 | grep -o "OC_OK" | head -1 && echo "RESULT: RUNTIME-PROVEN" || echo "RESULT: BLOCKED"' \
-    2>&1 | grep -v -iE "auth\.json|token|secret|api.key|credential" | tail -3
+    bash -c 'cd /pkg && timeout 30 opencode run --dir /pkg --agent maintenance-orchestrator --format json "Reply: OC_OK" 2>&1 | grep -o "OC_OK" | head -1 && echo "RUNTIME-PROVEN" || echo "BLOCKED"' \
+    2>&1 | grep -vE "auth|token|key|secret|credential" | tail -2
 else
-  echo "RESULT: BLOCKED (auth.json not found)"
+  echo "BLOCKED: config not found"
 fi
 
 echo ""
 echo "=== Claude Code ==="
-if [ -f /home/jfi/.claude/.credentials.json ]; then
+echo "Official headless: claude --bare -p \"prompt\" --allowedTools Read"
+echo "Auth: ANTHROPIC_API_KEY env or apiKeyHelper in --settings"
+if [ -n "${ANTHROPIC_API_KEY:-}" ]; then
   timeout 60 docker run --rm \
     --user node \
     -v "$PKG_COPY:/pkg:ro" \
-    -v "/home/jfi/.claude/.credentials.json:/tmp/creds.json:ro" \
     -v "/home/jfi/.local/bin/claude:/usr/local/bin/claude:ro" \
     -e ANTHROPIC_API_KEY \
     -e HOME=/home/node \
     node:22-slim \
-    bash -c 'mkdir -p /home/node/.claude && cp /tmp/creds.json /home/node/.claude/.credentials.json && echo "{}" > /home/node/.claude.json && timeout 30 claude --print --dangerously-skip-permissions "Reply with exactly: CC_OK" 2>&1 | tail -3' \
-    2>&1 | grep -v -iE "credentials|token|secret|api.key|sk-|ANTHROPIC" | tail -3
-  echo "RESULT: see output above (401=BLOCKED auth, CC_OK=RUNTIME-PROVEN)"
+    bash -c 'echo "{}" > /home/node/.claude.json 2>/dev/null; timeout 30 claude --bare -p "Reply: CC_OK" --allowedTools Read 2>&1 | tail -3' \
+    2>&1 | grep -vE "credential|token|secret|key" | tail -3
 else
-  echo "RESULT: BLOCKED (credentials not found)"
+  echo "BLOCKED: ANTHROPIC_API_KEY not set"
 fi
 
 echo ""
 echo "=== Codex CLI ==="
-if [ -f /home/jfi/.codex/auth.json ]; then
+echo "Official headless: codex exec \"prompt\" --skip-git-repo-check"
+echo "Auth: config dir or OPENAI_API_KEY env"
+CX_AUTH="${HOME}/.codex/auth.json"
+CX_CFG="${HOME}/.codex/config.toml"
+if [ -f "$CX_AUTH" ]; then
   timeout 90 docker run --rm \
     -v "$PKG_COPY:/pkg:ro" \
-    -v "/home/jfi/.codex/auth.json:/root/.codex/auth.json:ro" \
-    -v "/home/jfi/.codex/config.toml:/root/.codex/config.toml:ro" \
+    -v "$CX_AUTH:/root/.codex/auth.json:ro" \
+    -v "$CX_CFG:/root/.codex/config.toml:ro" \
     -e OPENAI_API_KEY \
     node:22-slim \
-    bash -c 'npm install -g @openai/codex 2>/dev/null && timeout 30 codex exec "Reply with exactly: CX_OK" 2>&1 | tail -3' \
-    2>&1 | grep -v -iE "auth\.json|token|secret|api.key|credential|sk-|funding|bson" | tail -3
-  echo "RESULT: BLOCKED (codex exec requires trusted git repo + interactive TTY)"
+    bash -c 'npm install -g @openai/codex 2>/dev/null; timeout 30 codex exec "Reply: CX_OK" --skip-git-repo-check 2>&1 | tail -3' \
+    2>&1 | grep -vE "auth|token|secret|key|credential|funding|bson" | tail -3
 else
-  echo "RESULT: BLOCKED (codex auth not found)"
+  echo "BLOCKED: config not found"
 fi
 
 echo ""
 echo "=== Copilot CLI ==="
-echo "RESULT: BLOCKED (copilot binary is a host wrapper calling copilot-real with full nvm tree)"
+echo "Official headless: copilot -p \"prompt\""
+echo "Auth: COPILOT_GITHUB_TOKEN or GH_TOKEN or GITHUB_TOKEN env"
+echo "BLOCKED: host binary is a wrapper script requiring full nvm tree"
+echo "Fix: fresh npm install in container + valid token env"
 
 echo ""
 echo "=== Devin ==="
-echo "RESULT: BLOCKED (no installable CLI; web-access platform only)"
+echo "Official headless: devin -- \"prompt\""
+echo "Auth: browser OAuth on first run (no env-var headless auth documented)"
+echo "BLOCKED: no headless auth mechanism; requires browser OAuth"
 
 echo ""
 echo "========================================"
