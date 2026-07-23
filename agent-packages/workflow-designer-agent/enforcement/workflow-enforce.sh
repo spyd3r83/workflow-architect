@@ -39,6 +39,7 @@ state = {
     "phases": {},
     "revision_count": 0,
     "escalated": False,
+    "dispatch_failed": False,
     "created_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     "updated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
 }
@@ -61,10 +62,12 @@ check_tool() {
   local tool_name="${1:-}"
   local tool_arg="${2:-}"
 
-  if [ "$tool_name" = "call_omo_agent" ] || [ "$tool_name" = "call-omo-agent" ]; then
-    echo "block:call_omo_agent is forbidden as a primary dispatch path. Use task(subagent_type=...) instead. See dispatch-protocol.md."
+  if [ "$tool_name" = "call_omo_agent" ] || [ "$tool_name" = "call-omo-agent" ] || [ "$tool_name" = "call_omo_Agent" ]; then
+    echo "block:call_omo_agent is forbidden as an OpenCode dispatch path. Use task(subagent_type=...); if a real task call fails, stop with TASK_DISPATCH_UNAVAILABLE. See dispatch-protocol.md."
     return 0
   fi
+
+  tool_name=$(echo "$tool_name" | tr '[:upper:]' '[:lower:]')
 
   if [ ! -f "$STATE_FILE" ] || [ ! -f "$CONFIG_FILE" ]; then
     echo "allow"
@@ -82,7 +85,7 @@ with open(os.environ["CONFIG_PATH"]) as f:
 with open(os.environ["STATE_PATH"]) as f:
     state = json.load(f)
 
-write_tools = set(config.get("write_tools", ["write", "edit", "apply_patch", "str_replace_editor"]))
+write_tools = set(config.get("write_tools", ["write", "edit", "apply_patch", "str_replace_editor", "create"]))
 impl_phases = set(int(x) for x in config.get("implementation_phases", [9, 10]))
 revision_phases = set(int(x) for x in config.get("revision_phases", list(impl_phases) + [11, 12, 13]))
 bash_conditional = config.get("bash_is_conditional", True)
@@ -121,7 +124,7 @@ APPROVAL_REQUIRED = re.compile(
 def is_write_tool(name: str, arg: str) -> bool:
     if name in write_tools:
         return True
-    if name == "bash":
+    if name in ("bash", "exec"):
         if not bash_conditional:
             return True
         if not arg.strip():
@@ -168,6 +171,15 @@ if not is_write_tool(tool, tool_arg):
     print("allow")
     sys.exit(0)
 
+dispatch_failed = state.get("dispatch_failed", False)
+if dispatch_failed:
+    print(
+        "block:Dispatch failure detected. Mutating tools are blocked until "
+        "workflow_status fail_gate is called to acknowledge the failure. "
+        "Do not fall back to direct implementation."
+    )
+    sys.exit(0)
+
 current = int(state.get("current_phase", 1))
 phase_key = str(current)
 phase = state.get("phases", {}).get(phase_key, {})
@@ -195,6 +207,10 @@ with open(os.environ["CONFIG_PATH"]) as f:
     config = json.load(f)
 with open(os.environ["STATE_PATH"]) as f:
     state = json.load(f)
+
+if state.get("dispatch_failed", False):
+    print("error:Cannot advance while dispatch_failed is true. Call fail_gate to acknowledge the failure first.")
+    sys.exit(1)
 
 min_chars = int(config.get("min_evidence_chars", 20))
 target_raw = os.environ.get("TARGET_PHASE", "").strip()
@@ -252,6 +268,10 @@ with open(os.environ["CONFIG_PATH"]) as f:
 with open(os.environ["STATE_PATH"]) as f:
     state = json.load(f)
 
+if state.get("dispatch_failed", False):
+    print("error:Cannot pass gate while dispatch_failed is true. Call fail_gate to acknowledge the failure first.")
+    sys.exit(1)
+
 min_chars = int(config.get("min_evidence_chars", 20))
 phase_raw = os.environ.get("PHASE", "").strip()
 evidence = os.environ.get("EVIDENCE", "").strip()
@@ -283,7 +303,11 @@ PY
 
 fail_gate() {
   local phase="${1:-}"
-  local reason="${2:-unspecified}"
+  local reason="${2:-}"
+  if [ -z "$reason" ]; then
+    echo "error:fail_gate requires a reason describing the failure."
+    exit 1
+  fi
   PHASE="$phase" REASON="$reason" CONFIG_PATH="$CONFIG_FILE" STATE_PATH="$STATE_FILE" python3 - <<'PY'
 import json, os
 from datetime import datetime, timezone
@@ -308,6 +332,7 @@ state["phases"][key]["timestamp"] = datetime.now(timezone.utc).strftime("%Y-%m-%
 state["phases"][key]["status"] = "in_progress"
 state["revision_mode"] = True
 state["revision_target_phase"] = phase
+state["dispatch_failed"] = False
 
 rev = state.get("revision_count", 0) + 1
 state["revision_count"] = rev
@@ -451,10 +476,27 @@ print(f"Failed Gates: {failed if failed else 'none'}")
 print(f"Revision Count: {state.get('revision_count', 0)}/3")
 print(f"Revision Mode: {state.get('revision_mode', False)}")
 print(f"Escalated: {state.get('escalated', False)}")
+print(f"Dispatch Failed: {state.get('dispatch_failed', False)}")
 print(f"Last Updated: {state.get('updated_at', 'unknown')}")
 print("IMPORTANT: Do not skip phases. pass_gate and advance require evidence.")
 print("Local mutations allowed in implementation/revision phases; external push/release needs approve.")
 print("Read-only bash is allowed. Use enter_revision/recover if deadlocked.")
+PY
+}
+
+dispatch_failed() {
+  STATE_PATH="$STATE_FILE" python3 - <<'PY'
+import json, os
+from datetime import datetime, timezone
+
+with open(os.environ["STATE_PATH"]) as f:
+    state = json.load(f)
+state["dispatch_failed"] = True
+state["dispatch_failed_at"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+state["updated_at"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+with open(os.environ["STATE_PATH"], "w") as f:
+    json.dump(state, f, indent=2)
+print("Dispatch failure recorded. Mutating tools blocked until fail_gate is called.")
 PY
 }
 
@@ -468,6 +510,7 @@ case "${1:-help}" in
   enter_revision) shift; enter_revision "$@" ;;
   recover) shift; recover "$@" ;;
   approve) shift; approve "$@" ;;
+  dispatch-failed) dispatch_failed ;;
   compaction) compaction_context ;;
   help|*)
     echo "Usage: workflow-enforce.sh <command> [args]"

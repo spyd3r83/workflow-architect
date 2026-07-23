@@ -167,10 +167,7 @@ export const WorkflowEnforcer: Plugin = async ({ directory, client }) => {
     "tool.execute.before": async (input, output) => {
       const enforceDir = await resolver.resolveEnforcementDir(input.sessionID)
 
-      // If no package root was found, fail closed: do not apply parent repo enforcement to a nested session.
       if (!enforceDir) {
-        // Only block if the tool is call_omo_agent (which should always be blocked).
-        // For other tools, allow through without enforcement when directory is ambiguous.
         if (input.tool === "call_omo_agent" || input.tool === "call-omo-agent") {
           throw new Error(
             "[workflow-enforcer] call_omo_agent is forbidden as an OpenCode dispatch path. Use task(subagent_type=...); if a real task call fails, stop with TASK_DISPATCH_UNAVAILABLE. See dispatch-protocol.md."
@@ -183,6 +180,29 @@ export const WorkflowEnforcer: Plugin = async ({ directory, client }) => {
       const result = runEnforce(enforceDir, ["check", input.tool, toolArg])
       if (result.startsWith("block:")) {
         throw new Error(`[workflow-enforcer] ${result.slice(6)}`)
+      }
+    },
+
+    "tool.execute.after": async (input, output) => {
+      if (input.tool !== "task") return
+      const enforceDir = await resolver.resolveEnforcementDir(input.sessionID)
+      if (!enforceDir) return
+      const outStr = [
+        typeof output.output === "string" ? output.output : "",
+        typeof output.title === "string" ? output.title : "",
+        output.metadata ? JSON.stringify(output.metadata) : "",
+      ].join(" ")
+      const errorPatterns = [
+        "Skills not found",
+        "TASK_DISPATCH_UNAVAILABLE",
+        "dispatch failed",
+        "Error:",
+        "error:",
+        "not found",
+        "unavailable",
+      ]
+      if (errorPatterns.some((p) => outStr.includes(p))) {
+        runEnforce(enforceDir, ["dispatch-failed"])
       }
     },
 
@@ -245,7 +265,11 @@ export const WorkflowEnforcer: Plugin = async ({ directory, client }) => {
             }
             case "fail_gate": {
               const phase = args.phase != null ? String(args.phase) : ""
-              return runEnforce(enforceDir, ["fail", phase, args.reason ?? "unspecified"])
+              const reason = args.reason ?? ""
+              if (!reason) {
+                throw new Error("[workflow-enforcer] fail_gate requires a reason describing the failure.")
+              }
+              return runEnforce(enforceDir, ["fail", phase, reason])
             }
             default:
               return `Unknown action: ${args.action}`

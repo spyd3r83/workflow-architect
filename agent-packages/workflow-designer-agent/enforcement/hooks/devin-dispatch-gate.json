@@ -1,0 +1,26 @@
+{
+  "PreToolUse": [
+    {
+      "matcher": "exec|edit",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "bash scripts/enforcement/dispatch-gate-hook.sh",
+          "timeout": 10
+        }
+      ]
+    }
+  ],
+  "PostToolUse": [
+    {
+      "matcher": "^task$",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "bash scripts/enforcement/dispatch-gate-hook.sh",
+          "timeout": 10
+        }
+      ]
+    }
+  ]
+}

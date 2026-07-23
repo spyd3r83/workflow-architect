@@ -329,7 +329,7 @@ def sync_enforcement(package_dir: Path, output_root: Path):
 
     settings_src = enforcement_src / "settings.json"
     settings_dest = output_root / ".claude" / "settings.json"
-    if settings_src.exists():
+    if settings_src.exists() and not settings_dest.exists():
         shutil.copy2(settings_src, settings_dest)
 
     scripts_dir = output_root / "scripts" / "enforcement"
@@ -341,12 +341,76 @@ def sync_enforcement(package_dir: Path, output_root: Path):
 
     config_src = enforcement_src / "workflow-config.json"
     config_dest = output_root / ".opencode" / "workflow-config.json"
-    if not config_dest.exists() and config_src.exists():
-        shutil.copy2(config_src, config_dest)
+    if config_src.exists():
+        import json as _json
+
+        config_text = config_src.read_text(encoding="utf-8")
+        config_data = _json.loads(config_text)
+        config_data["workflow_package"] = output_root.name
+        config_dest.parent.mkdir(parents=True, exist_ok=True)
+        config_dest.write_text(
+            _json.dumps(config_data, indent=2) + "\n", encoding="utf-8"
+        )
+
+    preflight_src = REPO_ROOT / "scripts" / "preflight-task-check.sh"
+    preflight_dest = output_root / "scripts" / "preflight-task-check.sh"
+    if preflight_src.exists():
+        preflight_dest.parent.mkdir(parents=True, exist_ok=True)
+        if preflight_src.resolve() != preflight_dest.resolve():
+            shutil.copy2(preflight_src, preflight_dest)
+        os.chmod(preflight_dest, 0o755)
 
     docs_src = enforcement_src / "enforcement.md"
     if docs_src.exists():
         shutil.copy2(docs_src, output_root / "enforcement.md")
+
+    gate_hook_src = enforcement_src / "dispatch-gate-hook.sh"
+    if gate_hook_src.exists():
+        gate_hook_dest = scripts_dir / "dispatch-gate-hook.sh"
+        shutil.copy2(gate_hook_src, gate_hook_dest)
+        os.chmod(gate_hook_dest, 0o755)
+
+    gate_spec_src = enforcement_src / "dispatch-gate.md"
+    if gate_spec_src.exists():
+        shutil.copy2(gate_spec_src, output_root / "dispatch-gate.md")
+
+    hooks_src = enforcement_src / "hooks"
+    if hooks_src.is_dir():
+        claude_fragment_src = hooks_src / "claude-dispatch-gate-fragment.json"
+        if claude_fragment_src.exists():
+            import json as _json
+
+            settings_dest = output_root / ".claude" / "settings.json"
+            settings_dest.parent.mkdir(parents=True, exist_ok=True)
+            fragment = _json.loads(claude_fragment_src.read_text(encoding="utf-8"))
+            if settings_dest.exists():
+                existing = _json.loads(settings_dest.read_text(encoding="utf-8"))
+            else:
+                existing = {}
+            existing_hooks = existing.get("hooks", {})
+            for event, groups in fragment.get("hooks", {}).items():
+                if event in existing_hooks:
+                    existing_hooks[event].extend(groups)
+                else:
+                    existing_hooks[event] = groups
+            existing["hooks"] = existing_hooks
+            settings_dest.write_text(
+                _json.dumps(existing, indent=2) + "\n", encoding="utf-8"
+            )
+
+        for mapping in [
+            (
+                "copilot-dispatch-gate.json",
+                output_root / ".github" / "hooks" / "dispatch-gate.json",
+            ),
+            ("codex-dispatch-gate.json", output_root / ".codex" / "hooks.json"),
+            ("devin-dispatch-gate.json", output_root / ".devin" / "hooks.v1.json"),
+        ]:
+            src_file = hooks_src / mapping[0]
+            dest_file = mapping[1]
+            if src_file.exists():
+                dest_file.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(src_file, dest_file)
 
     print(f"  Enforcement: plugin + hooks + state manager synced")
 
