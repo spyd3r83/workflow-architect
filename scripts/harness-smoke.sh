@@ -84,8 +84,9 @@ OC_AUTH="${HOME}/.local/share/opencode/auth.json"
 if [ -f "$OC_AUTH" ] && [ -f /usr/local/bin/opencode ]; then
   timeout 90 docker run --rm \
     -v "$PKG_COPY:/pkg:ro" \
-    -v "$OC_AUTH:/home/jfi/.local/share/opencode/auth.json:ro" \
+    -v "$OC_AUTH:/root/.local/share/opencode/auth.json:ro" \
     -v "/usr/local/bin/opencode:/usr/local/bin/opencode:ro" \
+    -e HOME=/root \
     -e OPENCODE_DISABLE_CHANNEL_DB=1 \
     node:22-slim \
     bash -c 'cd /pkg && timeout 30 opencode run --dir /pkg --agent maintenance-orchestrator --format json "Reply: OC_OK" 2>&1 | grep -o "OC_OK" | head -1 && echo "RUNTIME-PROVEN" || echo "BLOCKED"' \
@@ -102,7 +103,7 @@ if [ -n "${ANTHROPIC_API_KEY:-}" ]; then
   timeout 60 docker run --rm \
     --user node \
     -v "$PKG_COPY:/pkg:ro" \
-    -v "/home/jfi/.local/bin/claude:/usr/local/bin/claude:ro" \
+    -v "$(command -v claude 2>/dev/null || echo "${HOME}/.local/bin/claude"):/usr/local/bin/claude:ro" \
     -e ANTHROPIC_API_KEY \
     -e HOME=/home/node \
     node:22-slim \

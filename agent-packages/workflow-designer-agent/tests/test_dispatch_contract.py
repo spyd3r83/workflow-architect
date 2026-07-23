@@ -774,5 +774,68 @@ class MockPreflightTests(unittest.TestCase):
         self.assertNotIn("Traceback", result.stderr)
 
 
+class PublicRepoHygieneTests(unittest.TestCase):
+    """Scan committed scripts and canonical files for hardcoded developer paths."""
+
+    def test_no_hardcoded_home_paths_in_committed_scripts(self):
+        import subprocess
+
+        result = subprocess.run(
+            ["git", "grep", "-n", "/home/", "--", "scripts/"],
+            cwd=REPO,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        if result.returncode != 0:
+            return
+        standard = ("/home/node", "/home/app", "/home/runner")
+        developer_specific = []
+        for l in result.stdout.strip().splitlines():
+            if "/home/" not in l:
+                continue
+            is_standard = False
+            for s in standard:
+                if s in l:
+                    is_standard = True
+                    break
+            if not is_standard:
+                developer_specific.append(l)
+        self.assertEqual(
+            len(developer_specific),
+            0,
+            "Hardcoded developer home paths found in committed scripts "
+            "(use $HOME or command -v):\n" + "\n".join(developer_specific),
+        )
+
+    def test_no_session_ids_in_committed_content(self):
+        import subprocess
+
+        result = subprocess.run(
+            ["git", "grep", "-n", "ses_[a-z0-9]\\{10\\}", "--", "."],
+            cwd=REPO,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        if result.returncode == 0:
+            self.fail(f"Session IDs found in committed content:\n{result.stdout}")
+
+    def test_no_private_ips_in_committed_scripts(self):
+        import subprocess
+
+        result = subprocess.run(
+            ["git", "grep", "-n", "10\\.66\\.", "--", "scripts/"],
+            cwd=REPO,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        if result.returncode == 0:
+            self.fail(
+                f"Private IP addresses found in committed scripts:\n{result.stdout}"
+            )
+
+
 if __name__ == "__main__":
     unittest.main()
