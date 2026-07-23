@@ -142,7 +142,8 @@ Every generated workflow package must have this structure:
 | 34 | Workflow enforcement (OpenCode plugin) | .opencode/plugins/workflow-enforcer.ts | Yes |
 | 35 | Workflow enforcement (Claude Code hooks) | .claude/settings.json + .claude/hooks/ | Yes |
 | 36 | Shared enforcement state manager | scripts/enforcement/workflow-enforce.sh | Yes |
-| 37 | Enforcement documentation | enforcement.md | Yes |
+| 37 | Task dispatch preflight | scripts/preflight-task-check.sh | Yes |
+| 38 | Enforcement documentation | enforcement.md | Yes |
 
 ## File Requirements
 

@@ -22,7 +22,7 @@ workflow-orchestrator (coordinator)
   └── final-packager          (assembles final package + summary)
 ```
 
-The orchestrator is the only agent that talks to the user. All other agents communicate through the orchestrator via structured `task()` dispatch calls (package agents and OMO specialists alike). `call_omo_agent()` is forbidden as a primary path. See `dispatch-protocol.md`.
+The orchestrator is the only agent that talks to the user. All other agents communicate through the orchestrator via structured `task()` dispatch calls (package agents and OMO specialists alike). In OpenCode, `call_omo_agent()` is forbidden as a dispatch path; if a real `task()` call fails, report `TASK_DISPATCH_UNAVAILABLE` and stop. See `dispatch-protocol.md`.
 
 ## Collaboration Model
 

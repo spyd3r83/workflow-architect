@@ -1,102 +1,92 @@
 # Harness Compatibility and Runtime QA Matrix
 
-Authoritative per-harness QA status. Container smoke is the acceptance path; host runs are exploratory only.
+Authoritative per-harness QA status. Container smoke is the acceptance path.
 
-## Status Definitions
+## Oracle-Reviewed Classification (2026-07-16)
 
-| Status | Meaning |
-|--------|---------|
-| **RUNTIME-PROVEN** | Live runtime evidence from a disposable container with auth safely mounted via env or read-only config |
-| **BLOCKED** | Cannot runtime-test in container: auth unavailable, binary wrapper, CLI missing, or platform limitation |
+Oracle verdict: REJECT blanket release. Only runtime-proven harnesses ship in the supported release matrix. Others are experimental or excluded.
 
-## Per-Harness Matrix
+## Release Tiers
 
-### OpenCode
+| Tier | Definition | Ship in release? |
+|------|-----------|-----------------|
+| **Tier 1: Release-Ready** | Container runtime evidence exists | Yes |
+| **Tier 2: Experimental** | Artifacts valid, runtime pending credentials | Draft PRs only |
+| **Tier 3: Unsupported** | No headless auth mechanism | Excluded; roadmap note |
+
+## Per-Harness Status
+
+### OpenCode — Tier 1: Release-Ready
 
 | Field | Value |
 |-------|-------|
-| **Status** | **RUNTIME-PROVEN** |
 | **Official headless path** | `opencode run --dir <pkg> --agent <name> --format json "prompt"` |
-| **Auth mechanism** | Provider credentials in config dir (env-injected in container) |
-| **Container test** | `node:22-slim` + binary mount + config mounted read-only; `opencode run --agent maintenance-orchestrator` responded successfully |
-| **CI can prove runtime?** | No — requires local install + provider access |
+| **Container evidence** | Orchestrator responded in `node:22-slim` container with config mounted read-only |
+| **Auth** | Provider credentials via config dir (env-injected in container) |
+| **Status** | **RUNTIME-PROVEN** |
 
-### Claude Code
-
-| Field | Value |
-|-------|-------|
-| **Status** | **BLOCKED** |
-| **Official headless path** | `claude --bare -p "prompt" --allowedTools "Read"` ([docs](https://code.claude.com/docs/en/headless)) |
-| **Auth mechanism** | `ANTHROPIC_API_KEY` env var or `apiKeyHelper` in `--settings` JSON (bare mode skips OAuth/keychain) |
-| **Container test** | `node:22-slim --user node` + binary mount; `claude --print` returned 401 auth error |
-| **Exact blocker** | Available API key is expired or invalid |
-| **CI can prove runtime?** | No — requires valid `ANTHROPIC_API_KEY` |
-
-### OpenAI Codex CLI
+### Claude Code — Tier 2: Experimental
 
 | Field | Value |
 |-------|-------|
-| **Status** | **BLOCKED** |
-| **Official headless path** | `codex exec "prompt" --skip-git-repo-check` ([docs](https://learn.chatgpt.com/docs/codex/non-interactive-mode)) |
-| **Auth mechanism** | OAuth or API key in config dir; env `OPENAI_API_KEY` |
-| **Container test** | `node:22-slim` + npm `@openai/codex` + config mounted read-only; `codex exec` returned "Not inside a trusted directory" (needs `--skip-git-repo-check`) |
-| **Exact blocker** | Container read-only mount cannot satisfy git trust; retry with `--skip-git-repo-check` flag needed |
-| **CI can prove runtime?** | No — requires valid OpenAI credentials |
+| **Official headless path** | `claude --bare -p "prompt" --allowedTools Read` |
+| **Container evidence** | Static artifacts valid; runtime returned 401 auth error |
+| **Blocker** | Valid `ANTHROPIC_API_KEY` required |
+| **Auth pattern** | `ANTHROPIC_API_KEY` via GitHub Secret; bare mode skips keychain |
+| **Status** | **BLOCKED — needs valid credentials** |
 
-### GitHub Copilot CLI
-
-| Field | Value |
-|-------|-------|
-| **Status** | **BLOCKED** |
-| **Official headless path** | `copilot -p "prompt"` with env auth (`COPILOT_GITHUB_TOKEN`, `GH_TOKEN`, or `GITHUB_TOKEN`) ([docs](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference)) |
-| **Auth mechanism** | Fine-grained PAT (v2) or OAuth token via env var; classic PATs not supported |
-| **Container test** | Host binary is a bash wrapper calling `copilot-real` with full nvm dependency tree; cannot isolate in container without replicating host Node.js installation |
-| **Exact blocker** | Binary is a host-specific wrapper; needs `npm install -g` fresh install in container + valid `COPILOT_GITHUB_TOKEN` |
-| **CI can prove runtime?** | No — requires Copilot subscription + token |
-
-### Devin
+### Codex CLI — Tier 2: Experimental
 
 | Field | Value |
 |-------|-------|
-| **Status** | **BLOCKED** |
-| **Official headless path** | `devin -- "prompt"` after `curl -fsSL https://cli.devin.ai/install.sh \| bash` ([docs](https://docs.devin.ai/cli)) |
-| **Auth mechanism** | Browser-based OAuth on first run; no env-var token documented for headless |
-| **Container test** | Devin CLI not installed; install script available but requires interactive browser auth |
-| **Exact blocker** | No headless auth mechanism documented; first-run requires browser OAuth |
-| **CI can prove runtime?** | No — requires Devin account + browser auth |
+| **Official headless path** | `codex exec "prompt" --skip-git-repo-check` |
+| **Container evidence** | Static TOML valid; runtime needs `--skip-git-repo-check` flag |
+| **Blocker** | Retry with correct flags; verify OpenAI credentials valid |
+| **Auth pattern** | Config dir or `OPENAI_API_KEY` via GitHub Secret |
+| **Status** | **BLOCKED — needs flag retry** |
+
+### Copilot CLI — Tier 2: Experimental
+
+| Field | Value |
+|-------|-------|
+| **Official headless path** | `copilot -p "prompt"` with env token |
+| **Container evidence** | Static artifacts valid; host binary is wrapper script |
+| **Blocker** | Fresh npm install in container + fine-grained PAT (v2) required |
+| **Auth pattern** | `COPILOT_GITHUB_TOKEN` via GitHub Secret (fine-grained PAT only) |
+| **Status** | **BLOCKED — needs PAT + fresh install** |
+
+### Devin — Tier 3: Unsupported (Excluded from Release)
+
+| Field | Value |
+|-------|-------|
+| **Official headless path** | `devin -- "prompt"` (requires browser OAuth on first run) |
+| **Container evidence** | Static artifacts valid; no headless auth mechanism exists |
+| **Blocker** | Browser OAuth required; no env-var headless auth documented |
+| **Status** | **EXCLUDED — no CI injection possible** |
 
 ## Summary Table
 
-| Harness | Official headless path | Container static | Container runtime | Status |
-|---------|----------------------|-----------------|-------------------|--------|
-| **OpenCode** | `opencode run --agent <name>` | PASS | PASS | **RUNTIME-PROVEN** |
-| **Claude Code** | `claude --bare -p` + `ANTHROPIC_API_KEY` | PASS | BLOCKED | **BLOCKED** |
-| **Codex CLI** | `codex exec --skip-git-repo-check` | PASS | BLOCKED | **BLOCKED** |
-| **Copilot CLI** | `copilot -p` + `COPILOT_GITHUB_TOKEN` | PASS | BLOCKED | **BLOCKED** |
-| **Devin** | `devin --` (needs browser OAuth) | PASS | BLOCKED | **BLOCKED** |
+| Harness | Tier | Container static | Container runtime | Release status |
+|---------|------|-----------------|-------------------|----------------|
+| **OpenCode** | 1 | PASS | **PASS** | **Release-ready** |
+| **Claude Code** | 2 | PASS | BLOCKED | Experimental draft |
+| **Codex CLI** | 2 | PASS | BLOCKED | Experimental draft |
+| **Copilot CLI** | 2 | PASS | BLOCKED | Experimental draft |
+| **Devin** | 3 | PASS | BLOCKED | **Excluded** |
 
-## Container Static Validation (all harnesses)
+## CI Gates (per Oracle)
 
-Validated in `python:3.12-slim` container without credentials:
-
-- Frontmatter: all files valid
-- TOML: all Codex agents valid
-- Hook syntax: all Claude hooks valid
-- Agent counts: consistent across all platforms
-
-## CI Validation Coverage
-
-CI validates without secrets:
-- pytest suite (enforcer, frontmatter, regression, harness matrix)
-- `validate-package.py` (structural checks + `harness_matrix_exists`)
-- `validate_frontmatter.py` (recursive YAML scan)
-
-CI **cannot** validate any harness runtime behavior.
+| Gate | Blocking? | Scope |
+|------|-----------|-------|
+| Source lint / format / type check | **Blocking** | All source |
+| Manifest schema validation | **Blocking** | Generated manifests |
+| Secret/credential scan | **Blocking** | All artifacts |
+| Runtime smoke (Tier 1) | **Blocking** | OpenCode only |
+| Frontmatter + TOML parse | **Blocking** | All harness files |
+| Runtime smoke (Tier 2) | Advisory | Claude, Codex, Copilot |
 
 ## Container Smoke Script
 
-`scripts/harness-smoke.sh <package-path>` runs:
-- Phase 1: static validation in `python:3.12-slim` (no auth)
-- Phase 2: runtime smoke in `node:22-slim` with read-only auth mounts (requires Docker + existing auth)
+`scripts/harness-smoke.sh <package-path>` runs Phase 1 (static) and Phase 2 (runtime) in disposable containers. Auth mounted read-only; never printed or committed.
 
-Auth is mounted read-only and never printed or committed.
+CI cannot validate any harness runtime behavior without credentials injected via GitHub Secrets.

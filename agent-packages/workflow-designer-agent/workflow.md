@@ -6,7 +6,7 @@ This file defines the end-to-end workflow that the Workflow Designer Agent execu
 
 **One delegation primitive: `task()`.** See `dispatch-protocol.md`.
 
-Use `task(subagent_type=...)` for package agents and OMO specialists (`oracle`, `explore`, `librarian`, `hephaestus`, `momus`). Never use `call_omo_agent()` as a primary path.
+Use `task(subagent_type=...)` for package agents and OMO specialists (`oracle`, `explore`, `librarian`, `hephaestus`, `momus`). In OpenCode, never use `call_omo_agent()` as a dispatch fallback; if a real `task()` call fails, report `TASK_DISPATCH_UNAVAILABLE` and stop.
 
 **Dispatch table** (full version in `dispatch-protocol.md`):
 

@@ -8,7 +8,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[3]
 PKG = REPO / "agent-packages" / "workflow-designer-agent"
 
-STATUS_VALUES = {"RUNTIME-PROVEN", "RUNTIME-PROVEN (partial)", "STATIC-ONLY", "BLOCKED"}
+STATUS_VALUES = {"RUNTIME-PROVEN", "RUNTIME-PROVEN (partial)", "BLOCKED", "EXCLUDED"}
 HARNESSES = {"OpenCode", "Claude Code", "Codex CLI", "Copilot CLI", "Devin"}
 
 

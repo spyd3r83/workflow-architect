@@ -8,7 +8,7 @@ This file defines how the orchestrator dispatches work to subagents across all s
 
 The orchestrator is the only agent that communicates with the user. All other agents receive work through structured `task()` calls — not prose "delegate to" descriptions, and not `call_omo_agent()`.
 
-Mixing invocation surfaces breaks session continuity and dispatch routing. `call_omo_agent()` is **forbidden** as a primary path. See [Fallbacks](#fallbacks) for the only allowed exception.
+Mixing invocation surfaces breaks session continuity and dispatch routing. `call_omo_agent()` is **forbidden** as a dispatch path in OpenCode workflow packages.
 
 Every dispatch call includes:
 
@@ -23,7 +23,7 @@ The subagent returns its output to the orchestrator. The orchestrator validates 
 ## Hard Rules
 
 1. Use `task()` for **all** subagent dispatch — package agents and OMO specialists.
-2. Never use `call_omo_agent()` unless `task()` is unavailable (documented fallback only).
+2. On OpenCode, never use `call_omo_agent()`. If `task()` is unavailable or not surfaced at runtime, report `TASK_DISPATCH_UNAVAILABLE` and stop.
 3. Sequential dispatch only — wait for each `task()` to return before starting the next.
 4. Prefer session reuse via `session_id` / `task_id` for follow-ups to the same specialist.
 5. Structured prompts only — every worker prompt answers identity, scope, deliverable, context, validation, escalation.
@@ -241,30 +241,33 @@ After each `task()` returns, the orchestrator validates:
 
 If validation fails, re-dispatch with specific fixes. After 3 failed iterations on the same issue, escalate to the user.
 
+## Preflight Check
+
+Before any dispatch, the orchestrator or package startup runs `scripts/preflight-task-check.sh`. The script distinguishes static registration, live-server registration, agent permission, enforcer state, and a real per-session tool call:
+
+- **PASS**: A real `task()` call succeeded and its session/message identifier was supplied as runtime-probe evidence. Proceed normally.
+- **UNKNOWN**: Static/configuration checks found no blocker, but no real call has been proved. Attempt one `task(subagent_type=...)` call and retain the returned session/message identifier. Registration alone is not proof.
+- **FAIL**: Agent permission denies a required target, a probed live server does not register `task`, the enforcer permits `call_omo_agent`, or the real `task()` call failed. Report `TASK_DISPATCH_UNAVAILABLE` and stop. Do not switch dispatch surfaces.
+
+`--server-url` (or `OPENCODE_SERVER_URL`) adds live server-registration evidence. A duplicate `task` ID is reported for diagnosis but is not itself a failure because OpenCode can expose a built-in and plugin implementation under the same name. Only a real call proves which implementation the current session can use.
+
 ## Fallbacks
 
 ### When `task()` is unavailable
 
 | Platform | Fallback |
 |----------|----------|
+| OpenCode | Stop with `TASK_DISPATCH_UNAVAILABLE`; fix runtime/tool surfacing. Do not fall back to `call_omo_agent()`. |
 | Claude Code | `@agent_name` or Task tool |
 | Codex CLI | Single-agent role adoption |
 | Copilot CLI | `@agent_name` |
 | Devin | Playbook reference |
-| OpenCode without OMO specialists | Orchestrator self-work with reduced independence noted |
-
-### `call_omo_agent()` (last resort only)
-
-`call_omo_agent()` is **not** a normal path. Use only when:
-
-1. `task()` is confirmed unavailable in the runtime, and
-2. Platform-native fallbacks above are also unavailable, and
-3. The call is marked `[FALLBACK — task() unavailable]` in the handoff log.
-
-Prefer self-work + reduced-independence note over inventing a second primary surface.
+| OpenCode without OMO specialists | Stop with `TASK_DISPATCH_UNAVAILABLE`; fix runtime/tool surfacing. |
 
 ## Enforcement
 
-- Canonical docs must not present `call_omo_agent()` as a primary dispatch tool.
-- `validate-package.py` fails packages that authorize `call_omo_agent()` as a primary path.
+- Canonical docs must not present `call_omo_agent()` as an OpenCode dispatch option, including ambiguous "primary path" wording that implies a fallback.
+- `validate-package.py` fails packages that authorize or imply any OpenCode `call_omo_agent()` fallback.
 - Runtime enforcer blocks `call_omo_agent` tool calls and redirects to `task(subagent_type=...)`.
+- `scripts/preflight-task-check.sh` parses real JSON/JSONC safely, evaluates required-target permissions, queries the live tool endpoint and effective agent permission (including `*` blanket rules and pattern ordering), verifies runtime evidence against the live server (child session exists, parentID matches, task-child metadata), and never treats registration as runtime proof.
+- `test_dispatch_contract.py` exercises 29 cases: preflight existence/executability, verdict types (PASS/FAIL/UNKNOWN), preflight documentation, dispatch-protocol forbidden wording, enforcer blocks call_omo_agent, no Oracle allowlist, stale fallback wording (canonical + generated), JSONC safety with `//` inside strings, explicit deny detection, runtime-evidence gate (missing/fail/pass-without-evidence), and 15 mock-server negative cases (bogus evidence, wrong parent, missing live task, duplicate registration, enforcer-not-blocking, wildcard-then-deny ordering, narrow-allow-vs-global-deny, no-parent-supplied, verified-evidence PASS, provider/model exact match, wrong provider, wrong model, no assistant message, message endpoint unreachable, title-lacks-markers crash safety).

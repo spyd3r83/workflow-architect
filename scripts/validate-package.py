@@ -241,10 +241,14 @@ def validate_package(package_path: str) -> dict:
         pkg / "agents" / "maintenance-orchestrator.md",
     ]
     dual_path_hits = []
+    forbidden_fallback_hits = []
+    task_dispatch_docs_present = False
     for f in dispatch_files:
         if not f.exists():
             continue
         text = f.read_text()
+        if "task(subagent_type" in text or "task()" in text:
+            task_dispatch_docs_present = True
         if "call_omo_agent" not in text:
             continue
         primary_markers = [
@@ -259,8 +263,18 @@ def validate_package(package_path: str) -> dict:
             "| `call_omo_agent()` | `hephaestus`",
             "| `call_omo_agent()` | `momus`",
         ]
+        fallback_markers = [
+            "call_omo_agent() (last resort only)",
+            "Use only when `task()` is confirmed unavailable",
+            "[FALLBACK — task() unavailable]",
+            "call_omo_agent() is forbidden as a primary path",
+            "as a primary path",
+            "last-resort fallback",
+        ]
         if any(m in text for m in primary_markers):
             dual_path_hits.append(str(f.relative_to(pkg)))
+        if any(m in text for m in fallback_markers):
+            forbidden_fallback_hits.append(str(f.relative_to(pkg)))
     check(
         "single_dispatch_primitive",
         len(dual_path_hits) == 0,
@@ -269,6 +283,37 @@ def validate_package(package_path: str) -> dict:
         else f"call_omo_agent authorized as primary path in: {dual_path_hits}",
         "Rewrite dispatch docs to task()-only; see dispatch-protocol.md"
         if dual_path_hits
+        else "",
+    )
+    check(
+        "no_call_omo_fallback_docs",
+        len(forbidden_fallback_hits) == 0,
+        "OpenCode dispatch docs fail hard on TASK_DISPATCH_UNAVAILABLE"
+        if not forbidden_fallback_hits
+        else f"call_omo_agent fallback still documented in: {forbidden_fallback_hits}",
+        "Remove call_omo_agent fallback language; require TASK_DISPATCH_UNAVAILABLE instead"
+        if forbidden_fallback_hits
+        else "",
+    )
+
+    canonical_pkg = (
+        Path(__file__).resolve().parents[1]
+        / "agent-packages"
+        / "workflow-designer-agent"
+    )
+    preflight_script = pkg / "scripts" / "preflight-task-check.sh"
+    repo_preflight_script = Path(__file__).resolve().parent / "preflight-task-check.sh"
+    preflight_present = preflight_script.exists() or (
+        pkg.resolve() == canonical_pkg.resolve() and repo_preflight_script.exists()
+    )
+    check(
+        "dispatch_preflight_present",
+        (not task_dispatch_docs_present) or preflight_present,
+        "preflight script present for task()-based dispatch"
+        if (not task_dispatch_docs_present) or preflight_present
+        else "task()-based dispatch documented but scripts/preflight-task-check.sh is missing",
+        "Add scripts/preflight-task-check.sh to packages that document task()-based dispatch"
+        if task_dispatch_docs_present and not preflight_present
         else "",
     )
 
