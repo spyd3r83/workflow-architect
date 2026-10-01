@@ -15,20 +15,43 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.4.2"
 
       - name: Install test dependencies
         run: |
           python -m pip install --upgrade pip
           python -m pip install pytest pyyaml
+          bun install --no-save @opencode-ai/plugin@1.18.33
 
-      - name: Unit and regression tests
-        run: python -m pytest agent-packages/workflow-designer-agent/tests -q
+      - name: Repository-contained Python tests
+        run: |
+          python -m pytest \
+            agent-packages/workflow-designer-agent/tests/test_regression.py \
+            agent-packages/workflow-designer-agent/tests/test_idempotency.py \
+            agent-packages/workflow-designer-agent/tests/test_frontmatter.py \
+            agent-packages/workflow-designer-agent/tests/test_sync_identity.py \
+            agent-packages/workflow-designer-agent/tests/test_harness_matrix.py \
+            -q
+          python -m pytest \
+            agent-packages/workflow-designer-agent/tests/test_dispatch_contract.py \
+            -k broad_rule \
+            -q
+          python -m unittest discover \
+            -s agent-packages/workflow-designer-agent/tests \
+            -p test_run_store.py
+
+      - name: Runtime plugin tests
+        run: bun test agent-packages/workflow-designer-agent/tests/runtime_plugin.test.ts
 
       - name: Validate meta-package
         run: python scripts/validate-package.py agent-packages/workflow-designer-agent
@@ -36,26 +59,29 @@ jobs:
       - name: Frontmatter scan repo harness
         run: python scripts/validate_frontmatter.py .
 
-      - name: Frontmatter scan generated-workflows tree (optional)
+      - name: Generated-workflow validation (optional)
         run: |
           if [ -d generated-workflows ]; then
             python scripts/validate_frontmatter.py generated-workflows --generated-tree
           else
-            echo "generated-workflows/ absent (gitignored) — skipping optional scan"
+            echo "generated-workflows/ absent (gitignored) — skipping generated integration validation"
           fi
 
-      - name: Backend generated package validation (optional)
-        run: |
+          if [ -d generated-workflows/network-infrastructure-execution-workflow/tests ]; then
+            python -m pytest generated-workflows/network-infrastructure-execution-workflow/tests -q
+            python scripts/validate-package.py generated-workflows/network-infrastructure-execution-workflow
+          else
+            echo "network generated workflow absent — skipping its integration suite"
+          fi
+
           if [ -d generated-workflows/backend-repo-maintenance-workflow ]; then
             python scripts/validate-package.py generated-workflows/backend-repo-maintenance-workflow
           else
-            echo "generated-workflows/backend-repo-maintenance-workflow absent — skipping optional validation"
+            echo "backend generated workflow absent — skipping its package validation"
           fi
 
-      - name: Backend generated self-verification (optional)
-        run: |
           if [ -d generated-workflows/backend-repo-maintenance-workflow/tests ]; then
             python -m pytest generated-workflows/backend-repo-maintenance-workflow/tests/test_self_verification.py -q
           else
-            echo "generated-workflows backend tests absent — skipping optional self-verification"
+            echo "backend generated workflow tests absent — skipping self-verification"
           fi
