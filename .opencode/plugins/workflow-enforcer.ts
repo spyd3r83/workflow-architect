@@ -1,5 +1,5 @@
-import type { Plugin } from "@opencode-ai/plugin"
-import { tool } from "@opencode-ai/plugin"
+import type { Plugin } from "../node_modules/@opencode-ai/plugin/dist/index.js"
+import { tool } from "../node_modules/@opencode-ai/plugin/dist/index.js"
 import { existsSync, realpathSync, openSync, closeSync, constants } from "node:fs"
 import { join, isAbsolute } from "node:path"
 import { execFileSync, execFile } from "node:child_process"
