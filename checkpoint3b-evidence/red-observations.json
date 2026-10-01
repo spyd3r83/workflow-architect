@@ -1,0 +1,10 @@
+{
+  "review_provenance": "User-supplied F1-F7 summary; session_read returned Session not found for ses_f09259c2affefTD8qrTCbzqMYZ",
+  "executed_red": [
+    "Six lifecycle tests errored before run_operator existed",
+    "Actual-shell test_tool_end_cannot_consume_dispatch_effect failed: tool-end consumed parent dispatch ID",
+    "Actual-shell test_network_retry_cannot_reuse_completed_receipt failed: old receipt passed after fail/reopen",
+    "Typed-lifecycle test_network_old_attempt_receipt_denied failed before network phase-attempt fix"
+  ],
+  "scope": "F1/F2/F7 core and F6 operator path; F3/F4/F5 remain pending. No final package-wide review."
+}

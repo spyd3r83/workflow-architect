@@ -1,0 +1,14 @@
+{
+  "source": "Recorded from the completed synchronous terminal tool result; no live host activation",
+  "commands": [
+    {"command": "python3 -B -m unittest discover -s agent-packages/workflow-designer-agent/tests -p test_run_store.py", "passed": 24, "failed": 0},
+    {"command": "python3 -B -m unittest discover -s agent-packages/workflow-designer-agent/tests -p test_effect_lifecycle.py", "passed": 20, "failed": 0},
+    {"command": "python3 -B -m unittest discover -s agent-packages/workflow-designer-agent/tests -p test_runtime_paths.py", "passed": 17, "failed": 0},
+    {"command": "bun test agent-packages/workflow-designer-agent/tests/runtime_plugin.test.ts", "passed": 15, "failed": 0, "assertions": 22}
+  ],
+  "red_observations": [
+    "F3: eight failing target/read/symlink subcases before mediation",
+    "F5: missing pin_action before exact-action implementation",
+    "F4: actual old installed plugin failed five new success/lifecycle cases; updated installed candidate passed all fifteen"
+  ]
+}

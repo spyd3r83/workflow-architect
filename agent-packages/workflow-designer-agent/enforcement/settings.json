@@ -1,0 +1,8 @@
+{
+  "hooks": {
+    "PreToolUse": [{"matcher": "*", "hooks": [{"type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/enforcement/dispatch-gate-hook.sh\"", "timeout": 10}]}],
+    "PostToolUse": [{"matcher": "*", "hooks": [{"type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/enforcement/dispatch-gate-hook.sh\"", "timeout": 10}]}],
+    "PostToolUseFailure": [{"matcher": "*", "hooks": [{"type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/enforcement/dispatch-gate-hook.sh\"", "timeout": 10}]}],
+    "PreCompact": [{"matcher": "*", "hooks": [{"type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/enforcement/dispatch-gate-hook.sh\"", "timeout": 10}]}]
+  }
+}

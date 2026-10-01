@@ -1,0 +1,61 @@
+name: enterprise-validation
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pytest pyyaml
+
+      - name: Unit and regression tests
+        run: python -m pytest agent-packages/workflow-designer-agent/tests -q
+
+      - name: Validate meta-package
+        run: python scripts/validate-package.py agent-packages/workflow-designer-agent
+
+      - name: Frontmatter scan repo harness
+        run: python scripts/validate_frontmatter.py .
+
+      - name: Frontmatter scan generated-workflows tree (optional)
+        run: |
+          if [ -d generated-workflows ]; then
+            python scripts/validate_frontmatter.py generated-workflows --generated-tree
+          else
+            echo "generated-workflows/ absent (gitignored) — skipping optional scan"
+          fi
+
+      - name: Backend generated package validation (optional)
+        run: |
+          if [ -d generated-workflows/backend-repo-maintenance-workflow ]; then
+            python scripts/validate-package.py generated-workflows/backend-repo-maintenance-workflow
+          else
+            echo "generated-workflows/backend-repo-maintenance-workflow absent — skipping optional validation"
+          fi
+
+      - name: Backend generated self-verification (optional)
+        run: |
+          if [ -d generated-workflows/backend-repo-maintenance-workflow/tests ]; then
+            python -m pytest generated-workflows/backend-repo-maintenance-workflow/tests/test_self_verification.py -q
+          else
+            echo "generated-workflows backend tests absent — skipping optional self-verification"
+          fi

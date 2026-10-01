@@ -1,0 +1,14 @@
+{
+  "main_files_changed": [],
+  "snapshot_drift": [],
+  "status_equal": true,
+  "main_head": "57fe1421573d0e3fa2aea404db15e1ba3db7c32d",
+  "candidate_head": "57fe1421573d0e3fa2aea404db15e1ba3db7c32d",
+  "core_helper_loc_breaches": [],
+  "candidate_hashes": {
+    "agent-packages/workflow-designer-agent/enforcement/run_store.py": "de5c482e3bec967c49c35421fbb125baabf109f7f96a62476fe4f20018f334fb",
+    "agent-packages/workflow-designer-agent/tests/test_run_store.py": "87e7d13be21cdb0ad64d41696b4a55299a6b699021f65e0253c380cf56dd0da4",
+    "RUN-SCOPED-HANDOFF-PROGRESS.md": "e785314ff66a4779f7c8c6cd9302cc1708ca5b1b078804f6d898b48bd7793f25"
+  },
+  "verified_at": "2026-10-01T09:22:22.367225+00:00"
+}

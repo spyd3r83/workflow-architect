@@ -1,0 +1,8 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.5, pytest-9.1.1, pluggy-1.6.0
+rootdir: /home/jfi/GitHub/workflow-architect-run-scoped-handoff/generated-workflows/network-infrastructure-execution-workflow
+collected 5 items / 3 deselected / 2 selected
+
+tests/test_enforcement_alignment.py ..                                   [100%]
+
+======================= 2 passed, 3 deselected in 0.03s ========================

@@ -1,0 +1,35 @@
+[
+  {
+    "name": "workflow-architect-run-scoped-handoff: missing binding/state/config denies write",
+    "expected": "explicit denial",
+    "exit_code": 0,
+    "stdout": "allow",
+    "stderr": "",
+    "red": true
+  },
+  {
+    "name": "network-infrastructure-execution-workflow: missing binding/state/config denies write",
+    "expected": "explicit denial",
+    "exit_code": 0,
+    "stdout": "allow",
+    "stderr": "",
+    "red": true
+  },
+  {
+    "name": "actual Claude hook: missing enforcement script denies write",
+    "expected": "deny decision, not empty success",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "",
+    "red": true
+  },
+  {
+    "name": "stale owner callback must leave state unchanged",
+    "expected": "denial and byte-identical state",
+    "exit_code": 0,
+    "stdout": "Dispatch failure recorded. Mutating tools blocked until fail_gate is called.",
+    "stderr": "",
+    "red": true,
+    "state_changed": true
+  }
+]

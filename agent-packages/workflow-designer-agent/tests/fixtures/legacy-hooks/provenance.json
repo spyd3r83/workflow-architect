@@ -1,0 +1,12 @@
+{
+  "root": {
+    "source": ".claude/settings.json",
+    "sha256": "f2e36a97dc75f1a54dfebfba95b0a8941d9bf5016c3e78e217938df1e728afcb",
+    "fixture": "root.json"
+  },
+  "network": {
+    "source": "generated-workflows/network-infrastructure-execution-workflow/.claude/settings.json",
+    "sha256": "5ee6e01de4e77d8b545aeba53f6aaef7ee5dfa28449bc173d9371a9dd845127c",
+    "fixture": "network.json"
+  }
+}

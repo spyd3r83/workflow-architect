@@ -1,0 +1,9 @@
+{
+  "main_changed": [],
+  "main_status_equal": true,
+  "main_head": "57fe1421573d0e3fa2aea404db15e1ba3db7c32d",
+  "candidate_head": "57fe1421573d0e3fa2aea404db15e1ba3db7c32d",
+  "live_fixture_subprocess_pids": [],
+  "python_size_findings": 0,
+  "verified_at": "2026-10-01T11:01:16.193090+00:00"
+}

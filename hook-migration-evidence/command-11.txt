@@ -1,0 +1,9 @@
+  Enforcement: complete run-scoped runtime; local phase/specialist policy preserved
+  Enforcement: complete run-scoped runtime; local phase/specialist policy preserved
+  Enforcement: complete run-scoped runtime; local phase/specialist policy preserved
+  Enforcement: complete run-scoped runtime; local phase/specialist policy preserved
+...................
+----------------------------------------------------------------------
+Ran 19 tests in 6.525s
+
+OK

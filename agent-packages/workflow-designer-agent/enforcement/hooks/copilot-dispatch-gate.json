@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "type": "command",
+        "bash": "bash scripts/enforcement/dispatch-gate-hook.sh",
+        "timeoutSec": 10
+      }
+    ],
+    "postToolUse": [
+      {
+        "type": "command",
+        "bash": "bash scripts/enforcement/dispatch-gate-hook.sh",
+        "timeoutSec": 10
+      }
+    ]
+  }
+}

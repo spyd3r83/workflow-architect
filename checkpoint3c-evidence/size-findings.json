@@ -1,0 +1,92 @@
+[
+  {
+    "path": "agent-packages/workflow-designer-agent/enforcement/run_hook.py",
+    "function": "after",
+    "nonblank_lines": 45,
+    "budget": 40
+  },
+  {
+    "path": "agent-packages/workflow-designer-agent/enforcement/run_effects.py",
+    "function": "current",
+    "nonblank_lines": 25,
+    "budget": 20
+  },
+  {
+    "path": "agent-packages/workflow-designer-agent/enforcement/run_effects.py",
+    "function": "begin",
+    "nonblank_lines": 23,
+    "budget": 20
+  },
+  {
+    "path": "agent-packages/workflow-designer-agent/enforcement/run_effects.py",
+    "function": "make_record",
+    "nonblank_lines": 39,
+    "budget": 20
+  },
+  {
+    "path": "agent-packages/workflow-designer-agent/enforcement/run_effects.py",
+    "function": "identity",
+    "nonblank_lines": 29,
+    "budget": 20
+  },
+  {
+    "path": "agent-packages/workflow-designer-agent/enforcement/run_effects.py",
+    "function": "matching_proof",
+    "nonblank_lines": 24,
+    "budget": 20
+  },
+  {
+    "path": "agent-packages/workflow-designer-agent/enforcement/run_effects.py",
+    "function": "permit_completion",
+    "nonblank_lines": 25,
+    "budget": 20
+  },
+  {
+    "path": "agent-packages/workflow-designer-agent/enforcement/run_effects.py",
+    "function": "complete",
+    "nonblank_lines": 22,
+    "budget": 20
+  },
+  {
+    "path": "agent-packages/workflow-designer-agent/enforcement/run_cli.py",
+    "function": "run_program",
+    "nonblank_lines": 27,
+    "budget": 20
+  },
+  {
+    "path": "agent-packages/workflow-designer-agent/enforcement/run_policy.py",
+    "function": "check",
+    "nonblank_lines": 41,
+    "budget": 40
+  },
+  {
+    "path": "agent-packages/workflow-designer-agent/enforcement/run_policy.py",
+    "function": "patch_targets",
+    "nonblank_lines": 22,
+    "budget": 20
+  },
+  {
+    "path": "agent-packages/workflow-designer-agent/enforcement/run_policy.py",
+    "function": "mediate_targets",
+    "nonblank_lines": 21,
+    "budget": 20
+  },
+  {
+    "path": "agent-packages/workflow-designer-agent/enforcement/run_policy.py",
+    "function": "exact_action",
+    "nonblank_lines": 26,
+    "budget": 20
+  },
+  {
+    "path": "agent-packages/workflow-designer-agent/enforcement/run_policy.py",
+    "function": "validate_action_definition",
+    "nonblank_lines": 39,
+    "budget": 20
+  },
+  {
+    "path": "agent-packages/workflow-designer-agent/enforcement/run_policy.py",
+    "function": "approved_action",
+    "nonblank_lines": 23,
+    "budget": 20
+  }
+]

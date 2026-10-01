@@ -1,0 +1,20 @@
+# Improvement snapshots (created by /update)
+.improvement-snapshot/
+
+# Validation reports (generated per run)
+validation-report.json
+
+# Generated workflow packages
+generated-workflows/
+
+# OpenCode runtime session registry and workflow state
+.opencode/omo-session-registry.json
+.opencode/workflow-state.json
+
+# Generated enforcement artifacts (produced by sync-platform-configs.py)
+scripts/enforcement/workflow-enforce.sh
+.opencode/workflow-config.json
+
+# Python
+__pycache__/
+*.pyc

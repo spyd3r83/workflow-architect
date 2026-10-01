@@ -1,0 +1,9 @@
+{
+  "command": "python3 -B -m unittest discover -s agent-packages/workflow-designer-agent/tests -p test_run_store.py",
+  "observations": [
+    {"stage": "before core implementation", "tests": 12, "errors": 12, "reason": "run_store.py absent; FileNotFoundError"},
+    {"stage": "after initial green, added negative requirements", "tests": 18, "failures": 2, "cases": ["corrupt pointer overwritten by admission", "retired run ID reused"]},
+    {"stage": "before session binding implementation", "tests": 22, "errors": 2, "reason": "bind and bound methods absent"}
+  ],
+  "limits": "Recorded from actual tool output, not a saved raw log. Initial missing-module RED establishes missing capability, not a baseline behavioral failure. Checkpoint1 contains existing-runtime behavioral RED evidence."
+}

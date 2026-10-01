@@ -1,0 +1,48 @@
+{
+  "review": {
+    "status": "PASS",
+    "scope": "Independent focused QC and adversarial review of the exact manifest",
+    "session": "ses_f09259c2affefTD8qrTCbzqMYZ",
+    "provenance": "Controller/user-supplied final approval; full session not independently fetched by writer",
+    "manifest_sha256": "712bd809162ace0b39da125e232949343811c0c525be784c9130422066a50f62",
+    "entries_verified_by_reviewer": 405,
+    "mandatory_findings_remaining": 0
+  },
+  "bookkeeping_scope": "Progress-only append plus this separate final receipt; no reviewed implementation changes",
+  "verification": {
+    "checked_at": "2026-10-01T12:14:15.717101+00:00",
+    "reviewed_manifest_unchanged": true,
+    "reviewed_entries": 405,
+    "unchanged_reviewed_entries": 404,
+    "only_changed_reviewed_path": "RUN-SCOPED-HANDOFF-PROGRESS.md",
+    "reviewed_progress_sha256": "196e0b4d0e5733b6cadae2e4c798b41c7123f4a4053619235da54d637cbad200",
+    "current_progress_sha256": "06c181aa34db583508ec029ab6bd1ed3fb9ceae233e0b62ba5d223bd6c752a69",
+    "appended_progress_delta_sha256": "03b3b75decab81d17cc814ed24e5aa56c72c26e8d186f8b00e219ae46f46fe7e",
+    "main_changed_paths": [],
+    "main_status_matches_checkpoint1": true,
+    "main_head": "57fe1421573d0e3fa2aea404db15e1ba3db7c32d",
+    "candidate_head": "57fe1421573d0e3fa2aea404db15e1ba3db7c32d",
+    "main_branch": "feat/harness-matrix",
+    "candidate_branch": "fix/run-scoped-workflow-handoff",
+    "candidate_git_diff_check_exit": 0,
+    "tests_rerun": false
+  },
+  "final_working_tree_counts": {"changed_tracked": 105, "untracked": 230, "ignored": 649, "staged": 0},
+  "reviewed_manifest_counts": {"tracked": 105, "untracked": 226, "ignored": 74},
+  "reviewed_purpose_counts": {"code-and-tests": 42, "docs": 33, "generated": 221, "evidence": 109},
+  "baseline_imports_separately_enumerated": 637,
+  "exact_inventory": "hook-migration-evidence/file-inventory.json",
+  "production_path_groups": [
+    "scripts/sync-platform-configs.py",
+    "scripts/validate-package.py",
+    "agent-packages/workflow-designer-agent/enforcement/",
+    "agent-packages/workflow-designer-agent/agents/",
+    "agent-packages/workflow-designer-agent/templates/",
+    "agent-packages/workflow-designer-agent/commands/",
+    "agent-packages/workflow-designer-agent/prompts/generate-new-agent-package.md",
+    "generated-workflows/network-infrastructure-execution-workflow/enforcement/network_policy.py",
+    "Generated platform and scripts/enforcement copies at root, canonical package and network package only"
+  ],
+  "rollback": "Do not promote the isolated candidate. No live migration occurred; no destructive cleanup is required or authorized.",
+  "release_authority": "None; no staging, commit, install, activation or release authorized"
+}
