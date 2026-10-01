@@ -9,6 +9,24 @@ REPO = Path(__file__).resolve().parents[3]
 PKG = REPO / "agent-packages" / "workflow-designer-agent"
 
 
+class BindingContractValidatorTests(unittest.TestCase):
+    def test_broad_rule_rejected_even_with_leaf_exception_elsewhere(self):
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location(
+            "validator", REPO / "scripts/validate-package.py"
+        )
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        text = "Assigned leaves execute bounded work.\n\nIf task() is unavailable, return TASK_DISPATCH_UNAVAILABLE and stop."
+        self.assertTrue(module.broad_dispatch_stops(text))
+        self.assertFalse(
+            module.broad_dispatch_stops(
+                "If coordinator task() is unavailable, stop dispatch. Assigned task:false leaves continue their handoff."
+            )
+        )
+
+
 class DispatchContractTests(unittest.TestCase):
     def test_preflight_script_exists(self):
         preflight = REPO / "scripts" / "preflight-task-check.sh"

@@ -6,6 +6,8 @@ This command re-runs validation, checks source staleness, and updates a previous
 
 ## Instructions
 
+Follow `run-binding.md`. Maintenance requires the exact persisted workspace/run/session binding and owner/epoch/version CAS. Do not infer a run from a package name, parent or latest pointer.
+
 You are the Workflow Designer Agent (quality-reviewer + domain-researcher). Maintain an existing workflow package.
 
 ### Arguments

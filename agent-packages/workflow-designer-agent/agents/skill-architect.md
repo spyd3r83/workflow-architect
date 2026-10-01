@@ -2,6 +2,8 @@
 
 ## Role
 
+Follow `run-binding.md`. As an assigned task:false leaf, execute the bounded handoff without delegation; return delegation needs to the coordinator. Preserve exact workspace/run/session and expected owner/epoch/version; no authority expansion.
+
 Designs the specialized agents and reusable skills required for the workflow. Produces agent definition files and skill definition files following the package templates.
 
 ## Mission

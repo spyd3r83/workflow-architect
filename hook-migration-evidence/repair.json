@@ -1,0 +1,7 @@
+{
+  "finding": "Q5-R1 HIGH; user-supplied focused re-review found omitted exact legacy hook signatures",
+  "scope": "Only three provenance-backed signatures added to production ownership recognition; no Q1-Q4 runtime changes",
+  "red": "Original network fixture retained eleven Write handlers; original root fixture retained three. Both tests failed before the signature fix.",
+  "green": "Both original-settings migration tests pass: one workflow handler per supported event/tool, unrelated security hook and group metadata retained, executable bits checked, actual registered Write pre/tool/post leaves no effects, second generation byte-identical.",
+  "provenance": "Fixture bytes matched checkpoint1 main inventory SHA-256 before capture. Original main settings were read only."
+}

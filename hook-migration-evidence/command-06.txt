@@ -1,0 +1,121 @@
+
+============================================================
+VALIDATION REPORT: /home/jfi/GitHub/workflow-architect-run-scoped-handoff/agent-packages/workflow-designer-agent
+============================================================
+
+Summary: 55 passed, 0 failed, 55 total
+Overall: PASS
+
+  [PASS] file_exists:README.md
+        README.md present
+  [PASS] file_exists:AGENTS.md
+        AGENTS.md present
+  [PASS] file_exists:workflow.md
+        workflow.md present
+  [PASS] file_exists:dispatch-protocol.md
+        dispatch-protocol.md present
+  [PASS] file_exists:intake.md
+        intake.md present
+  [PASS] file_exists:research-protocol.md
+        research-protocol.md present
+  [PASS] file_exists:quality-control.md
+        quality-control.md present
+  [PASS] file_exists:red-team-review.md
+        red-team-review.md present
+  [PASS] file_exists:package-output-spec.md
+        package-output-spec.md present
+  [PASS] file_exists:implementation-guide.md
+        implementation-guide.md present
+  [PASS] file_exists:fmea.md
+        fmea.md present
+  [PASS] file_exists:traceability-matrix.md
+        traceability-matrix.md present
+  [PASS] file_exists:reliability-plan.md
+        reliability-plan.md present
+  [PASS] file_exists:source-log.md
+        source-log.md present
+  [PASS] file_exists:requirements.md
+        requirements.md present
+  [PASS] file_exists:improvement-protocol.md
+        improvement-protocol.md present
+  [PASS] file_exists:CHANGELOG.md
+        CHANGELOG.md present
+  [PASS] file_exists:defect-patterns.md
+        defect-patterns.md present
+  [PASS] agents_dir_exists
+        9 agent files found
+  [PASS] agent_sections:workflow-orchestrator.md
+        All 10 sections present
+  [PASS] agent_sections:domain-researcher.md
+        All 10 sections present
+  [PASS] agent_sections:workflow-architect.md
+        All 10 sections present
+  [PASS] agent_sections:red-team-reviewer.md
+        All 10 sections present
+  [PASS] agent_sections:implementation-planner.md
+        All 10 sections present
+  [PASS] agent_sections:final-packager.md
+        All 10 sections present
+  [PASS] agent_sections:skill-architect.md
+        All 10 sections present
+  [PASS] agent_sections:intake-analyst.md
+        All 10 sections present
+  [PASS] agent_sections:quality-reviewer.md
+        All 10 sections present
+  [PASS] skills_dir_exists
+        10 skill files found
+  [PASS] skill_sections:source-validation.md
+        All 8 sections present
+  [PASS] skill_sections:domain-research.md
+        All 8 sections present
+  [PASS] skill_sections:workflow-sequencing.md
+        All 8 sections present
+  [PASS] skill_sections:skill-design.md
+        All 8 sections present
+  [PASS] skill_sections:final-packaging.md
+        All 8 sections present
+  [PASS] skill_sections:agent-design.md
+        All 8 sections present
+  [PASS] skill_sections:file-structure-design.md
+        All 8 sections present
+  [PASS] skill_sections:red-team-analysis.md
+        All 8 sections present
+  [PASS] skill_sections:qa-validation.md
+        All 8 sections present
+  [PASS] skill_sections:objective-decomposition.md
+        All 8 sections present
+  [PASS] templates_dir_exists
+        19 template files found
+  [PASS] required_templates_present
+        All 19 required templates present
+  [PASS] single_dispatch_primitive
+        Dispatch protocol uses task()-only
+  [PASS] role_scoped_dispatch_contract
+        No broad task-unavailable stop rules
+  [PASS] no_empty_files
+        No empty files
+  [PASS] citation_format_compliance
+        5 properly formatted citations found
+  [PASS] cross_references_resolve
+        All cross-references resolve
+  [PASS] vague_verbs_in_agents
+        No vague verbs in agent files
+  [PASS] assumptions_tagged
+        92 tagged assumptions found across package
+  [PASS] fmea_structure
+        FMEA has RPN: True, severity: True, mitigation: True
+  [PASS] traceability_structure
+        Has requirement IDs: True, verification: True
+  [PASS] requirements_structure
+        Has requirement IDs: True, acceptance criteria: True
+  [PASS] source_log_structure
+        Has retrieval IDs: True
+  [PASS] frontmatter_yaml_valid
+        frontmatter files=112 ok=112 fail=0
+  [PASS] generated_workflows_frontmatter
+        packages_pass=1 packages_fail=0
+  [PASS] harness_matrix_exists
+        harness-compatibility-matrix.md present
+        Fix: Create harness-compatibility-matrix.md documenting per-harness runtime/static status
+
+Report saved to: /home/jfi/GitHub/workflow-architect-run-scoped-handoff/agent-packages/workflow-designer-agent/validation-report.json

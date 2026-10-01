@@ -22,11 +22,13 @@ workflow-orchestrator (coordinator)
   └── final-packager          (assembles final package + summary)
 ```
 
-The orchestrator is the only agent that talks to the user. All other agents communicate through the orchestrator via structured `task()` dispatch calls (package agents and OMO specialists alike). `call_omo_agent()` is forbidden as a primary path. See `dispatch-protocol.md`.
+The orchestrator is the only agent that talks to the user and dispatches using task() only. Assigned leaves execute scoped handoffs and return results without requiring delegation tools. `call_omo_agent()` is forbidden. See `dispatch-protocol.md` and `run-binding.md`.
 
 ## Collaboration Model
 
 ### Handoff Protocol
+
+Every command and handoff follows `run-binding.md`: explicit immutable workspace, run_id, session_id, owner, owner_epoch, expected state_version, phase and dispatch ID. No implicit initialization or inferred resume. Only the coordinator requires task() to delegate; assigned leaves with task:false perform their bounded work and return delegation needs without gaining authority.
 
 Every agent handoff includes:
 

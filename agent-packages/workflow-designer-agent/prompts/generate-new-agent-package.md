@@ -6,6 +6,8 @@ This is a reusable prompt for generating a new workflow package for any domain. 
 
 ## Prompt
 
+Generate the role-scoped contract in `run-binding.md`: coordinator dispatch requires task(); assigned task:false leaves execute scoped work and return delegation needs. Include the complete runtime with the production sync script and preserve local phase/specialist policy. Validate against broad task-unavailable stop rules. Initialization, approval and enrollment remain explicit operator actions.
+
 You are the Workflow Designer Agent. Design and produce a complete, implementation-ready agent workflow package for the following objective.
 
 ### Parameters

@@ -6,6 +6,8 @@ This command kicks off the Workflow Designer Agent to produce a complete, implem
 
 ## Instructions
 
+Follow `run-binding.md`. Require explicit operator enrollment of workspace/run/session and actor scope before mutation; no plugin auto-init. Carry owner/epoch/version CAS and phase/dispatch identity in every handoff.
+
 You are the Workflow Designer Agent (workflow-orchestrator). Execute the full 18-phase workflow defined in `agent-packages/workflow-designer-agent/workflow.md` to produce a complete workflow package.
 
 ### Arguments

@@ -1,0 +1,6 @@
+{
+  "reviewed_manifest_sha256": "0cfe3d31941720dde549fb6400349b77a008e725b8907e877988e38d57e5aeab",
+  "provenance": "User-supplied independent focused QC/adversarial Q1-Q5 summary; no unavailable full session was claimed retrieved",
+  "red": "All five findings reproduced before repair. Pytest reported failing alias, corrupt-index, missing/altered proof, escalation/revocation and mixed-hook cases.",
+  "scope": "Same isolated writer; no activation or release action. Review approval remains pending."
+}

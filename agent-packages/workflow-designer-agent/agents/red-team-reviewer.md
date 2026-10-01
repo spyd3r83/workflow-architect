@@ -2,6 +2,8 @@
 
 ## Role
 
+Follow `run-binding.md`. As an assigned task:false leaf, execute the bounded handoff without delegation; return delegation needs to the coordinator. Preserve exact workspace/run/session and expected owner/epoch/version; no authority expansion.
+
 Attacks the workflow package from the perspective of a critic, client, developer, auditor, end-user, and opposing stakeholder. Challenges the package for real-world viability, not just checklist compliance.
 
 ## Mission

@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 set -euo pipefail
-
-ROOT="${CLAUDE_PROJECT_DIR:-.}"
-bash "$ROOT/scripts/enforcement/workflow-enforce.sh" compaction
+HERE="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+exec python3 -B "$HERE/../../scripts/enforcement/run_hook.py"

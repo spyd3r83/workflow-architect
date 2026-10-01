@@ -1,0 +1,71 @@
+[
+  {
+    "command": [
+      "/usr/bin/python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "agent-packages/workflow-designer-agent/tests",
+      "-p",
+      "test_run_store.py"
+    ],
+    "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff",
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/usr/bin/python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "agent-packages/workflow-designer-agent/tests",
+      "-p",
+      "test_effect_lifecycle.py"
+    ],
+    "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff",
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/usr/bin/python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "agent-packages/workflow-designer-agent/tests",
+      "-p",
+      "test_runtime_paths.py"
+    ],
+    "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff",
+    "returncode": 0
+  },
+  {
+    "command": [
+      "bun",
+      "test",
+      "agent-packages/workflow-designer-agent/tests/runtime_plugin.test.ts"
+    ],
+    "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff",
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/usr/bin/python3",
+      "-B",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "tests/test_enforcement_alignment.py",
+      "-k",
+      "enforcement_alignment_passes or workflow_configs_match"
+    ],
+    "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff/generated-workflows/network-infrastructure-execution-workflow",
+    "returncode": 0
+  }
+]

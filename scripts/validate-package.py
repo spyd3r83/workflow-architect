@@ -111,6 +111,44 @@ def find_cross_references(filepath: Path) -> list[str]:
     return refs
 
 
+def broad_dispatch_stops(text):
+    hits = []
+    for paragraph in re.split(r"\n\s*\n", text):
+        for sentence in re.split(r"(?<=[.!?])\s+", paragraph.replace("\n", " ")):
+            line = sentence.lower().replace("`", "")
+            unavailable = "task" in line and (
+                "unavailable" in line or "missing" in line
+            )
+            stop = re.search(r"\b(stop|halt|abort)\b", line)
+            exempt = (
+                "coordinator" in line
+                or "does not stop" in line
+                or "do not stop" in line
+            )
+            if unavailable and stop and not exempt:
+                hits.append(sentence[:220])
+    return hits
+
+
+def dispatch_contract_files(pkg):
+    files = [
+        pkg / name for name in ["AGENTS.md", "workflow.md", "dispatch-protocol.md"]
+    ]
+    for directory in [
+        "agents",
+        "commands",
+        "templates",
+        ".opencode/agents",
+        ".claude/agents",
+        ".github/agents",
+        ".codex/agents",
+        ".devin/agents",
+    ]:
+        files.extend((pkg / directory).rglob("*.md"))
+        files.extend((pkg / directory).rglob("*.toml"))
+    return [path for path in files if path.is_file()]
+
+
 def validate_package(package_path: str) -> dict:
     pkg = Path(package_path)
     results = {
@@ -269,6 +307,22 @@ def validate_package(package_path: str) -> dict:
         else f"call_omo_agent authorized as primary path in: {dual_path_hits}",
         "Rewrite dispatch docs to task()-only; see dispatch-protocol.md"
         if dual_path_hits
+        else "",
+    )
+
+    contradictions = [
+        str(f.relative_to(pkg))
+        for f in dispatch_contract_files(pkg)
+        if broad_dispatch_stops(f.read_text())
+    ]
+    check(
+        "role_scoped_dispatch_contract",
+        not contradictions,
+        "No broad task-unavailable stop rules"
+        if not contradictions
+        else str(contradictions),
+        "Scope dispatch-stop rules to coordinators; assigned task:false leaves execute bounded handoffs"
+        if contradictions
         else "",
     )
 

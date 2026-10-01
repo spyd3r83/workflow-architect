@@ -1,5 +1,13 @@
 # Workflow Designer Agent
 
+## Run-scoped repair candidate
+
+Follow `run-binding.md` for immutable workspace/run/session binding, operator enrollment and exact-action authority. Only coordinators need delegation tools; task:false leaves execute assigned work without gaining authority. The legacy singleton is not current runtime authority.
+
+Production generation is owned by `scripts/sync-platform-configs.py`: run its default mode for root adapters, `--package agent-packages/workflow-designer-agent` for package-local adapters, and `--package <package> --runtime-source <canonical-enforcement-dir>` for an explicitly authorized shared-runtime refresh. Local specialist policy/config and existing preflight scripts are retained. Generation never initializes state. Two-pass byte stability and actual runtime tests are required before review.
+
+Native OpenCode and Claude file-hook tests are scoped evidence, not live activation or OMO/replacement-provider certification. See `enforcement.md` and `run-binding.md` for unsupported adapters, bounded retention, filesystem assumptions and human approval requirements.
+
 A reusable meta-agent package that designs domain-specific agent workflows on demand. Give it a project objective; it returns a complete, implementation-ready agent workflow package.
 
 ## What This Is

@@ -1,0 +1,157 @@
+ M .agents/skills/file-structure-design/SKILL.md
+ M .agents/skills/final-packaging/SKILL.md
+ M .claude/agents/workflow-orchestrator.md
+ M .claude/commands/flowstart.md
+ M .claude/commands/maintain.md
+ M .claude/commands/update.md
+ M .claude/settings.json
+ M .codex/agents/workflow-orchestrator.toml
+ M .codex/commands/flowstart.md
+ M .codex/commands/maintain.md
+ M .codex/commands/update.md
+ M .devin/agents/workflow-orchestrator/AGENT.md
+ M .github/agents/workflow-orchestrator.agent.md
+ M .github/commands/flowstart.md
+ M .github/commands/maintain.md
+ M .github/commands/update.md
+ M .opencode/agents/workflow-orchestrator.md
+ M .opencode/commands/flowstart.md
+ M .opencode/commands/maintain.md
+ M .opencode/commands/update.md
+ M AGENTS.md
+ M agent-packages/workflow-designer-agent/AGENTS.md
+ M agent-packages/workflow-designer-agent/agents/workflow-orchestrator.md
+ M agent-packages/workflow-designer-agent/commands/flowstart.md
+ M agent-packages/workflow-designer-agent/commands/maintain.md
+ M agent-packages/workflow-designer-agent/commands/update.md
+ M agent-packages/workflow-designer-agent/dispatch-protocol.md
+ M agent-packages/workflow-designer-agent/harness-compatibility-matrix.md
+ M agent-packages/workflow-designer-agent/improvement-protocol.md
+ M agent-packages/workflow-designer-agent/package-output-spec.md
+ M agent-packages/workflow-designer-agent/prompts/generate-new-agent-package.md
+ M agent-packages/workflow-designer-agent/skills/file-structure-design.md
+ M agent-packages/workflow-designer-agent/skills/final-packaging.md
+ M agent-packages/workflow-designer-agent/templates/agent-file-template.md
+ M agent-packages/workflow-designer-agent/templates/final-summary-template.md
+ M agent-packages/workflow-designer-agent/templates/platform-config-template.md
+ M agent-packages/workflow-designer-agent/templates/workflow-package-template.md
+ M agent-packages/workflow-designer-agent/tests/test_dispatch_contract.py
+ M agent-packages/workflow-designer-agent/tests/test_harness_matrix.py
+ M agent-packages/workflow-designer-agent/workflow.md
+ M flowstart.devin.md
+ M maintain.devin.md
+ M opencode.json
+ M scripts/sync-platform-configs.py
+ M scripts/validate-package.py
+ M update.devin.md
+?? .codex/hooks.json
+?? .devin/hooks.v1.json
+?? .github/hooks/dispatch-gate.json
+?? agent-packages/workflow-designer-agent/.agents/skills/agent-design/SKILL.md
+?? agent-packages/workflow-designer-agent/.agents/skills/domain-research/SKILL.md
+?? agent-packages/workflow-designer-agent/.agents/skills/file-structure-design/SKILL.md
+?? agent-packages/workflow-designer-agent/.agents/skills/final-packaging/SKILL.md
+?? agent-packages/workflow-designer-agent/.agents/skills/objective-decomposition/SKILL.md
+?? agent-packages/workflow-designer-agent/.agents/skills/qa-validation/SKILL.md
+?? agent-packages/workflow-designer-agent/.agents/skills/red-team-analysis/SKILL.md
+?? agent-packages/workflow-designer-agent/.agents/skills/skill-design/SKILL.md
+?? agent-packages/workflow-designer-agent/.agents/skills/source-validation/SKILL.md
+?? agent-packages/workflow-designer-agent/.agents/skills/workflow-sequencing/SKILL.md
+?? agent-packages/workflow-designer-agent/.claude/agents/domain-researcher.md
+?? agent-packages/workflow-designer-agent/.claude/agents/final-packager.md
+?? agent-packages/workflow-designer-agent/.claude/agents/implementation-planner.md
+?? agent-packages/workflow-designer-agent/.claude/agents/intake-analyst.md
+?? agent-packages/workflow-designer-agent/.claude/agents/quality-reviewer.md
+?? agent-packages/workflow-designer-agent/.claude/agents/red-team-reviewer.md
+?? agent-packages/workflow-designer-agent/.claude/agents/skill-architect.md
+?? agent-packages/workflow-designer-agent/.claude/agents/workflow-architect.md
+?? agent-packages/workflow-designer-agent/.claude/agents/workflow-orchestrator.md
+?? agent-packages/workflow-designer-agent/.claude/commands/flowstart.md
+?? agent-packages/workflow-designer-agent/.claude/commands/maintain.md
+?? agent-packages/workflow-designer-agent/.claude/commands/resume.md
+?? agent-packages/workflow-designer-agent/.claude/commands/update.md
+?? agent-packages/workflow-designer-agent/.claude/hooks/pre-compact.sh
+?? agent-packages/workflow-designer-agent/.claude/hooks/pre-tool-use.sh
+?? agent-packages/workflow-designer-agent/.claude/settings.json
+?? agent-packages/workflow-designer-agent/.claude/skills
+?? agent-packages/workflow-designer-agent/.codex/agents/domain-researcher.toml
+?? agent-packages/workflow-designer-agent/.codex/agents/final-packager.toml
+?? agent-packages/workflow-designer-agent/.codex/agents/implementation-planner.toml
+?? agent-packages/workflow-designer-agent/.codex/agents/intake-analyst.toml
+?? agent-packages/workflow-designer-agent/.codex/agents/quality-reviewer.toml
+?? agent-packages/workflow-designer-agent/.codex/agents/red-team-reviewer.toml
+?? agent-packages/workflow-designer-agent/.codex/agents/skill-architect.toml
+?? agent-packages/workflow-designer-agent/.codex/agents/workflow-architect.toml
+?? agent-packages/workflow-designer-agent/.codex/agents/workflow-orchestrator.toml
+?? agent-packages/workflow-designer-agent/.codex/commands/flowstart.md
+?? agent-packages/workflow-designer-agent/.codex/commands/maintain.md
+?? agent-packages/workflow-designer-agent/.codex/commands/resume.md
+?? agent-packages/workflow-designer-agent/.codex/commands/update.md
+?? agent-packages/workflow-designer-agent/.codex/hooks.json
+?? agent-packages/workflow-designer-agent/.devin/agents/domain-researcher/AGENT.md
+?? agent-packages/workflow-designer-agent/.devin/agents/final-packager/AGENT.md
+?? agent-packages/workflow-designer-agent/.devin/agents/implementation-planner/AGENT.md
+?? agent-packages/workflow-designer-agent/.devin/agents/intake-analyst/AGENT.md
+?? agent-packages/workflow-designer-agent/.devin/agents/quality-reviewer/AGENT.md
+?? agent-packages/workflow-designer-agent/.devin/agents/red-team-reviewer/AGENT.md
+?? agent-packages/workflow-designer-agent/.devin/agents/skill-architect/AGENT.md
+?? agent-packages/workflow-designer-agent/.devin/agents/workflow-architect/AGENT.md
+?? agent-packages/workflow-designer-agent/.devin/agents/workflow-orchestrator/AGENT.md
+?? agent-packages/workflow-designer-agent/.devin/hooks.v1.json
+?? agent-packages/workflow-designer-agent/.github/agents/domain-researcher.agent.md
+?? agent-packages/workflow-designer-agent/.github/agents/final-packager.agent.md
+?? agent-packages/workflow-designer-agent/.github/agents/implementation-planner.agent.md
+?? agent-packages/workflow-designer-agent/.github/agents/intake-analyst.agent.md
+?? agent-packages/workflow-designer-agent/.github/agents/quality-reviewer.agent.md
+?? agent-packages/workflow-designer-agent/.github/agents/red-team-reviewer.agent.md
+?? agent-packages/workflow-designer-agent/.github/agents/skill-architect.agent.md
+?? agent-packages/workflow-designer-agent/.github/agents/workflow-architect.agent.md
+?? agent-packages/workflow-designer-agent/.github/agents/workflow-orchestrator.agent.md
+?? agent-packages/workflow-designer-agent/.github/commands/flowstart.md
+?? agent-packages/workflow-designer-agent/.github/commands/maintain.md
+?? agent-packages/workflow-designer-agent/.github/commands/resume.md
+?? agent-packages/workflow-designer-agent/.github/commands/update.md
+?? agent-packages/workflow-designer-agent/.github/hooks/dispatch-gate.json
+?? agent-packages/workflow-designer-agent/.opencode/agents/domain-researcher.md
+?? agent-packages/workflow-designer-agent/.opencode/agents/final-packager.md
+?? agent-packages/workflow-designer-agent/.opencode/agents/implementation-planner.md
+?? agent-packages/workflow-designer-agent/.opencode/agents/intake-analyst.md
+?? agent-packages/workflow-designer-agent/.opencode/agents/quality-reviewer.md
+?? agent-packages/workflow-designer-agent/.opencode/agents/red-team-reviewer.md
+?? agent-packages/workflow-designer-agent/.opencode/agents/skill-architect.md
+?? agent-packages/workflow-designer-agent/.opencode/agents/workflow-architect.md
+?? agent-packages/workflow-designer-agent/.opencode/agents/workflow-orchestrator.md
+?? agent-packages/workflow-designer-agent/.opencode/commands/flowstart.md
+?? agent-packages/workflow-designer-agent/.opencode/commands/maintain.md
+?? agent-packages/workflow-designer-agent/.opencode/commands/resume.md
+?? agent-packages/workflow-designer-agent/.opencode/commands/update.md
+?? agent-packages/workflow-designer-agent/.opencode/plugins/workflow-enforcer.ts
+?? agent-packages/workflow-designer-agent/.opencode/workflow-config.json
+?? agent-packages/workflow-designer-agent/dispatch-gate.md
+?? agent-packages/workflow-designer-agent/enforcement.md
+?? agent-packages/workflow-designer-agent/flowstart.devin.md
+?? agent-packages/workflow-designer-agent/living-guidance.md
+?? agent-packages/workflow-designer-agent/maintain.devin.md
+?? agent-packages/workflow-designer-agent/repository-history-pr-gate.md
+?? agent-packages/workflow-designer-agent/resume.devin.md
+?? agent-packages/workflow-designer-agent/scripts/enforcement/dispatch-gate-hook.sh
+?? agent-packages/workflow-designer-agent/scripts/enforcement/workflow-enforce.sh
+?? agent-packages/workflow-designer-agent/scripts/preflight-task-check.sh
+?? agent-packages/workflow-designer-agent/templates/acceptance-contract-template.md
+?? agent-packages/workflow-designer-agent/templates/adr-template.md
+?? agent-packages/workflow-designer-agent/templates/current-state-evidence-index-template.md
+?? agent-packages/workflow-designer-agent/templates/delivery-contract-template.md
+?? agent-packages/workflow-designer-agent/templates/human-gates-template.md
+?? agent-packages/workflow-designer-agent/templates/living-guidance-template.md
+?? agent-packages/workflow-designer-agent/templates/repository-history-pr-gate-template.md
+?? agent-packages/workflow-designer-agent/templates/review-budget-template.md
+?? agent-packages/workflow-designer-agent/templates/session-pin-template.md
+?? agent-packages/workflow-designer-agent/templates/working-set-template.md
+?? agent-packages/workflow-designer-agent/tests/test_delivery_contract.py
+?? agent-packages/workflow-designer-agent/tests/test_generated_delivery_controls.py
+?? agent-packages/workflow-designer-agent/tests/test_living_guidance.py
+?? agent-packages/workflow-designer-agent/tests/test_repository_history_pr_gate.py
+?? agent-packages/workflow-designer-agent/update.devin.md
+?? dispatch-gate.md
+?? living-guidance.md
+?? scripts/enforcement/dispatch-gate-hook.sh

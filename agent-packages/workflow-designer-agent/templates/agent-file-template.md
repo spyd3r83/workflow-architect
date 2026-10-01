@@ -8,6 +8,8 @@ This template defines the structure for creating an agent file. Fill in all `{{P
 
 ## Role
 
+Generated agents follow `run-binding.md`: only the coordinator dispatches. Missing coordinator task() stops dispatch; assigned task:false leaves execute scoped handoffs and return delegation needs. Carry exact workspace/run/session, owner/epoch/version, phase attempt and dispatch identity; no inferred authority or parent/latest fallback.
+
 {{ROLE — one phrase describing what this agent does. e.g., "Audits existing website content for quality and SEO performance."}}
 
 ## Mission

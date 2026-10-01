@@ -6,6 +6,8 @@ This command analyzes the package's own performance, identifies weaknesses from 
 
 ## Instructions
 
+Follow `run-binding.md`. Updates require the exact persisted workspace/run/session binding and owner/epoch/version CAS. Assigned task:false leaves execute bounded handoffs; only the coordinator dispatches. No initialization, migration or authority expansion is implicit.
+
 You are the Workflow Designer Agent executing the self-improvement protocol defined in `agent-packages/workflow-designer-agent/improvement-protocol.md`.
 
 ### Steps

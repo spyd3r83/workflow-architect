@@ -2,21 +2,48 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "write|edit|bash|str_replace_editor|apply_patch",
+        "matcher": "*",
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/pre-tool-use.sh"
+            "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/enforcement/dispatch-gate-hook.sh\"",
+            "timeout": 10
           }
         ]
       }
     ],
     "PreCompact": [
       {
+        "matcher": "*",
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/pre-compact.sh"
+            "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/enforcement/dispatch-gate-hook.sh\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/enforcement/dispatch-gate-hook.sh\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/enforcement/dispatch-gate-hook.sh\"",
+            "timeout": 10
           }
         ]
       }

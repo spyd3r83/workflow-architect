@@ -10,6 +10,13 @@ Every improvement to the Workflow Designer Agent package is recorded here. Entri
 - **Slash commands**: /flowstart, /resume, /maintain across all 5 platforms.
 - **Self-improvement**: /update command with improvement-protocol.md, defect-patterns.md, and this changelog.
 
+## Unreleased — 2026-10-01 — Run-scoped handoff repair candidate
+
+- Replaced singleton writers with explicit run/session binding, CAS, typed effects, authenticated operator actions and scoped host adapters.
+- Production generation installs complete runtime dependencies while retaining package-local phase/specialist policy. Agent generation distinguishes coordinator dispatch from task:false leaf work; validator rejects broad stop rules.
+- Added lifetime admission refusal to bound permanent retirement markers without reusing run IDs.
+- Verification is recorded in the isolated candidate's authoritative progress/evidence. Independent focused QC/red-team is pending; this entry is not approval, release numbering, live compatibility certification or activation authority.
+
 ## Changelog Entry Format
 
 ```

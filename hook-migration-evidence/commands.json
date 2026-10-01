@@ -1,0 +1,198 @@
+[
+  {
+    "command": [
+      "/usr/bin/python3",
+      "-B",
+      "scripts/sync-platform-configs.py"
+    ],
+    "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff",
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/usr/bin/python3",
+      "-B",
+      "scripts/sync-platform-configs.py",
+      "--package",
+      "/home/jfi/GitHub/workflow-architect-run-scoped-handoff/agent-packages/workflow-designer-agent"
+    ],
+    "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff",
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/usr/bin/python3",
+      "-B",
+      "scripts/sync-platform-configs.py",
+      "--package",
+      "/home/jfi/GitHub/workflow-architect-run-scoped-handoff/generated-workflows/network-infrastructure-execution-workflow",
+      "--runtime-source",
+      "/home/jfi/GitHub/workflow-architect-run-scoped-handoff/agent-packages/workflow-designer-agent/enforcement"
+    ],
+    "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff",
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/usr/bin/python3",
+      "-B",
+      "scripts/sync-platform-configs.py"
+    ],
+    "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff",
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/usr/bin/python3",
+      "-B",
+      "scripts/sync-platform-configs.py",
+      "--package",
+      "/home/jfi/GitHub/workflow-architect-run-scoped-handoff/agent-packages/workflow-designer-agent"
+    ],
+    "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff",
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/usr/bin/python3",
+      "-B",
+      "scripts/sync-platform-configs.py",
+      "--package",
+      "/home/jfi/GitHub/workflow-architect-run-scoped-handoff/generated-workflows/network-infrastructure-execution-workflow",
+      "--runtime-source",
+      "/home/jfi/GitHub/workflow-architect-run-scoped-handoff/agent-packages/workflow-designer-agent/enforcement"
+    ],
+    "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff",
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/usr/bin/python3",
+      "-B",
+      "scripts/validate-package.py",
+      "/home/jfi/GitHub/workflow-architect-run-scoped-handoff/agent-packages/workflow-designer-agent"
+    ],
+    "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff",
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/usr/bin/python3",
+      "-B",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "/home/jfi/GitHub/workflow-architect-run-scoped-handoff/agent-packages/workflow-designer-agent/tests/test_regression.py",
+      "/home/jfi/GitHub/workflow-architect-run-scoped-handoff/agent-packages/workflow-designer-agent/tests/test_idempotency.py",
+      "/home/jfi/GitHub/workflow-architect-run-scoped-handoff/agent-packages/workflow-designer-agent/tests/test_frontmatter.py",
+      "/home/jfi/GitHub/workflow-architect-run-scoped-handoff/agent-packages/workflow-designer-agent/tests/test_sync_identity.py",
+      "-q"
+    ],
+    "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff",
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/usr/bin/python3",
+      "-B",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "/home/jfi/GitHub/workflow-architect-run-scoped-handoff/agent-packages/workflow-designer-agent/tests/test_dispatch_contract.py",
+      "-k",
+      "broad_rule",
+      "-q"
+    ],
+    "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff",
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/usr/bin/python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "/home/jfi/GitHub/workflow-architect-run-scoped-handoff/agent-packages/workflow-designer-agent/tests",
+      "-p",
+      "test_run_store.py"
+    ],
+    "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff",
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/usr/bin/python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "/home/jfi/GitHub/workflow-architect-run-scoped-handoff/agent-packages/workflow-designer-agent/tests",
+      "-p",
+      "test_effect_lifecycle.py"
+    ],
+    "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff",
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/usr/bin/python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "/home/jfi/GitHub/workflow-architect-run-scoped-handoff/agent-packages/workflow-designer-agent/tests",
+      "-p",
+      "test_runtime_paths.py"
+    ],
+    "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff",
+    "returncode": 0
+  },
+  {
+    "command": [
+      "bun",
+      "test",
+      "/home/jfi/GitHub/workflow-architect-run-scoped-handoff/agent-packages/workflow-designer-agent/tests/runtime_plugin.test.ts"
+    ],
+    "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff",
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/usr/bin/python3",
+      "-B",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "tests",
+      "-q"
+    ],
+    "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff/generated-workflows/network-infrastructure-execution-workflow",
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/usr/bin/python3",
+      "-B",
+      "scripts/validate-package.py",
+      "/home/jfi/GitHub/workflow-architect-run-scoped-handoff/generated-workflows/network-infrastructure-execution-workflow"
+    ],
+    "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff/generated-workflows/network-infrastructure-execution-workflow",
+    "returncode": 0
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff",
+    "returncode": 0
+  }
+]

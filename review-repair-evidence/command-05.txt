@@ -1,0 +1,25 @@
+Syncing package: /home/jfi/GitHub/workflow-architect-run-scoped-handoff/generated-workflows/network-infrastructure-execution-workflow
+Parsed 13 skills from network-infrastructure-execution-workflow.
+Parsed 15 agents from network-infrastructure-execution-workflow.
+Primary agent: network-infrastructure-execution-orchestrator
+Discovered 17 commands: ['accept-handoff', 'closeout', 'diagnose-ci', 'execute-feature', 'fix-pr', 'flowstart', 'maintain', 'merge-feature', 'resume-execution', 'resume', 'rollback', 'run-advertise', 'run-bgp-mesh', 'run-canary', 'run-failover', 'update', 'validate-current-head']
+
+Generating platform-native files for network-infrastructure-execution-workflow:
+  Skills: 13 SKILL.md files in .agents/skills/
+  Skills: .claude/skills/ -> .agents/skills/ (symlink)
+  Agents: 15 files in .claude/agents/
+  Agents: 15 files in .opencode/agents/ (primary: network-infrastructure-execution-orchestrator)
+  Agents: 15 files in .github/agents/
+  Agents: 15 files in .devin/agents/
+  Agents: 15 files in .codex/agents/
+  Commands: 85 command files synced across all platforms (17 commands)
+  Enforcement: complete run-scoped runtime; local phase/specialist policy preserved
+
+Done. Platform configs synced.
+
+Next steps:
+  - Verify agents: ls .opencode/agents/ .claude/agents/ .github/agents/ .devin/agents/ .codex/agents/
+  - Verify skills: ls .agents/skills/
+  - Verify commands: ls .opencode/commands/ .claude/commands/ .codex/commands/ .github/commands/
+  - Devin playbooks: ls *.devin.md
+  - Re-run after editing canonical source files.

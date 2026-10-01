@@ -73,6 +73,8 @@ python3 scripts/sync-platform-configs.py
 
 ## Project Conventions
 
+For command execution and handoffs, follow `run-binding.md`: explicit immutable workspace/run/session, expected owner/epoch/version and phase/dispatch identity. No implicit initialization, parent/latest fallback or inferred resume. Assigned task:false leaves perform bounded work without delegation or expanded authority.
+
 - Agent and skill definitions are written in markdown with YAML frontmatter.
 - The canonical source lives in `agent-packages/workflow-designer-agent/`.
 - Platform-specific files are generated, not hand-edited. Run the sync script after changing canonical files.

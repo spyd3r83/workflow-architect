@@ -1,5 +1,7 @@
 # Workflow Package Template
 
+Include `run-binding.md` and the complete run-scoped runtime using the production generator; preserve local phase/specialist policy. Coordinator task() absence stops dispatch only. Assigned task:false leaves execute bounded handoffs. Initialization, approval and enrollment are explicit operator actions. Document actual provider compatibility rather than claiming unsupported task adapters work.
+
 This template defines the structure for a complete generated workflow package. Fill in all `{{PLACEHOLDERS}}`.
 
 ---

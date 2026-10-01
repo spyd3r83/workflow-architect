@@ -8,7 +8,7 @@ This file defines how the orchestrator dispatches work to subagents across all s
 
 The orchestrator is the only agent that communicates with the user. All other agents receive work through structured `task()` calls — not prose "delegate to" descriptions, and not `call_omo_agent()`.
 
-Mixing invocation surfaces breaks session continuity and dispatch routing. `call_omo_agent()` is **forbidden** as a primary path. See [Fallbacks](#fallbacks) for the only allowed exception.
+Mixing invocation surfaces breaks session continuity and dispatch routing. `call_omo_agent()` is **forbidden**. Missing coordinator task() stops dispatch; assigned task:false leaves continue their bounded handoffs without delegation.
 
 Every dispatch call includes:
 
@@ -23,7 +23,7 @@ The subagent returns its output to the orchestrator. The orchestrator validates 
 ## Hard Rules
 
 1. Use `task()` for **all** subagent dispatch — package agents and OMO specialists.
-2. Never use `call_omo_agent()` unless `task()` is unavailable (documented fallback only).
+2. Never use `call_omo_agent()`. Missing coordinator `task()` capability stops dispatch; leaves do not need delegation tools.
 3. Sequential dispatch only — wait for each `task()` to return before starting the next.
 4. Prefer session reuse via `session_id` / `task_id` for follow-ups to the same specialist.
 5. Structured prompts only — every worker prompt answers identity, scope, deliverable, context, validation, escalation.
@@ -211,6 +211,8 @@ All rows use `task(subagent_type=...)` except deterministic scripts (`validate-p
 
 Every dispatch prompt must include:
 
+Follow `run-binding.md`: immutable workspace, run_id, session_id, owner, owner_epoch, expected state_version, phase and dispatch ID are mandatory. A leaf with task:false performs assigned bounded work and returns delegation needs; it does not adopt a coordinator role or gain authority.
+
 ```
 ## Handoff
 - Phase: <phase number>
@@ -241,30 +243,12 @@ After each `task()` returns, the orchestrator validates:
 
 If validation fails, re-dispatch with specific fixes. After 3 failed iterations on the same issue, escalate to the user.
 
-## Fallbacks
+## Dispatch unavailable
 
-### When `task()` is unavailable
-
-| Platform | Fallback |
-|----------|----------|
-| Claude Code | `@agent_name` or Task tool |
-| Codex CLI | Single-agent role adoption |
-| Copilot CLI | `@agent_name` |
-| Devin | Playbook reference |
-| OpenCode without OMO specialists | Orchestrator self-work with reduced independence noted |
-
-### `call_omo_agent()` (last resort only)
-
-`call_omo_agent()` is **not** a normal path. Use only when:
-
-1. `task()` is confirmed unavailable in the runtime, and
-2. Platform-native fallbacks above are also unavailable, and
-3. The call is marked `[FALLBACK — task() unavailable]` in the handoff log.
-
-Prefer self-work + reduced-independence note over inventing a second primary surface.
+The coordinator stops dispatch with TASK_DISPATCH_UNAVAILABLE. No alternate primitive, role adoption or specialist self-work is permitted. This does not stop an assigned leaf solely because it lacks task().
 
 ## Enforcement
 
 - Canonical docs must not present `call_omo_agent()` as a primary dispatch tool.
-- `validate-package.py` fails packages that authorize `call_omo_agent()` as a primary path.
+- `validate-package.py` rejects alternate delegation primitives and enforces coordinator-specific dispatch failure handling.
 - Runtime enforcer blocks `call_omo_agent` tool calls and redirects to `task(subagent_type=...)`.

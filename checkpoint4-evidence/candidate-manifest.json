@@ -1,0 +1,2526 @@
+{
+  "self_excluded": "checkpoint4-evidence/candidate-manifest.json",
+  "baseline": "HEAD plus provenance-bound checkpoint1 imports",
+  "files": [
+    {
+      "path": ".claude/agents/domain-researcher.md",
+      "category": "tracked",
+      "base_sha256": "207361a25489b8b1156c21faab69a72b00da7e499b8a5076d1bb2498ef5ea982",
+      "import_sha256": null,
+      "candidate_sha256": "3c117d85d17dc3568595ac35e2172fc57d8ad789b25c181827af157995037ded"
+    },
+    {
+      "path": ".claude/agents/final-packager.md",
+      "category": "tracked",
+      "base_sha256": "8b3864441e3ef7998bad4224713d42f4783eb98c04a6d2c11f1f8dead4da8017",
+      "import_sha256": null,
+      "candidate_sha256": "6a59b61abe572f117d6fd8eae2e70dea1b20c40e23dd9614cf5d66e06071dfd2"
+    },
+    {
+      "path": ".claude/agents/implementation-planner.md",
+      "category": "tracked",
+      "base_sha256": "6ee63c994d7aac45a0a0ec1812c3d125ba32e0b39d6a100720f4cb0d88f579fe",
+      "import_sha256": null,
+      "candidate_sha256": "f4b8a1baab6fc0435a96524598d3176f86e7436ecc4b1f7c484d1a86ad51fe42"
+    },
+    {
+      "path": ".claude/agents/intake-analyst.md",
+      "category": "tracked",
+      "base_sha256": "bb3e121a27973833d359c925bfca396a6e54ef26e186cca6bbc7d52e6004c3d8",
+      "import_sha256": null,
+      "candidate_sha256": "251e282f1a3139b210ed5fec6da6ba67b28f49eb0c12c0d10925f2b254f41a8c"
+    },
+    {
+      "path": ".claude/agents/quality-reviewer.md",
+      "category": "tracked",
+      "base_sha256": "e3b092c2b3f19db96a362eef0e02989e468bf72dc156851495e7ec5e7e96e9f6",
+      "import_sha256": null,
+      "candidate_sha256": "039110b10b11566aab63d9a4fde7bd4afaade31db7b5014ea59181d833428e07"
+    },
+    {
+      "path": ".claude/agents/red-team-reviewer.md",
+      "category": "tracked",
+      "base_sha256": "02a7244c6780fd66e5ab328036f9903c835b4a0bdc8ea12e809e9bfe82bb4acc",
+      "import_sha256": null,
+      "candidate_sha256": "11605758426cb7acfbb41202136199dc468e9e94e3c911b266bc5d0f0d766601"
+    },
+    {
+      "path": ".claude/agents/skill-architect.md",
+      "category": "tracked",
+      "base_sha256": "a4709c88f139a1e9376025d06461c98d92e448563a0ef699868d1570c97cce17",
+      "import_sha256": null,
+      "candidate_sha256": "fe839ad59752f87c2a074c749fb53e186b5598b0abbfded1c15437de30317762"
+    },
+    {
+      "path": ".claude/agents/workflow-architect.md",
+      "category": "tracked",
+      "base_sha256": "e343331084df5fc916c096de1557786e2da8b401b2ee9037c967b90da86b0505",
+      "import_sha256": null,
+      "candidate_sha256": "14c38178f935c480733b441178ea62a678f5f2b5be773aa181b4397a51e6e9a7"
+    },
+    {
+      "path": ".claude/agents/workflow-orchestrator.md",
+      "category": "tracked",
+      "base_sha256": "f6133f48e30f6f35494823ee0fc416cddf9556ef72465980b3c8dfc994d909ac",
+      "import_sha256": null,
+      "candidate_sha256": "671225157b48502491735cdeb904aeb876c1028c02aab2e9e098512b69b358d5"
+    },
+    {
+      "path": ".claude/commands/flowstart.md",
+      "category": "tracked",
+      "base_sha256": "a0ff149b4e7e61fd3636095158aa7159f68e893767f69d83543d09d9f8e7eae9",
+      "import_sha256": null,
+      "candidate_sha256": "05c4db7394bebb34d7e082acf6d7670c099c36fd7256772121c43c6dfdb21491"
+    },
+    {
+      "path": ".claude/commands/maintain.md",
+      "category": "tracked",
+      "base_sha256": "5ec26aa8426b0142619260879c6eb1d9082feb664f8dc1e7130adbd3aeea8058",
+      "import_sha256": null,
+      "candidate_sha256": "f79b8b0948894932e8c3c37a3d09a3ef5424620edbb99587430bd32b38749c96"
+    },
+    {
+      "path": ".claude/commands/resume.md",
+      "category": "tracked",
+      "base_sha256": "fe1b923a1ab0c2647a05c45e4f7b3711458002bbf700b268aed22b9ceffb197a",
+      "import_sha256": null,
+      "candidate_sha256": "47fa4f9527cc519044f1bc4468a3f362980e5acf0045f6c21d5cd8362fd45545"
+    },
+    {
+      "path": ".claude/commands/update.md",
+      "category": "tracked",
+      "base_sha256": "a9a68c846d29419a2e6357672c7061f46c18147616f51623b7bf807b9efa3741",
+      "import_sha256": null,
+      "candidate_sha256": "2cc91e8bae4bfe640ae414b63557f904b9f93deba2304e98bc67ef88e37451cd"
+    },
+    {
+      "path": ".claude/hooks/pre-compact.sh",
+      "category": "tracked",
+      "base_sha256": "37c3c50717c8dae2683d8e0942374b417e39e44764e3c59b5c03c91e930051b7",
+      "import_sha256": null,
+      "candidate_sha256": "551fd10a70e3d3e204038ae4ffe48cec008cbb3bf62861770f6e080bdda14291"
+    },
+    {
+      "path": ".claude/hooks/pre-tool-use.sh",
+      "category": "tracked",
+      "base_sha256": "21b98721292b3454c040f8b993aa3f4f69b236c19224de96a038e2ade6c1864e",
+      "import_sha256": null,
+      "candidate_sha256": "551fd10a70e3d3e204038ae4ffe48cec008cbb3bf62861770f6e080bdda14291"
+    },
+    {
+      "path": ".claude/settings.json",
+      "category": "tracked",
+      "base_sha256": "57062cf906e61764af3b9d772444539723a930fd5f4a1bdfe1414dfbd7eefd53",
+      "import_sha256": null,
+      "candidate_sha256": "97df89d5c77b42e5c37efec1aaf635fb1285d96cfe346a6d4746c5c2ea3447d7"
+    },
+    {
+      "path": ".codex/agents/domain-researcher.toml",
+      "category": "tracked",
+      "base_sha256": "5d7c9818c298c900552049d0d193d6438728ed9685f453f31a10626b652bfb51",
+      "import_sha256": null,
+      "candidate_sha256": "1e9723f9d46dd00a60381aca939e5a0a252ee25d45811718ca90994c06db8fd5"
+    },
+    {
+      "path": ".codex/agents/final-packager.toml",
+      "category": "tracked",
+      "base_sha256": "7d7529634da20a9e6df180063c606b58b383d95ac0c5cc8030e5cf6daf46aca1",
+      "import_sha256": null,
+      "candidate_sha256": "e789220f5c71366279b9b0ac7116619b083b5c650da3ea25b790a3983b04ce3e"
+    },
+    {
+      "path": ".codex/agents/implementation-planner.toml",
+      "category": "tracked",
+      "base_sha256": "3a3c32481bec5f84a918145b3312462b30dc86887e24eb2468a1c7ccf561e881",
+      "import_sha256": null,
+      "candidate_sha256": "aedb87813fcf27fcc145445e52da14861a789aae692d474c37a3b2f9373be5d5"
+    },
+    {
+      "path": ".codex/agents/intake-analyst.toml",
+      "category": "tracked",
+      "base_sha256": "8fecdce8655e6aa3ee70c83cf425c6beebac8e030c73e8e1b4f6d9cdc79d105d",
+      "import_sha256": null,
+      "candidate_sha256": "cd6b1cccc66f8d44ab3bee965f9744109bb7884f7d7f5a6795296c808bbeab6f"
+    },
+    {
+      "path": ".codex/agents/quality-reviewer.toml",
+      "category": "tracked",
+      "base_sha256": "5d62f7f270360f0941a4a9444c61a8aa63241fce3b99bcedfd40aad3d3cb63d2",
+      "import_sha256": null,
+      "candidate_sha256": "b17641acc4a50e53e644f7bc5eed74ba4541a0a71da48b07b78df2eb45f102a3"
+    },
+    {
+      "path": ".codex/agents/red-team-reviewer.toml",
+      "category": "tracked",
+      "base_sha256": "72b7a57c561af9a89c436fb4df825a47543816e34ff14d2e4231ab93596cb827",
+      "import_sha256": null,
+      "candidate_sha256": "1bee10e0ed429c8a4368adbaea84aec4e4046e3e00ed4d96d78959a40ff08609"
+    },
+    {
+      "path": ".codex/agents/skill-architect.toml",
+      "category": "tracked",
+      "base_sha256": "8b574cc4ef1f7f399665274024f2b7e227543170bfcc2f7ba5e2d6a14100329d",
+      "import_sha256": null,
+      "candidate_sha256": "4523b165fe4aaf4caf17707771e8cd1aa0b981a8e2546b57d17d033f0141f7a3"
+    },
+    {
+      "path": ".codex/agents/workflow-architect.toml",
+      "category": "tracked",
+      "base_sha256": "679663e9b1a2c90ff3f60dd0260d6b94ee532312a0687bcfbf504025a4acc2b4",
+      "import_sha256": null,
+      "candidate_sha256": "3ee13c3cb79615afe521dbad6e2bb40ff3600717b64a7a2cc4ce7cddb5838cd7"
+    },
+    {
+      "path": ".codex/agents/workflow-orchestrator.toml",
+      "category": "tracked",
+      "base_sha256": "2c62b61c5b4210d90f7aab18f362c35f919a0bcc991d6094ac8543cac0b9f993",
+      "import_sha256": null,
+      "candidate_sha256": "7c2bf34ac0b8b2b45daa9db0aeafa3ca362e1d3c50bb2a8ec6e33971c4f457cb"
+    },
+    {
+      "path": ".codex/commands/flowstart.md",
+      "category": "tracked",
+      "base_sha256": "a0ff149b4e7e61fd3636095158aa7159f68e893767f69d83543d09d9f8e7eae9",
+      "import_sha256": null,
+      "candidate_sha256": "05c4db7394bebb34d7e082acf6d7670c099c36fd7256772121c43c6dfdb21491"
+    },
+    {
+      "path": ".codex/commands/maintain.md",
+      "category": "tracked",
+      "base_sha256": "5ec26aa8426b0142619260879c6eb1d9082feb664f8dc1e7130adbd3aeea8058",
+      "import_sha256": null,
+      "candidate_sha256": "f79b8b0948894932e8c3c37a3d09a3ef5424620edbb99587430bd32b38749c96"
+    },
+    {
+      "path": ".codex/commands/resume.md",
+      "category": "tracked",
+      "base_sha256": "fe1b923a1ab0c2647a05c45e4f7b3711458002bbf700b268aed22b9ceffb197a",
+      "import_sha256": null,
+      "candidate_sha256": "47fa4f9527cc519044f1bc4468a3f362980e5acf0045f6c21d5cd8362fd45545"
+    },
+    {
+      "path": ".codex/commands/update.md",
+      "category": "tracked",
+      "base_sha256": "a9a68c846d29419a2e6357672c7061f46c18147616f51623b7bf807b9efa3741",
+      "import_sha256": null,
+      "candidate_sha256": "2cc91e8bae4bfe640ae414b63557f904b9f93deba2304e98bc67ef88e37451cd"
+    },
+    {
+      "path": ".devin/agents/domain-researcher/AGENT.md",
+      "category": "tracked",
+      "base_sha256": "207361a25489b8b1156c21faab69a72b00da7e499b8a5076d1bb2498ef5ea982",
+      "import_sha256": null,
+      "candidate_sha256": "3c117d85d17dc3568595ac35e2172fc57d8ad789b25c181827af157995037ded"
+    },
+    {
+      "path": ".devin/agents/final-packager/AGENT.md",
+      "category": "tracked",
+      "base_sha256": "8b3864441e3ef7998bad4224713d42f4783eb98c04a6d2c11f1f8dead4da8017",
+      "import_sha256": null,
+      "candidate_sha256": "6a59b61abe572f117d6fd8eae2e70dea1b20c40e23dd9614cf5d66e06071dfd2"
+    },
+    {
+      "path": ".devin/agents/implementation-planner/AGENT.md",
+      "category": "tracked",
+      "base_sha256": "6ee63c994d7aac45a0a0ec1812c3d125ba32e0b39d6a100720f4cb0d88f579fe",
+      "import_sha256": null,
+      "candidate_sha256": "f4b8a1baab6fc0435a96524598d3176f86e7436ecc4b1f7c484d1a86ad51fe42"
+    },
+    {
+      "path": ".devin/agents/intake-analyst/AGENT.md",
+      "category": "tracked",
+      "base_sha256": "bb3e121a27973833d359c925bfca396a6e54ef26e186cca6bbc7d52e6004c3d8",
+      "import_sha256": null,
+      "candidate_sha256": "251e282f1a3139b210ed5fec6da6ba67b28f49eb0c12c0d10925f2b254f41a8c"
+    },
+    {
+      "path": ".devin/agents/quality-reviewer/AGENT.md",
+      "category": "tracked",
+      "base_sha256": "e3b092c2b3f19db96a362eef0e02989e468bf72dc156851495e7ec5e7e96e9f6",
+      "import_sha256": null,
+      "candidate_sha256": "039110b10b11566aab63d9a4fde7bd4afaade31db7b5014ea59181d833428e07"
+    },
+    {
+      "path": ".devin/agents/red-team-reviewer/AGENT.md",
+      "category": "tracked",
+      "base_sha256": "02a7244c6780fd66e5ab328036f9903c835b4a0bdc8ea12e809e9bfe82bb4acc",
+      "import_sha256": null,
+      "candidate_sha256": "11605758426cb7acfbb41202136199dc468e9e94e3c911b266bc5d0f0d766601"
+    },
+    {
+      "path": ".devin/agents/skill-architect/AGENT.md",
+      "category": "tracked",
+      "base_sha256": "a4709c88f139a1e9376025d06461c98d92e448563a0ef699868d1570c97cce17",
+      "import_sha256": null,
+      "candidate_sha256": "fe839ad59752f87c2a074c749fb53e186b5598b0abbfded1c15437de30317762"
+    },
+    {
+      "path": ".devin/agents/workflow-architect/AGENT.md",
+      "category": "tracked",
+      "base_sha256": "e343331084df5fc916c096de1557786e2da8b401b2ee9037c967b90da86b0505",
+      "import_sha256": null,
+      "candidate_sha256": "14c38178f935c480733b441178ea62a678f5f2b5be773aa181b4397a51e6e9a7"
+    },
+    {
+      "path": ".devin/agents/workflow-orchestrator/AGENT.md",
+      "category": "tracked",
+      "base_sha256": "f6133f48e30f6f35494823ee0fc416cddf9556ef72465980b3c8dfc994d909ac",
+      "import_sha256": null,
+      "candidate_sha256": "671225157b48502491735cdeb904aeb876c1028c02aab2e9e098512b69b358d5"
+    },
+    {
+      "path": ".github/agents/domain-researcher.agent.md",
+      "category": "tracked",
+      "base_sha256": "207361a25489b8b1156c21faab69a72b00da7e499b8a5076d1bb2498ef5ea982",
+      "import_sha256": null,
+      "candidate_sha256": "3c117d85d17dc3568595ac35e2172fc57d8ad789b25c181827af157995037ded"
+    },
+    {
+      "path": ".github/agents/final-packager.agent.md",
+      "category": "tracked",
+      "base_sha256": "8b3864441e3ef7998bad4224713d42f4783eb98c04a6d2c11f1f8dead4da8017",
+      "import_sha256": null,
+      "candidate_sha256": "6a59b61abe572f117d6fd8eae2e70dea1b20c40e23dd9614cf5d66e06071dfd2"
+    },
+    {
+      "path": ".github/agents/implementation-planner.agent.md",
+      "category": "tracked",
+      "base_sha256": "6ee63c994d7aac45a0a0ec1812c3d125ba32e0b39d6a100720f4cb0d88f579fe",
+      "import_sha256": null,
+      "candidate_sha256": "f4b8a1baab6fc0435a96524598d3176f86e7436ecc4b1f7c484d1a86ad51fe42"
+    },
+    {
+      "path": ".github/agents/intake-analyst.agent.md",
+      "category": "tracked",
+      "base_sha256": "bb3e121a27973833d359c925bfca396a6e54ef26e186cca6bbc7d52e6004c3d8",
+      "import_sha256": null,
+      "candidate_sha256": "251e282f1a3139b210ed5fec6da6ba67b28f49eb0c12c0d10925f2b254f41a8c"
+    },
+    {
+      "path": ".github/agents/quality-reviewer.agent.md",
+      "category": "tracked",
+      "base_sha256": "e3b092c2b3f19db96a362eef0e02989e468bf72dc156851495e7ec5e7e96e9f6",
+      "import_sha256": null,
+      "candidate_sha256": "039110b10b11566aab63d9a4fde7bd4afaade31db7b5014ea59181d833428e07"
+    },
+    {
+      "path": ".github/agents/red-team-reviewer.agent.md",
+      "category": "tracked",
+      "base_sha256": "02a7244c6780fd66e5ab328036f9903c835b4a0bdc8ea12e809e9bfe82bb4acc",
+      "import_sha256": null,
+      "candidate_sha256": "11605758426cb7acfbb41202136199dc468e9e94e3c911b266bc5d0f0d766601"
+    },
+    {
+      "path": ".github/agents/skill-architect.agent.md",
+      "category": "tracked",
+      "base_sha256": "a4709c88f139a1e9376025d06461c98d92e448563a0ef699868d1570c97cce17",
+      "import_sha256": null,
+      "candidate_sha256": "fe839ad59752f87c2a074c749fb53e186b5598b0abbfded1c15437de30317762"
+    },
+    {
+      "path": ".github/agents/workflow-architect.agent.md",
+      "category": "tracked",
+      "base_sha256": "e343331084df5fc916c096de1557786e2da8b401b2ee9037c967b90da86b0505",
+      "import_sha256": null,
+      "candidate_sha256": "14c38178f935c480733b441178ea62a678f5f2b5be773aa181b4397a51e6e9a7"
+    },
+    {
+      "path": ".github/agents/workflow-orchestrator.agent.md",
+      "category": "tracked",
+      "base_sha256": "f6133f48e30f6f35494823ee0fc416cddf9556ef72465980b3c8dfc994d909ac",
+      "import_sha256": null,
+      "candidate_sha256": "671225157b48502491735cdeb904aeb876c1028c02aab2e9e098512b69b358d5"
+    },
+    {
+      "path": ".github/commands/flowstart.md",
+      "category": "tracked",
+      "base_sha256": "a0ff149b4e7e61fd3636095158aa7159f68e893767f69d83543d09d9f8e7eae9",
+      "import_sha256": null,
+      "candidate_sha256": "05c4db7394bebb34d7e082acf6d7670c099c36fd7256772121c43c6dfdb21491"
+    },
+    {
+      "path": ".github/commands/maintain.md",
+      "category": "tracked",
+      "base_sha256": "5ec26aa8426b0142619260879c6eb1d9082feb664f8dc1e7130adbd3aeea8058",
+      "import_sha256": null,
+      "candidate_sha256": "f79b8b0948894932e8c3c37a3d09a3ef5424620edbb99587430bd32b38749c96"
+    },
+    {
+      "path": ".github/commands/resume.md",
+      "category": "tracked",
+      "base_sha256": "fe1b923a1ab0c2647a05c45e4f7b3711458002bbf700b268aed22b9ceffb197a",
+      "import_sha256": null,
+      "candidate_sha256": "47fa4f9527cc519044f1bc4468a3f362980e5acf0045f6c21d5cd8362fd45545"
+    },
+    {
+      "path": ".github/commands/update.md",
+      "category": "tracked",
+      "base_sha256": "a9a68c846d29419a2e6357672c7061f46c18147616f51623b7bf807b9efa3741",
+      "import_sha256": null,
+      "candidate_sha256": "2cc91e8bae4bfe640ae414b63557f904b9f93deba2304e98bc67ef88e37451cd"
+    },
+    {
+      "path": ".opencode/.gitignore",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "b8b53b4c0b0283ef8bdc9b36fcfefda660c0aba23454bdf8d0cbffd3068d762a"
+    },
+    {
+      "path": ".opencode/agents/domain-researcher.md",
+      "category": "tracked",
+      "base_sha256": "2d737f3e3ee67884aa86eb94f5776daa5014d5093e2aff739db93440be22f77a",
+      "import_sha256": null,
+      "candidate_sha256": "1d5513f4c586522396d557b1b2399a2c3158d05e931172726af6f399a65dbd56"
+    },
+    {
+      "path": ".opencode/agents/final-packager.md",
+      "category": "tracked",
+      "base_sha256": "8fc0305298c31ec119927d50b0de12d4079ebf2f171a28d8667a5f81614ae706",
+      "import_sha256": null,
+      "candidate_sha256": "3374b122ad3c379b6b02747acdf9c5ff79c49395c4ae6322eea8db98da78a89f"
+    },
+    {
+      "path": ".opencode/agents/implementation-planner.md",
+      "category": "tracked",
+      "base_sha256": "7be288a1b79caa15bb90853d2e334a37edde7a34caf6887ae122cb7376cf4233",
+      "import_sha256": null,
+      "candidate_sha256": "a3feab6294a77ed43d18e447780f9a9a2a1e2b4b9aa29bd25a0b3b464defe92c"
+    },
+    {
+      "path": ".opencode/agents/intake-analyst.md",
+      "category": "tracked",
+      "base_sha256": "969163f6a1f100412ceec5406696f90b181a9c124e9471bcfb9ab9a4a8d7c8fc",
+      "import_sha256": null,
+      "candidate_sha256": "627ec4b54d56186e43d4c27d9a99360cf361d8df441ef80a9e46cdb75305164f"
+    },
+    {
+      "path": ".opencode/agents/quality-reviewer.md",
+      "category": "tracked",
+      "base_sha256": "22372d9258a514317e3c78400deb560737c328de6dcec0ca584f39c43c63d893",
+      "import_sha256": null,
+      "candidate_sha256": "70d9be9e2410215d331b95d5bfb84b2e4291f5c63d14f5654ab275fdbd3c5afe"
+    },
+    {
+      "path": ".opencode/agents/red-team-reviewer.md",
+      "category": "tracked",
+      "base_sha256": "ad788f7a3b296c93aa4214a22820f094969d8d56c346a61dea952fa519a9a227",
+      "import_sha256": null,
+      "candidate_sha256": "4168ba68093293db793ff894de52694c3ad1f211c004228f384d09f88b3ecbc2"
+    },
+    {
+      "path": ".opencode/agents/skill-architect.md",
+      "category": "tracked",
+      "base_sha256": "38180e47ee2e4e36e82375bca5ad1669e0069ab8171e4acb26d0c8a01db5408a",
+      "import_sha256": null,
+      "candidate_sha256": "c89981a0ee14662b2b03c226b4f53160cebd4bd83a8fb4a16a77fa7cf1fdc5d1"
+    },
+    {
+      "path": ".opencode/agents/workflow-architect.md",
+      "category": "tracked",
+      "base_sha256": "1411d72bd08a77648969d47210f7b4eb00aa48c2c7a1027cdb4cc60d70379a68",
+      "import_sha256": null,
+      "candidate_sha256": "4fdeb9b7e092be8edd3911db934cfd96f6b99cfac1819746a8956a56ed9a21ef"
+    },
+    {
+      "path": ".opencode/agents/workflow-orchestrator.md",
+      "category": "tracked",
+      "base_sha256": "b0c81a289355581a961fda725480f9b13630028d5265f401773b1d5d0916ccec",
+      "import_sha256": null,
+      "candidate_sha256": "4cf1de9aca16a274293ad23e5bc738b6a7adda835461b5f9eebd8c06c9950b62"
+    },
+    {
+      "path": ".opencode/commands/flowstart.md",
+      "category": "tracked",
+      "base_sha256": "a0ff149b4e7e61fd3636095158aa7159f68e893767f69d83543d09d9f8e7eae9",
+      "import_sha256": null,
+      "candidate_sha256": "05c4db7394bebb34d7e082acf6d7670c099c36fd7256772121c43c6dfdb21491"
+    },
+    {
+      "path": ".opencode/commands/maintain.md",
+      "category": "tracked",
+      "base_sha256": "5ec26aa8426b0142619260879c6eb1d9082feb664f8dc1e7130adbd3aeea8058",
+      "import_sha256": null,
+      "candidate_sha256": "f79b8b0948894932e8c3c37a3d09a3ef5424620edbb99587430bd32b38749c96"
+    },
+    {
+      "path": ".opencode/commands/resume.md",
+      "category": "tracked",
+      "base_sha256": "fe1b923a1ab0c2647a05c45e4f7b3711458002bbf700b268aed22b9ceffb197a",
+      "import_sha256": null,
+      "candidate_sha256": "47fa4f9527cc519044f1bc4468a3f362980e5acf0045f6c21d5cd8362fd45545"
+    },
+    {
+      "path": ".opencode/commands/update.md",
+      "category": "tracked",
+      "base_sha256": "a9a68c846d29419a2e6357672c7061f46c18147616f51623b7bf807b9efa3741",
+      "import_sha256": null,
+      "candidate_sha256": "2cc91e8bae4bfe640ae414b63557f904b9f93deba2304e98bc67ef88e37451cd"
+    },
+    {
+      "path": ".opencode/package.json",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "45d67a321d03e4cff49fd088e840b826ed6a2fc5671fb76291070bcba54ac01a"
+    },
+    {
+      "path": ".opencode/plugins/workflow-enforcer.ts",
+      "category": "tracked",
+      "base_sha256": "dab354e19daee5b4e64160e7f719a99b025d08c30efa946d09166ccbf9ff5123",
+      "import_sha256": "dab354e19daee5b4e64160e7f719a99b025d08c30efa946d09166ccbf9ff5123",
+      "candidate_sha256": "c3dfa67c3e2deaf24a76b970571f17870942f5fe284556d45fe91ca86250dc06"
+    },
+    {
+      "path": ".opencode/workflow-config.json",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "34fa72586f998b2b4b0766a7afd76a4766d901009f47c451e90b9b271a4afdb4",
+      "candidate_sha256": "b3237e99c419fcecb86f6977f4ce524dc3604c26352a3403c99f8dbc0fe35b5f"
+    },
+    {
+      "path": "AGENTS.md",
+      "category": "tracked",
+      "base_sha256": "cf51083b0307496b42b25fc0efd9959ea33cc1ea26f994fd2ec4abd9d2a1b73d",
+      "import_sha256": null,
+      "candidate_sha256": "3d3a842ca98e7281b3eac73c57b15a5e8104fec0a316e291603d11ba82c3476e"
+    },
+    {
+      "path": "RUN-SCOPED-HANDOFF-PROGRESS.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "a55292cd28fc18c9db21f6de193be07e913cb2b1897c43322bd6545820c73f07"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.agents/skills/agent-design/SKILL.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "72f6752a35cb8ea572f8b923bfff95562db19bb11a688e0e3b25a61527199f13"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.agents/skills/domain-research/SKILL.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "7435ab2f402b14a7e1e41aee8d5a55f90486cb8b37773806e6e12c79413291b9"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.agents/skills/file-structure-design/SKILL.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "40878a5b3361caafb44af86306ac0b1214749721079eb4efd088e705a207aef5"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.agents/skills/final-packaging/SKILL.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "91347f7ef567c6409247bd7275c164ebffd7f9fa409de656d99b173203c6df5e"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.agents/skills/objective-decomposition/SKILL.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "5e5d2623d91018c3ee11f14a582093e5c39b9212c094b6722e14ee555d6eb0aa"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.agents/skills/qa-validation/SKILL.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "06dba679c38e753b8a40ffc2fee3a8d3694cf95faaac70d8d7845baa4beacd45"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.agents/skills/red-team-analysis/SKILL.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "65ef492ee450f1c44df57e5b57142fef0aaa0582bf58b617e6301ae49dbcb0d6"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.agents/skills/skill-design/SKILL.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "299da2749799632141b0189e75721c7e29494c88bfc517dfcfcb3c6ae9382d95"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.agents/skills/source-validation/SKILL.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "389ef6e4b77f7a4024f4ee701d0dda04c0b9dc85a358c2e83819569b1a9446a0"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.agents/skills/workflow-sequencing/SKILL.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "5a495ff874e5f3dcd735d73e3d2f39e13a6e5e1f07723b0069dd6d584b512236"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.claude/agents/domain-researcher.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "3c117d85d17dc3568595ac35e2172fc57d8ad789b25c181827af157995037ded"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.claude/agents/final-packager.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "6a59b61abe572f117d6fd8eae2e70dea1b20c40e23dd9614cf5d66e06071dfd2"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.claude/agents/implementation-planner.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "f4b8a1baab6fc0435a96524598d3176f86e7436ecc4b1f7c484d1a86ad51fe42"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.claude/agents/intake-analyst.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "251e282f1a3139b210ed5fec6da6ba67b28f49eb0c12c0d10925f2b254f41a8c"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.claude/agents/quality-reviewer.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "039110b10b11566aab63d9a4fde7bd4afaade31db7b5014ea59181d833428e07"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.claude/agents/red-team-reviewer.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "11605758426cb7acfbb41202136199dc468e9e94e3c911b266bc5d0f0d766601"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.claude/agents/skill-architect.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "fe839ad59752f87c2a074c749fb53e186b5598b0abbfded1c15437de30317762"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.claude/agents/workflow-architect.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "14c38178f935c480733b441178ea62a678f5f2b5be773aa181b4397a51e6e9a7"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.claude/agents/workflow-orchestrator.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "671225157b48502491735cdeb904aeb876c1028c02aab2e9e098512b69b358d5"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.claude/commands/flowstart.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "05c4db7394bebb34d7e082acf6d7670c099c36fd7256772121c43c6dfdb21491"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.claude/commands/maintain.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "f79b8b0948894932e8c3c37a3d09a3ef5424620edbb99587430bd32b38749c96"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.claude/commands/resume.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "47fa4f9527cc519044f1bc4468a3f362980e5acf0045f6c21d5cd8362fd45545"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.claude/commands/update.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "2cc91e8bae4bfe640ae414b63557f904b9f93deba2304e98bc67ef88e37451cd"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.claude/hooks/pre-compact.sh",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "551fd10a70e3d3e204038ae4ffe48cec008cbb3bf62861770f6e080bdda14291"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.claude/hooks/pre-tool-use.sh",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "551fd10a70e3d3e204038ae4ffe48cec008cbb3bf62861770f6e080bdda14291"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.claude/settings.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "e3ebdea9a6011449d3d978cd5ed32a1c7e4cdc5c7b3d09141c6db26eff4c4c68"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.claude/skills",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "3c74c93317f015d16370349a76529b6f8332c808bdd589e7640eeba6a1b1b874"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.codex/agents/domain-researcher.toml",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "1e9723f9d46dd00a60381aca939e5a0a252ee25d45811718ca90994c06db8fd5"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.codex/agents/final-packager.toml",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "e789220f5c71366279b9b0ac7116619b083b5c650da3ea25b790a3983b04ce3e"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.codex/agents/implementation-planner.toml",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "aedb87813fcf27fcc145445e52da14861a789aae692d474c37a3b2f9373be5d5"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.codex/agents/intake-analyst.toml",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "cd6b1cccc66f8d44ab3bee965f9744109bb7884f7d7f5a6795296c808bbeab6f"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.codex/agents/quality-reviewer.toml",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "b17641acc4a50e53e644f7bc5eed74ba4541a0a71da48b07b78df2eb45f102a3"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.codex/agents/red-team-reviewer.toml",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "1bee10e0ed429c8a4368adbaea84aec4e4046e3e00ed4d96d78959a40ff08609"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.codex/agents/skill-architect.toml",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "4523b165fe4aaf4caf17707771e8cd1aa0b981a8e2546b57d17d033f0141f7a3"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.codex/agents/workflow-architect.toml",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "3ee13c3cb79615afe521dbad6e2bb40ff3600717b64a7a2cc4ce7cddb5838cd7"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.codex/agents/workflow-orchestrator.toml",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "7c2bf34ac0b8b2b45daa9db0aeafa3ca362e1d3c50bb2a8ec6e33971c4f457cb"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.codex/commands/flowstart.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "05c4db7394bebb34d7e082acf6d7670c099c36fd7256772121c43c6dfdb21491"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.codex/commands/maintain.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "f79b8b0948894932e8c3c37a3d09a3ef5424620edbb99587430bd32b38749c96"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.codex/commands/resume.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "47fa4f9527cc519044f1bc4468a3f362980e5acf0045f6c21d5cd8362fd45545"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.codex/commands/update.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "2cc91e8bae4bfe640ae414b63557f904b9f93deba2304e98bc67ef88e37451cd"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.devin/agents/domain-researcher/AGENT.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "3c117d85d17dc3568595ac35e2172fc57d8ad789b25c181827af157995037ded"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.devin/agents/final-packager/AGENT.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "6a59b61abe572f117d6fd8eae2e70dea1b20c40e23dd9614cf5d66e06071dfd2"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.devin/agents/implementation-planner/AGENT.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "f4b8a1baab6fc0435a96524598d3176f86e7436ecc4b1f7c484d1a86ad51fe42"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.devin/agents/intake-analyst/AGENT.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "251e282f1a3139b210ed5fec6da6ba67b28f49eb0c12c0d10925f2b254f41a8c"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.devin/agents/quality-reviewer/AGENT.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "039110b10b11566aab63d9a4fde7bd4afaade31db7b5014ea59181d833428e07"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.devin/agents/red-team-reviewer/AGENT.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "11605758426cb7acfbb41202136199dc468e9e94e3c911b266bc5d0f0d766601"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.devin/agents/skill-architect/AGENT.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "fe839ad59752f87c2a074c749fb53e186b5598b0abbfded1c15437de30317762"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.devin/agents/workflow-architect/AGENT.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "14c38178f935c480733b441178ea62a678f5f2b5be773aa181b4397a51e6e9a7"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.devin/agents/workflow-orchestrator/AGENT.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "671225157b48502491735cdeb904aeb876c1028c02aab2e9e098512b69b358d5"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.github/agents/domain-researcher.agent.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "3c117d85d17dc3568595ac35e2172fc57d8ad789b25c181827af157995037ded"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.github/agents/final-packager.agent.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "6a59b61abe572f117d6fd8eae2e70dea1b20c40e23dd9614cf5d66e06071dfd2"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.github/agents/implementation-planner.agent.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "f4b8a1baab6fc0435a96524598d3176f86e7436ecc4b1f7c484d1a86ad51fe42"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.github/agents/intake-analyst.agent.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "251e282f1a3139b210ed5fec6da6ba67b28f49eb0c12c0d10925f2b254f41a8c"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.github/agents/quality-reviewer.agent.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "039110b10b11566aab63d9a4fde7bd4afaade31db7b5014ea59181d833428e07"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.github/agents/red-team-reviewer.agent.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "11605758426cb7acfbb41202136199dc468e9e94e3c911b266bc5d0f0d766601"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.github/agents/skill-architect.agent.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "fe839ad59752f87c2a074c749fb53e186b5598b0abbfded1c15437de30317762"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.github/agents/workflow-architect.agent.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "14c38178f935c480733b441178ea62a678f5f2b5be773aa181b4397a51e6e9a7"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.github/agents/workflow-orchestrator.agent.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "671225157b48502491735cdeb904aeb876c1028c02aab2e9e098512b69b358d5"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.github/commands/flowstart.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "05c4db7394bebb34d7e082acf6d7670c099c36fd7256772121c43c6dfdb21491"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.github/commands/maintain.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "f79b8b0948894932e8c3c37a3d09a3ef5424620edbb99587430bd32b38749c96"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.github/commands/resume.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "47fa4f9527cc519044f1bc4468a3f362980e5acf0045f6c21d5cd8362fd45545"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.github/commands/update.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "2cc91e8bae4bfe640ae414b63557f904b9f93deba2304e98bc67ef88e37451cd"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.opencode/agents/domain-researcher.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "1d5513f4c586522396d557b1b2399a2c3158d05e931172726af6f399a65dbd56"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.opencode/agents/final-packager.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "3374b122ad3c379b6b02747acdf9c5ff79c49395c4ae6322eea8db98da78a89f"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.opencode/agents/implementation-planner.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "a3feab6294a77ed43d18e447780f9a9a2a1e2b4b9aa29bd25a0b3b464defe92c"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.opencode/agents/intake-analyst.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "627ec4b54d56186e43d4c27d9a99360cf361d8df441ef80a9e46cdb75305164f"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.opencode/agents/quality-reviewer.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "70d9be9e2410215d331b95d5bfb84b2e4291f5c63d14f5654ab275fdbd3c5afe"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.opencode/agents/red-team-reviewer.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "4168ba68093293db793ff894de52694c3ad1f211c004228f384d09f88b3ecbc2"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.opencode/agents/skill-architect.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "c89981a0ee14662b2b03c226b4f53160cebd4bd83a8fb4a16a77fa7cf1fdc5d1"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.opencode/agents/workflow-architect.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "4fdeb9b7e092be8edd3911db934cfd96f6b99cfac1819746a8956a56ed9a21ef"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.opencode/agents/workflow-orchestrator.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "4cf1de9aca16a274293ad23e5bc738b6a7adda835461b5f9eebd8c06c9950b62"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.opencode/commands/flowstart.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "05c4db7394bebb34d7e082acf6d7670c099c36fd7256772121c43c6dfdb21491"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.opencode/commands/maintain.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "f79b8b0948894932e8c3c37a3d09a3ef5424620edbb99587430bd32b38749c96"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.opencode/commands/resume.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "47fa4f9527cc519044f1bc4468a3f362980e5acf0045f6c21d5cd8362fd45545"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.opencode/commands/update.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "2cc91e8bae4bfe640ae414b63557f904b9f93deba2304e98bc67ef88e37451cd"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.opencode/plugins/workflow-enforcer.ts",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": "dab354e19daee5b4e64160e7f719a99b025d08c30efa946d09166ccbf9ff5123",
+      "candidate_sha256": "c3dfa67c3e2deaf24a76b970571f17870942f5fe284556d45fe91ca86250dc06"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/.opencode/workflow-config.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": "4a3fef982d42b72d9cc6c2a60e072dfc2aaf2d1433e09aaf52efac728c73f20d",
+      "candidate_sha256": "832c22b0c11af6df7dd7c5e749f8d70d32b0f9f810c4f0187f33ecd07c8f579b"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/AGENTS.md",
+      "category": "tracked",
+      "base_sha256": "c743b695c53d72251d82d6507e481602ff1d15fb85f11cac12ed91742041a743",
+      "import_sha256": null,
+      "candidate_sha256": "7314ab69ae53625e461c050c045f55f4e0068c064b2a9a98bdaf41ef7ba2724f"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/CHANGELOG.md",
+      "category": "tracked",
+      "base_sha256": "2f16935b1edc681b7e6cc1269da34cf0d3ea4729c3b0dd5c6c24836b9e39abd9",
+      "import_sha256": null,
+      "candidate_sha256": "a9b35c65eaf8a76fd86ac3cbda6cfaa1f8ba279a9c65a53b41c40a1df21a0f83"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/README.md",
+      "category": "tracked",
+      "base_sha256": "aae81128175917affc60d2ca5ad4154b26a0ce3e5b3378a4f5dacbc93eda8c64",
+      "import_sha256": null,
+      "candidate_sha256": "24f90f430ad029587612c5075905702701779ba215ea155aebb0ca66daf8b4cd"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/agents/domain-researcher.md",
+      "category": "tracked",
+      "base_sha256": "8f7345ed883d4ca9707834b5f8d35d5da17b9ea90649cd9bad93bcc732b59cae",
+      "import_sha256": null,
+      "candidate_sha256": "8737856d540920ad837b41292f2614d0f5517617764e87c1a4dd9d148e9db21e"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/agents/final-packager.md",
+      "category": "tracked",
+      "base_sha256": "87fae92921f1671e9de7fae4d9fbc51d695544158dd27f986132b67e06a56588",
+      "import_sha256": null,
+      "candidate_sha256": "4c9e61ad3202a61926ee655f4452788657d5b930a60388df06aa87f44c2d95de"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/agents/implementation-planner.md",
+      "category": "tracked",
+      "base_sha256": "456e1fafc0bfd3a9ae41497ba98c806f462231e7fdf313122226e645db43884d",
+      "import_sha256": null,
+      "candidate_sha256": "841b4eed47f484d8c2180d2aa59b1ed85ced65fd4b1ccfc6ea7e837c01b31267"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/agents/intake-analyst.md",
+      "category": "tracked",
+      "base_sha256": "3e5bdd049693b96e304bed631efe9e9d25365955a1c8aa5057c45031a56f8b2b",
+      "import_sha256": null,
+      "candidate_sha256": "cfb1db11cfc77ea5f07c342bebaeb2bb23b17f91867ef95bd0fec3750a5252e5"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/agents/quality-reviewer.md",
+      "category": "tracked",
+      "base_sha256": "61a9a84af89a00cb714d814f6622117062924124296eaf77be44321a03110198",
+      "import_sha256": null,
+      "candidate_sha256": "1a3e624b0fab62b0c56272cb6ebc34fe03406e084d771af5800d13713952768e"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/agents/red-team-reviewer.md",
+      "category": "tracked",
+      "base_sha256": "c4e9b264ce1dde7b2eb39bc7e0854ff6e13d4d05ab58bf1625255f4548c22cde",
+      "import_sha256": null,
+      "candidate_sha256": "439cba6ed07dbf1e7125c4761d17b36da38282e5b1814342cd10097636f16bc5"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/agents/skill-architect.md",
+      "category": "tracked",
+      "base_sha256": "390f4bde2f906fe0b3778d73e43301e1ce42a35d28c0953cfd85fc983b8a8e8a",
+      "import_sha256": null,
+      "candidate_sha256": "213b627334d4e1ce8db2edf50da904736cc3cdb866c8a0b23eb9c17549d25ad6"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/agents/workflow-architect.md",
+      "category": "tracked",
+      "base_sha256": "b91c76ecfdfd34e0d78cd1ac19497617502db42cbe2f8d1c6aa568e6614f874e",
+      "import_sha256": null,
+      "candidate_sha256": "c6733c3a2f11119f019839874c3183ed0d93d82edeb3a554260c8bd41022e8bb"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/agents/workflow-orchestrator.md",
+      "category": "tracked",
+      "base_sha256": "47fbe03484c325ee478385a65362f6fcb9cf2b38ffcfc9a1d52117ce4515ad65",
+      "import_sha256": null,
+      "candidate_sha256": "a50a2491045a30b214274b69be61a2f7d83bf8de679dbf94f0cc1e1040ad52f2"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/commands/flowstart.md",
+      "category": "tracked",
+      "base_sha256": "a0ff149b4e7e61fd3636095158aa7159f68e893767f69d83543d09d9f8e7eae9",
+      "import_sha256": null,
+      "candidate_sha256": "05c4db7394bebb34d7e082acf6d7670c099c36fd7256772121c43c6dfdb21491"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/commands/maintain.md",
+      "category": "tracked",
+      "base_sha256": "5ec26aa8426b0142619260879c6eb1d9082feb664f8dc1e7130adbd3aeea8058",
+      "import_sha256": null,
+      "candidate_sha256": "f79b8b0948894932e8c3c37a3d09a3ef5424620edbb99587430bd32b38749c96"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/commands/resume.md",
+      "category": "tracked",
+      "base_sha256": "fe1b923a1ab0c2647a05c45e4f7b3711458002bbf700b268aed22b9ceffb197a",
+      "import_sha256": null,
+      "candidate_sha256": "47fa4f9527cc519044f1bc4468a3f362980e5acf0045f6c21d5cd8362fd45545"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/commands/update.md",
+      "category": "tracked",
+      "base_sha256": "a9a68c846d29419a2e6357672c7061f46c18147616f51623b7bf807b9efa3741",
+      "import_sha256": null,
+      "candidate_sha256": "2cc91e8bae4bfe640ae414b63557f904b9f93deba2304e98bc67ef88e37451cd"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/dispatch-gate.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "fd691f4776e5d0bcfb6e0357141ba751cb49d4eb6b14a7646fd63a6932873662"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/dispatch-protocol.md",
+      "category": "tracked",
+      "base_sha256": "903b03e12640f0d0607a63d3af6e1b17129530a08b2e28f11762f3a58d68339e",
+      "import_sha256": null,
+      "candidate_sha256": "7e283e2683a93e1c5d78001687cf3f855436fd83c566f8e8d8f6ee2902328eb7"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/enforcement.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": "18a2dadf14e0ceaafb5726e4193bb5fdca735d16d2ef99f85b18254486ddc20c",
+      "candidate_sha256": "7913904346d74b8ce6dc7520d98c94456348198d4d3fa3256add8993b236b80b"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/enforcement/dispatch-gate-hook.sh",
+      "category": "tracked",
+      "base_sha256": "f87a174ba0693e447ccbd15cc6a8ad6a60564df0c663a16b0bde096430809aad",
+      "import_sha256": null,
+      "candidate_sha256": "551fd10a70e3d3e204038ae4ffe48cec008cbb3bf62861770f6e080bdda14291"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/enforcement/dispatch-gate.md",
+      "category": "tracked",
+      "base_sha256": "1b6c468c825eb92dd78871858cdf0b70d1bedcda6759d89dcb7099db1856d571",
+      "import_sha256": null,
+      "candidate_sha256": "fd691f4776e5d0bcfb6e0357141ba751cb49d4eb6b14a7646fd63a6932873662"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/enforcement/enforcement.md",
+      "category": "tracked",
+      "base_sha256": "18a2dadf14e0ceaafb5726e4193bb5fdca735d16d2ef99f85b18254486ddc20c",
+      "import_sha256": null,
+      "candidate_sha256": "7913904346d74b8ce6dc7520d98c94456348198d4d3fa3256add8993b236b80b"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/enforcement/operator_cli.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "f755e318394f055a9aa5de9511e97f7ffa15a1076c9bcb4da9d4c69aeae2291a"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/enforcement/pre-compact.sh",
+      "category": "tracked",
+      "base_sha256": "37c3c50717c8dae2683d8e0942374b417e39e44764e3c59b5c03c91e930051b7",
+      "import_sha256": null,
+      "candidate_sha256": "551fd10a70e3d3e204038ae4ffe48cec008cbb3bf62861770f6e080bdda14291"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/enforcement/pre-tool-use.sh",
+      "category": "tracked",
+      "base_sha256": "21b98721292b3454c040f8b993aa3f4f69b236c19224de96a038e2ade6c1864e",
+      "import_sha256": null,
+      "candidate_sha256": "551fd10a70e3d3e204038ae4ffe48cec008cbb3bf62861770f6e080bdda14291"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/enforcement/run-binding.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "3b9b81bdf52fbc9f51f4b9afba5492290ec24f67d7c2a52e703a66fe6649a462"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/enforcement/run_cli.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "9bcede0e72a148ed97fdf7c773205843e71a62c0090a2558420f6d38abc41822"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/enforcement/run_effects.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "1f7b8338b7fcd9b6c953ec2045a68ea4d83ff6042341f066d27201e0effc8a21"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/enforcement/run_hook.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "cd571be670d94a40c13de04400997bcf0c540c81c25829c5a5116e45bff86b34"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/enforcement/run_operator.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "60bb054465b721933d46080db4178566863dd77252d3195a7a923159a56b4c46"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/enforcement/run_policy.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "d65f9ae8618899598592ac2ac71025295cbf7f8f0dcca7a14c377905a51fd9c8"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/enforcement/run_store.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "2dd91060fc942be00b5a34bf32c4ed77b628ced5e7494189f4cca287ba72dca6"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/enforcement/settings.json",
+      "category": "tracked",
+      "base_sha256": "57062cf906e61764af3b9d772444539723a930fd5f4a1bdfe1414dfbd7eefd53",
+      "import_sha256": null,
+      "candidate_sha256": "e0eadfeff7848f3c6ca8a1d1952c7478842a48dfe5fa6dc6c01e2adceb382e5f"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/enforcement/workflow-config.json",
+      "category": "tracked",
+      "base_sha256": "c9e33c75fdab1f8994ef0fd0112d163cf2d987be47b46017bd064820658a7359",
+      "import_sha256": null,
+      "candidate_sha256": "832c22b0c11af6df7dd7c5e749f8d70d32b0f9f810c4f0187f33ecd07c8f579b"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/enforcement/workflow-enforce.sh",
+      "category": "tracked",
+      "base_sha256": "ab351a95c3f37081f124b965a2b600e62d2274f3fcedf9cc84ba6c238b16f027",
+      "import_sha256": null,
+      "candidate_sha256": "b2f005b540529356bb0404a0c9fc97b94318014d1a6dc755ac1bc0db4169c9ea"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/enforcement/workflow-enforcer.ts",
+      "category": "tracked",
+      "base_sha256": "dab354e19daee5b4e64160e7f719a99b025d08c30efa946d09166ccbf9ff5123",
+      "import_sha256": null,
+      "candidate_sha256": "c3dfa67c3e2deaf24a76b970571f17870942f5fe284556d45fe91ca86250dc06"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/flowstart.devin.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "05c4db7394bebb34d7e082acf6d7670c099c36fd7256772121c43c6dfdb21491"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/maintain.devin.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "f79b8b0948894932e8c3c37a3d09a3ef5424620edbb99587430bd32b38749c96"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/prompts/generate-new-agent-package.md",
+      "category": "tracked",
+      "base_sha256": "b82a67255dcf4617aceb83de6267231aed9b510a23e88ec67e316ec279635e91",
+      "import_sha256": null,
+      "candidate_sha256": "7b7be22a34bce038e2db5c5836044c1d3da831ca3f397baabea8838989140d6e"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/resume.devin.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "47fa4f9527cc519044f1bc4468a3f362980e5acf0045f6c21d5cd8362fd45545"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/run-binding.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "3b9b81bdf52fbc9f51f4b9afba5492290ec24f67d7c2a52e703a66fe6649a462"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/scripts/enforcement/dispatch-gate-hook.sh",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": "f87a174ba0693e447ccbd15cc6a8ad6a60564df0c663a16b0bde096430809aad",
+      "candidate_sha256": "551fd10a70e3d3e204038ae4ffe48cec008cbb3bf62861770f6e080bdda14291"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/scripts/enforcement/operator_cli.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "f755e318394f055a9aa5de9511e97f7ffa15a1076c9bcb4da9d4c69aeae2291a"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/scripts/enforcement/run_cli.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "9bcede0e72a148ed97fdf7c773205843e71a62c0090a2558420f6d38abc41822"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/scripts/enforcement/run_effects.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "1f7b8338b7fcd9b6c953ec2045a68ea4d83ff6042341f066d27201e0effc8a21"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/scripts/enforcement/run_hook.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "cd571be670d94a40c13de04400997bcf0c540c81c25829c5a5116e45bff86b34"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/scripts/enforcement/run_operator.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "60bb054465b721933d46080db4178566863dd77252d3195a7a923159a56b4c46"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/scripts/enforcement/run_policy.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "d65f9ae8618899598592ac2ac71025295cbf7f8f0dcca7a14c377905a51fd9c8"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/scripts/enforcement/run_store.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "2dd91060fc942be00b5a34bf32c4ed77b628ced5e7494189f4cca287ba72dca6"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/scripts/enforcement/workflow-enforce.sh",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": "ab351a95c3f37081f124b965a2b600e62d2274f3fcedf9cc84ba6c238b16f027",
+      "candidate_sha256": "b2f005b540529356bb0404a0c9fc97b94318014d1a6dc755ac1bc0db4169c9ea"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/scripts/preflight-task-check.sh",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "0dd0acf1fbc9235705eb532c8b076881e2f69b124b71cdc83e6171c1b0a68a33"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/templates/agent-file-template.md",
+      "category": "tracked",
+      "base_sha256": "2bada9c167592a3fcae22f1e3991431225e63efbb2022f69c5513b4780c5f2e0",
+      "import_sha256": null,
+      "candidate_sha256": "9937912d2494644ac3e3ea7a1bc39885c26ac1e360730ed6ba47ed03bfd6f33c"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/templates/workflow-package-template.md",
+      "category": "tracked",
+      "base_sha256": "ae6dc7317ee994d36296864ba1560fdc6ebe987f18ae84af2e92120d77b50f27",
+      "import_sha256": null,
+      "candidate_sha256": "f3d986805b3a02697a819aa6cde63148c8806af89a6da5b34f968c8339381e92"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/tests/runtime_plugin.test.ts",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "08420514072af29b6c7f5e5326aef2d9d5253864b63b227c9e887970cf208493"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/tests/test_dispatch_contract.py",
+      "category": "tracked",
+      "base_sha256": "768918765523a23ea8b1b59229e68e9f53ae038b1e0c29b7838b6696ace3a8d2",
+      "import_sha256": null,
+      "candidate_sha256": "d1ff4933ab6da5e58d9235d0d77dcd3735c4f3b2629ff693236665596dac65ab"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/tests/test_effect_lifecycle.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "6307b22b59228f8860a68d91a2568ec027598d9593d6978c96e4d75c2ac771e0"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/tests/test_run_store.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "d20c6e8ee36d2d7341a7325cf6cae6ad5c8c1d142b0153703e123cb6108a7705"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/tests/test_runtime_paths.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "cce231386ff76ee5854061c446c91f10cea18c2276b6660c5b480d6ed6464302"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/tests/test_sync_identity.py",
+      "category": "tracked",
+      "base_sha256": "a214441d5ecb0dfa6872bbac73a0fe3b290174be4c9c5babf78d588ec9d7b783",
+      "import_sha256": null,
+      "candidate_sha256": "5c4f93453f53fb7588da3645f4c7d0ed86c881700304b355d006b1ec612af625"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/update.devin.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "2cc91e8bae4bfe640ae414b63557f904b9f93deba2304e98bc67ef88e37451cd"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/validation-report.json",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "c036dd56c70f439886073294d864ee36dee6349282abcac4d3111abf7cb87609"
+    },
+    {
+      "path": "agent-packages/workflow-designer-agent/workflow.md",
+      "category": "tracked",
+      "base_sha256": "0220efd476c16fcb28c5005290a02ebe42d066b9e17a3574e47b5a8cfabe6cd5",
+      "import_sha256": null,
+      "candidate_sha256": "fa99ee9e5b36bebeec6a1b929b39e1355b71d1c174dbe3a48a862d372dc84e9d"
+    },
+    {
+      "path": "checkpoint1-evidence/main-inventory-before.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "ded922c9915c1a75e393bdd152d5c374e747ef0604531c47cb81dfa23f8a9a4f"
+    },
+    {
+      "path": "checkpoint1-evidence/main-status-before.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "db071f705e6318e10a2fe670966467963d70644dcfa9e3e75f8837d529d6f2d7"
+    },
+    {
+      "path": "checkpoint1-evidence/main-unchanged-final.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "612607988d6cccd1b1536e9b8a8eed64a9784f4bbb7b983b85667b3fbf490f35"
+    },
+    {
+      "path": "checkpoint1-evidence/main-unchanged.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "83e2d674df0919ae9ced3b9b1ca376a78cfdacd02b6dca5fc480d78b825ae8d7"
+    },
+    {
+      "path": "checkpoint1-evidence/red-results.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "25be52a434001f76bc0529d6ae0036354c07d2b2a4a6b7f8bf5cd2b3fe8ea73b"
+    },
+    {
+      "path": "checkpoint1-evidence/snapshot-manifest.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "a1ac90d7e071390ec07223be7a6687a89f92676303a72f541b2e66e4c3cf40f7"
+    },
+    {
+      "path": "checkpoint1_red.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "821e7ef06e91cdee0da2a1fab35606e9da55d659dab14d877acb29a9637f09a2"
+    },
+    {
+      "path": "checkpoint1_snapshot.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "c8af4ce749e2cfcbeb60751a95581cfe773cd0b8bfe2697c8cf55d7d80c74ec3"
+    },
+    {
+      "path": "checkpoint2-evidence/final-checks.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "bd6d72ad3c1ca17f4e0c27b63ed742a72e8da5d80c89b9626b917947d3a98708"
+    },
+    {
+      "path": "checkpoint2-evidence/red-observations.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "326daf251a41ae88077852309f56bd5a3cbaeb4774d9c715ccb682cddc4212fc"
+    },
+    {
+      "path": "checkpoint2-evidence/tests.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "1b3c7d1e92de66713709eb746d19065becad10b22fa18fc08f354c6ca1ef9a80"
+    },
+    {
+      "path": "checkpoint3-evidence/candidate-paths.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "89e2b12ae94079de2c855c3c78d72dd00a1ae331842ea657c66862625d25ade2"
+    },
+    {
+      "path": "checkpoint3-evidence/final-checks.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "3826e1d10f11bd063d55d256dd8aee21787fb473aebaaeca2804916af8bca1d1"
+    },
+    {
+      "path": "checkpoint3-evidence/red-observations.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "97e5252fca0a2d39b869902f3c147c5b3408b524de1434be6eaf1317d7bc680e"
+    },
+    {
+      "path": "checkpoint3-evidence/test-0.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "921ed0fd4ac4dd80c9a3997e921c4e10d2985fb8fd19a6657de0df907c1dc79a"
+    },
+    {
+      "path": "checkpoint3-evidence/test-1.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "c9b688290b6d80fdfe0425b51bd95641fe293269c583c18ea40fca405266938b"
+    },
+    {
+      "path": "checkpoint3-evidence/test-2.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "2584d75b8b5c84a52b8f932658ce75c4fd6d82794c18c49c64e00410844e47fc"
+    },
+    {
+      "path": "checkpoint3-evidence/test-3.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "db8ba46111c600e0be5816d1c6f2efbba825c01ed70f8a0fa067319cf314b6d2"
+    },
+    {
+      "path": "checkpoint3_sync.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "03bb8a24da88412e9030cd5bfd81eff392ebb0e0b311c207b37fd5a1dbff624d"
+    },
+    {
+      "path": "checkpoint3_verify.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "b07f2492c57610556bdf7b3f8ae478d65635633765b91586fdf3bd393e852fdc"
+    },
+    {
+      "path": "checkpoint3b-evidence/changed-paths.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "5e983ccd1067875460010105eb974e8f320aed6ff0bc80f25a8a19aabb56379c"
+    },
+    {
+      "path": "checkpoint3b-evidence/final-checks.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "156e1d596d10fefbe0c6d4a5836a82a58eefa7d09bde8bda7f6388753cf3b576"
+    },
+    {
+      "path": "checkpoint3b-evidence/red-observations.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "eb98f7bd3d95de619a4b95c0d070630a2394daf0a17904898aee82d4472591ee"
+    },
+    {
+      "path": "checkpoint3b-evidence/test-0.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "510e92f5b70b7d27d87f25197f3b0efcb94fdd9d15628d70d653bcf6076fc398"
+    },
+    {
+      "path": "checkpoint3b-evidence/test-1.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "3f2c7a0ec9c96cc26a770924a924786675dd408bba23da94dec9d80c1be6b1d9"
+    },
+    {
+      "path": "checkpoint3b-evidence/test-2.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "db8ba46111c600e0be5816d1c6f2efbba825c01ed70f8a0fa067319cf314b6d2"
+    },
+    {
+      "path": "checkpoint3b_verify.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "cc4fcd8fbf5c1bb25a742b631dbef1ce70eade85f59ae6a592cd1c3e615b5eb6"
+    },
+    {
+      "path": "checkpoint3c-evidence/changed-paths.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "1e7720ae53bb31ccfa434872e5ea43ffbe238e0f102814b019cc0a7f245ea201"
+    },
+    {
+      "path": "checkpoint3c-evidence/preservation.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "503a56c3025643e029921375fb54eb43d019a44a50fe2d10b8425c203bead0b9"
+    },
+    {
+      "path": "checkpoint3c-evidence/size-findings.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "9be79eefab92b259609bc26678eade2ef7993257265626ed05e57a5aa764818e"
+    },
+    {
+      "path": "checkpoint3c-evidence/test-receipt.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "2c860bce5f6681e3f5a8496d8c3aaf70732b4bf688c9dba8836e9652a956b5da"
+    },
+    {
+      "path": "checkpoint3c_snapshot.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "5bddf8bfbc38d125d03d4ee777c5fb82c63ee85c63fb8073951739094405ebcd"
+    },
+    {
+      "path": "checkpoint3d-evidence/changed-paths.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "9557ef7c0612c37fa2890608ab5fe4d37e6ca6e6cdf30d4a26f610119fad6fcf"
+    },
+    {
+      "path": "checkpoint3d-evidence/preservation.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "9bc67b4e819c0ae2b650ac50343afb13bb1006a6cacc92039f8474327c3cdc04"
+    },
+    {
+      "path": "checkpoint3d-evidence/red-observations.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "ce6b60f942f55334d05dbc3903ddf43f6f93b0dc9abf57db8b678429b2c1b6aa"
+    },
+    {
+      "path": "checkpoint3d-evidence/size-findings.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "checkpoint3d-evidence/test-0.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "7316dc3acacd5751c6d928ef219597c410b45676350f2ae8e842efdee331569b"
+    },
+    {
+      "path": "checkpoint3d-evidence/test-1.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "f6cf665fbce8f12ac2195b1aaacfe2acb523060d5c0922dc29b021b4b208f971"
+    },
+    {
+      "path": "checkpoint3d-evidence/test-2.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "8b70b11339f8a14b75eb6c6910ea1cc43ea5f603e4a02d9aed1552816d4437f0"
+    },
+    {
+      "path": "checkpoint3d-evidence/test-3.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "945cf398d1f30520c4238efd52ca63c1dd47a087dfac25da008ffb97881ae848"
+    },
+    {
+      "path": "checkpoint3d-evidence/test-4.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "3ab74475f50670ad94c7df3a898c029beea9da1478344f27e6acfa2a176c0710"
+    },
+    {
+      "path": "checkpoint3d-evidence/tests.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "31f7999e1e932232dad37e01e7ecd9a07aa6d693dcfd620fa5d9c126bf1484f1"
+    },
+    {
+      "path": "checkpoint3d_verify.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "e7fdcd11e10b7bc62982312c4713c212e7a644aaf645a15c656507759eff1721"
+    },
+    {
+      "path": "checkpoint4-evidence/command-00.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "08d8d9f5f26f3fc2d6ceea7f4c51158ef33ec1109e881bdfe20bac3453b95b74"
+    },
+    {
+      "path": "checkpoint4-evidence/command-01.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "76d3bbf5e6e47f187ea1cb0463d4f3f5a59bfdce807759e1a306ed677a71d8ad"
+    },
+    {
+      "path": "checkpoint4-evidence/command-02.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "2274a2e4393ec222124d3738a579dcd815948937dfc43c5fef617e4a80160adf"
+    },
+    {
+      "path": "checkpoint4-evidence/command-03.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "08d8d9f5f26f3fc2d6ceea7f4c51158ef33ec1109e881bdfe20bac3453b95b74"
+    },
+    {
+      "path": "checkpoint4-evidence/command-04.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "76d3bbf5e6e47f187ea1cb0463d4f3f5a59bfdce807759e1a306ed677a71d8ad"
+    },
+    {
+      "path": "checkpoint4-evidence/command-05.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "2274a2e4393ec222124d3738a579dcd815948937dfc43c5fef617e4a80160adf"
+    },
+    {
+      "path": "checkpoint4-evidence/command-06.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "12873c9d6b5c75a210101f692ca135865a17099a5c954e20e2e1c554db9321f8"
+    },
+    {
+      "path": "checkpoint4-evidence/command-07.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "232921e69f38a6ff7cccfdee3a6219012bef047cd0acbb638a69d15a0ebbbab6"
+    },
+    {
+      "path": "checkpoint4-evidence/command-08.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "bba84ba09befb1e7dc6cf7f70450260c63040878cd319b5a69cf4fc09d326011"
+    },
+    {
+      "path": "checkpoint4-evidence/command-09.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "0c2807d6db35badf41442eb83b5254e29c22639c7c135bba6238722db35fedc8"
+    },
+    {
+      "path": "checkpoint4-evidence/command-10.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "4c7dfcc78d545431b5fe44d6c08f1ff548ed8b4715ddaf1dc6a210e9a3744460"
+    },
+    {
+      "path": "checkpoint4-evidence/command-11.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "b68c78387213324e796343f59b36de63d9c254f26c649bfe5443fc7d32d1d4a3"
+    },
+    {
+      "path": "checkpoint4-evidence/command-12.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "f6051cec519f600145427add76495e16b52a4e6d4af4265a0d213f94ca9e7ca2"
+    },
+    {
+      "path": "checkpoint4-evidence/command-13.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "1e3a522d9b906d25059320a4041420c8d522c3fa9904877196d598e485644230"
+    },
+    {
+      "path": "checkpoint4-evidence/command-14.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "2d9e61b239b1db536e19fee18d40303b8883be64e5d7c12b874b93cbe22842c7"
+    },
+    {
+      "path": "checkpoint4-evidence/command-15.txt",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "checkpoint4-evidence/commands.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "d397942993ad326757300a078926648c569e676e57d00cde77418709f458de4b"
+    },
+    {
+      "path": "checkpoint4-evidence/generation.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "131f65e78089045d31fa1549f3e8ed2b7c8dfa66a186f0d9c9c6d211fbae3eea"
+    },
+    {
+      "path": "checkpoint4-evidence/notes.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "b84ed36ed1f5bef036ab7a7700b9c443332120b2aaf974c2773801904be6affb"
+    },
+    {
+      "path": "checkpoint4-evidence/preservation.json",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "2b882dffa683d3af79327d70b2aee45be9198ec2fb138f73e496f473f8224164"
+    },
+    {
+      "path": "checkpoint4_verify.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "f187e5f8fbde7b726fa5a4ac0079233a5e137ace4e22c03a27716eb0e303d8e1"
+    },
+    {
+      "path": "dispatch-gate.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "fd691f4776e5d0bcfb6e0357141ba751cb49d4eb6b14a7646fd63a6932873662"
+    },
+    {
+      "path": "enforcement.md",
+      "category": "tracked",
+      "base_sha256": "18a2dadf14e0ceaafb5726e4193bb5fdca735d16d2ef99f85b18254486ddc20c",
+      "import_sha256": null,
+      "candidate_sha256": "7913904346d74b8ce6dc7520d98c94456348198d4d3fa3256add8993b236b80b"
+    },
+    {
+      "path": "flowstart.devin.md",
+      "category": "tracked",
+      "base_sha256": "a0ff149b4e7e61fd3636095158aa7159f68e893767f69d83543d09d9f8e7eae9",
+      "import_sha256": null,
+      "candidate_sha256": "05c4db7394bebb34d7e082acf6d7670c099c36fd7256772121c43c6dfdb21491"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.claude/agents/network-infrastructure-execution-orchestrator.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "387bd6b671653b7cb765c3990e729bdcd4632fb568bfe51551b499d4a380d845",
+      "candidate_sha256": "6aeb13be2c62836dbac320c4489807c3f0e486f6e210708c3a4f9305917557b5"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.claude/agents/repo-implementation-owner.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "fd3deb7151bc4f5d89665cb2e7785ff7aad76c8e8e6397ed843b395286af87b0",
+      "candidate_sha256": "390f68aefd40c133c626728a87940bb03fd97a70cb49481ab3b54f2af9c03233"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.claude/commands/resume-execution.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "8c6a4c525c259190d41b76e503bbad1407347bdd3206742a782a80ca43242e2b",
+      "candidate_sha256": "e4e1b929659ef604394c89a3369332fddb741781e1d45e24b100fe9c4f6ee569"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.claude/hooks/pre-compact.sh",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "37c3c50717c8dae2683d8e0942374b417e39e44764e3c59b5c03c91e930051b7",
+      "candidate_sha256": "551fd10a70e3d3e204038ae4ffe48cec008cbb3bf62861770f6e080bdda14291"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.claude/hooks/pre-tool-use.sh",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "21b98721292b3454c040f8b993aa3f4f69b236c19224de96a038e2ade6c1864e",
+      "candidate_sha256": "551fd10a70e3d3e204038ae4ffe48cec008cbb3bf62861770f6e080bdda14291"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.claude/settings.json",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "5ee6e01de4e77d8b545aeba53f6aaef7ee5dfa28449bc173d9371a9dd845127c",
+      "candidate_sha256": "97df89d5c77b42e5c37efec1aaf635fb1285d96cfe346a6d4746c5c2ea3447d7"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.codex/agents/network-infrastructure-execution-orchestrator.toml",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "9d5c3df9cc44ca32b1105f226f18287396a0ec2e53532a81e6123fdbf1e2ace0",
+      "candidate_sha256": "7deb4b53f44846826f4837b40aa7414beab8665b1df5d8fe650d558280d36b34"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.codex/agents/repo-implementation-owner.toml",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "714a79e3ac917cf62a23322785b8e7ca8caab952385b0529886514afb82205e5",
+      "candidate_sha256": "378b7f3f000ca0916758e336068708eccd66ff1da642ed5161aa92aa018465ee"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.codex/commands/resume-execution.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "8c6a4c525c259190d41b76e503bbad1407347bdd3206742a782a80ca43242e2b",
+      "candidate_sha256": "e4e1b929659ef604394c89a3369332fddb741781e1d45e24b100fe9c4f6ee569"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.devin/agents/network-infrastructure-execution-orchestrator/AGENT.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "387bd6b671653b7cb765c3990e729bdcd4632fb568bfe51551b499d4a380d845",
+      "candidate_sha256": "6aeb13be2c62836dbac320c4489807c3f0e486f6e210708c3a4f9305917557b5"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.devin/agents/repo-implementation-owner/AGENT.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "fd3deb7151bc4f5d89665cb2e7785ff7aad76c8e8e6397ed843b395286af87b0",
+      "candidate_sha256": "390f68aefd40c133c626728a87940bb03fd97a70cb49481ab3b54f2af9c03233"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.github/agents/network-infrastructure-execution-orchestrator.agent.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "387bd6b671653b7cb765c3990e729bdcd4632fb568bfe51551b499d4a380d845",
+      "candidate_sha256": "6aeb13be2c62836dbac320c4489807c3f0e486f6e210708c3a4f9305917557b5"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.github/agents/repo-implementation-owner.agent.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "fd3deb7151bc4f5d89665cb2e7785ff7aad76c8e8e6397ed843b395286af87b0",
+      "candidate_sha256": "390f68aefd40c133c626728a87940bb03fd97a70cb49481ab3b54f2af9c03233"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.github/commands/resume-execution.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "8c6a4c525c259190d41b76e503bbad1407347bdd3206742a782a80ca43242e2b",
+      "candidate_sha256": "e4e1b929659ef604394c89a3369332fddb741781e1d45e24b100fe9c4f6ee569"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.opencode/agents/advertise-stage-operator.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "3759c8b2e5ab98cdbf6898681a63c705c868aeb78dbc44c6f225bd649614e9b6",
+      "candidate_sha256": "c232b50267cb8ebde61db2fb38065965dce9a093d88c346fc1953d9d888d15d2"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.opencode/agents/ansible-rollout-operator.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "4f713664b8a2d20530d7eda3089f27ddff0705b30279a68815ddd921d0200b7d",
+      "candidate_sha256": "47fea124ed7fe4f181caa664392eb5953a55f282ec9fd28f2da834d1e24a805e"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.opencode/agents/bgp-mesh-executor.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "db4350288d05079971d8a9011e76eb00f365605563e596f82fc69dec854319e3",
+      "candidate_sha256": "1cd6adf68e4b25bb684e5743162c1631e48d14adcf108ab030adde91f4551862"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.opencode/agents/canary-validation-operator.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "eb0269b0044654591467b6725bdb4d22c3113b28f3f45a428da92ba222687505",
+      "candidate_sha256": "af5cab86dae735f99e302dd1a46a238349ebd16484a4b7aeaa231d91b191a50d"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.opencode/agents/closeout-evidence-curator.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "9c1e0b3e5d32e1e3b64a17ad7251c995d7a442525b0374cabf500cb3645c8258",
+      "candidate_sha256": "5db2daa7b900941a81068512c1f117d3e87a51c32ab1d31021f78cbf5ab11a11"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.opencode/agents/execution-intake-gatekeeper.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "4ea2717318cbab317da3f0ddbe24c135227def23dde9557059003d0bdd545369",
+      "candidate_sha256": "0672c2054fabb591bc2300a9571fdce304594299b33a480169d89619150546ce"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.opencode/agents/failover-validation-operator.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "fc4577e2ed3786e666138a8d9621b5e371b6a382bda6f5d90bd89f094ff77727",
+      "candidate_sha256": "18b806ff1492d79a3d2b6f1f4e33c35331ef88c3b9875243e7f1768bb256bacf"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.opencode/agents/github-actions-diagnostics-specialist.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "e402a1cdde8500a1bc221617de32886386b756484d9c8c8c413a2bd02eed0aae",
+      "candidate_sha256": "b35df69aa2de748a225c99bca9f8912d722c15db715afa0b3417bdbd9454d005"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.opencode/agents/handoff-authenticator.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "e56d2890f4f9cae834f1aa3814b173a9d6144982cfb19450049f6880a00223dc",
+      "candidate_sha256": "758c5348f3246727631bb5c6dd2f2664db6c67e266d1ea9d37ff884dd4ab8042"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.opencode/agents/network-infrastructure-execution-orchestrator.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "73850d02ced66480e3b9203d9ce0b6a174a2a127329c30e409ebb5cb28345296",
+      "candidate_sha256": "1cf66139cc091c75e7edb454ea16b2471a5e19aaeff320ccfd4fc1a471748272"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.opencode/agents/quality-reviewer.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "dc336ba6fe9e6490344be9d743dfc2089d09159b655c9a2bc5b00a1fd0a15cd7",
+      "candidate_sha256": "e6103b194c6fdab01cd23831a2fa0c84a68dd4253343de3aa6bca69564b33735"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.opencode/agents/red-team-reviewer.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "aad01c9e02b4bde5c6656a2f9f03a8a40cd06626c3d438e23814d5ed240d7d1e",
+      "candidate_sha256": "6ea15a8ef8de24dd8fc1389cebf262b7c006be8d8e5a3ec7c774422bd415eb0b"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.opencode/agents/repo-implementation-owner.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "1b1679884c70ac5443dd98f3a9192e70445b0e1aadd376fa6515492d91840db9",
+      "candidate_sha256": "a47ca2db5287b3acb2ce7eeb488a16bece8ecd5a0aad521797f62509c1776de1"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.opencode/agents/rollback-coordinator.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "044dfee270538807105a1d4a9decc6a8e47e187e0bf431e142e6f466179ff285",
+      "candidate_sha256": "5322751db2d52695ea8cfc16f64de9bdcb43c3db56be4b5b698747a339f0b3cc"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.opencode/agents/terraform-apply-operator.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "18f1299eedfca89454d1efde4e05708251110e12995a6031b55c3f20f37be3e6",
+      "candidate_sha256": "c22239ffc87578342cf2466706e74c316fa8891e2207ca5ab69ce257dc0ebd41"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.opencode/commands/resume-execution.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "8c6a4c525c259190d41b76e503bbad1407347bdd3206742a782a80ca43242e2b",
+      "candidate_sha256": "e4e1b929659ef604394c89a3369332fddb741781e1d45e24b100fe9c4f6ee569"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.opencode/plugins/workflow-enforcer.ts",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "cbf02cd6bbc8c18067542f7eb8ee1ff37fb248b4019ec6c2f3a0bc887a6972b5",
+      "candidate_sha256": "c3dfa67c3e2deaf24a76b970571f17870942f5fe284556d45fe91ca86250dc06"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/.opencode/workflow-config.json",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "15e69d41ff2192716c94fad269af5e09d2623d30cf8daa487b376e49ff5a535e",
+      "candidate_sha256": "3476e0425f588eb572f5eb25d7ce9fa8825f99c9cacda1218a74394ba82d7b19"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/AGENTS.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "c7a2bcf1b007b4e906902eefca3cf2a127d47f679e6d7ef66b5020f8e1df4543",
+      "candidate_sha256": "9e3fa6b2663e8ddc991acbd60a6dc0fe8879b80102f2cf3d7a0687a2b0235b9f"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/agents/network-infrastructure-execution-orchestrator.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "c2b9fa67e5ccbabd93f449cc6813e883444dcc101dd782381e37fce1af0a1412",
+      "candidate_sha256": "6c41aa07ffdd8f379d5e25312d71489c13ff814e7df3888eefc7e47a3f415444"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/agents/repo-implementation-owner.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "6566aabfa6918ff36f0e61deb35cbcbf96d8edbba56112a08bceebe3288cd7f8",
+      "candidate_sha256": "e7000f4f2beed47c28cf1c89d699442ff1e51064c637f0eff2b0aef5654e8933"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/commands/resume-execution.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "8c6a4c525c259190d41b76e503bbad1407347bdd3206742a782a80ca43242e2b",
+      "candidate_sha256": "e4e1b929659ef604394c89a3369332fddb741781e1d45e24b100fe9c4f6ee569"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/dispatch-protocol.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "4a60ec18d59444d864dc178ee57d2b79d38831a83f9dd281d849edf34f25c055",
+      "candidate_sha256": "1110385ccd5f7e01e721b966f00c6885360bf7fbba7479aeeed5ef0f31af15ff"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/enforcement/dispatch-gate-hook.sh",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "f87a174ba0693e447ccbd15cc6a8ad6a60564df0c663a16b0bde096430809aad",
+      "candidate_sha256": "551fd10a70e3d3e204038ae4ffe48cec008cbb3bf62861770f6e080bdda14291"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/enforcement/network_policy.py",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "cd1e54d0f1737c89d29b1b5c4007381dfff7f2ba32dc0a1c2762ccdd8e706b18"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/enforcement/operator_cli.py",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "f755e318394f055a9aa5de9511e97f7ffa15a1076c9bcb4da9d4c69aeae2291a"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/enforcement/pre-compact.sh",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "37c3c50717c8dae2683d8e0942374b417e39e44764e3c59b5c03c91e930051b7",
+      "candidate_sha256": "551fd10a70e3d3e204038ae4ffe48cec008cbb3bf62861770f6e080bdda14291"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/enforcement/pre-tool-use.sh",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "21b98721292b3454c040f8b993aa3f4f69b236c19224de96a038e2ade6c1864e",
+      "candidate_sha256": "551fd10a70e3d3e204038ae4ffe48cec008cbb3bf62861770f6e080bdda14291"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/enforcement/run-binding.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "3b9b81bdf52fbc9f51f4b9afba5492290ec24f67d7c2a52e703a66fe6649a462"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/enforcement/run_cli.py",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "9bcede0e72a148ed97fdf7c773205843e71a62c0090a2558420f6d38abc41822"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/enforcement/run_effects.py",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "1f7b8338b7fcd9b6c953ec2045a68ea4d83ff6042341f066d27201e0effc8a21"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/enforcement/run_hook.py",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "cd571be670d94a40c13de04400997bcf0c540c81c25829c5a5116e45bff86b34"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/enforcement/run_operator.py",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "60bb054465b721933d46080db4178566863dd77252d3195a7a923159a56b4c46"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/enforcement/run_policy.py",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "d65f9ae8618899598592ac2ac71025295cbf7f8f0dcca7a14c377905a51fd9c8"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/enforcement/run_store.py",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "2dd91060fc942be00b5a34bf32c4ed77b628ced5e7494189f4cca287ba72dca6"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/enforcement/settings.json",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "57062cf906e61764af3b9d772444539723a930fd5f4a1bdfe1414dfbd7eefd53",
+      "candidate_sha256": "e0eadfeff7848f3c6ca8a1d1952c7478842a48dfe5fa6dc6c01e2adceb382e5f"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/enforcement/workflow-config.json",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "15e69d41ff2192716c94fad269af5e09d2623d30cf8daa487b376e49ff5a535e",
+      "candidate_sha256": "3476e0425f588eb572f5eb25d7ce9fa8825f99c9cacda1218a74394ba82d7b19"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/enforcement/workflow-enforce.sh",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "ed4b85988f1f523e3c15a016ade20d4b5676dfc8dd844f74e0441bc1171d574b",
+      "candidate_sha256": "b2f005b540529356bb0404a0c9fc97b94318014d1a6dc755ac1bc0db4169c9ea"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/enforcement/workflow-enforcer.ts",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "cbf02cd6bbc8c18067542f7eb8ee1ff37fb248b4019ec6c2f3a0bc887a6972b5",
+      "candidate_sha256": "c3dfa67c3e2deaf24a76b970571f17870942f5fe284556d45fe91ca86250dc06"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/resume-execution.devin.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "8c6a4c525c259190d41b76e503bbad1407347bdd3206742a782a80ca43242e2b",
+      "candidate_sha256": "e4e1b929659ef604394c89a3369332fddb741781e1d45e24b100fe9c4f6ee569"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/run-binding.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "3b9b81bdf52fbc9f51f4b9afba5492290ec24f67d7c2a52e703a66fe6649a462"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/scripts/enforcement/dispatch-gate-hook.sh",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "f87a174ba0693e447ccbd15cc6a8ad6a60564df0c663a16b0bde096430809aad",
+      "candidate_sha256": "551fd10a70e3d3e204038ae4ffe48cec008cbb3bf62861770f6e080bdda14291"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/scripts/enforcement/network_policy.py",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "cd1e54d0f1737c89d29b1b5c4007381dfff7f2ba32dc0a1c2762ccdd8e706b18"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/scripts/enforcement/operator_cli.py",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "f755e318394f055a9aa5de9511e97f7ffa15a1076c9bcb4da9d4c69aeae2291a"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/scripts/enforcement/run_cli.py",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "9bcede0e72a148ed97fdf7c773205843e71a62c0090a2558420f6d38abc41822"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/scripts/enforcement/run_effects.py",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "1f7b8338b7fcd9b6c953ec2045a68ea4d83ff6042341f066d27201e0effc8a21"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/scripts/enforcement/run_hook.py",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "cd571be670d94a40c13de04400997bcf0c540c81c25829c5a5116e45bff86b34"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/scripts/enforcement/run_operator.py",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "60bb054465b721933d46080db4178566863dd77252d3195a7a923159a56b4c46"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/scripts/enforcement/run_policy.py",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "d65f9ae8618899598592ac2ac71025295cbf7f8f0dcca7a14c377905a51fd9c8"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/scripts/enforcement/run_store.py",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "2dd91060fc942be00b5a34bf32c4ed77b628ced5e7494189f4cca287ba72dca6"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/scripts/enforcement/workflow-enforce.sh",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "ed4b85988f1f523e3c15a016ade20d4b5676dfc8dd844f74e0441bc1171d574b",
+      "candidate_sha256": "b2f005b540529356bb0404a0c9fc97b94318014d1a6dc755ac1bc0db4169c9ea"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/tests/golden/safe-package/README.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "8c13214e1024922ac5c4f685df4529ee59334427ca35605244fe998d00ce50ee",
+      "candidate_sha256": "44f8f50a7f406489d4111e9178ced43350429596f3542fd5b6b9d6ae1a9a78c2"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/tests/golden/safe-package/dispatch-protocol.md",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "b5c995009b1a50685cecceaaf6ae984aaf47c950294a4e3f3cd2e7fb5679b409",
+      "candidate_sha256": "85796e1fc6ab82514469bbc6578c9ef9cdbcd62e3aa92aed2971a956766551e8"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/tests/test_task_dispatch_preflight.py",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "222f911ad744b6c1d13420ee957a225c5c5a5540aa7b049da8aa19a32ac66c57",
+      "candidate_sha256": "1a7950ae39e66f533c34bb93c8cb4f3297c12bb8c72a9be388288d25005e2996"
+    },
+    {
+      "path": "generated-workflows/network-infrastructure-execution-workflow/validation-report.json",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "2517a6bf89ecdf81dcab32a0f0a2e787069ad15a55a727afa208f5deb1e98f26",
+      "candidate_sha256": "aa90638c0eba93870574c2c1979463602e9fb9b3856162ffa1ea1cb93b6cdb0c"
+    },
+    {
+      "path": "maintain.devin.md",
+      "category": "tracked",
+      "base_sha256": "5ec26aa8426b0142619260879c6eb1d9082feb664f8dc1e7130adbd3aeea8058",
+      "import_sha256": null,
+      "candidate_sha256": "f79b8b0948894932e8c3c37a3d09a3ef5424620edbb99587430bd32b38749c96"
+    },
+    {
+      "path": "resume.devin.md",
+      "category": "tracked",
+      "base_sha256": "fe1b923a1ab0c2647a05c45e4f7b3711458002bbf700b268aed22b9ceffb197a",
+      "import_sha256": null,
+      "candidate_sha256": "47fa4f9527cc519044f1bc4468a3f362980e5acf0045f6c21d5cd8362fd45545"
+    },
+    {
+      "path": "run-binding.md",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "3b9b81bdf52fbc9f51f4b9afba5492290ec24f67d7c2a52e703a66fe6649a462"
+    },
+    {
+      "path": "scripts/enforcement/dispatch-gate-hook.sh",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": "f87a174ba0693e447ccbd15cc6a8ad6a60564df0c663a16b0bde096430809aad",
+      "candidate_sha256": "551fd10a70e3d3e204038ae4ffe48cec008cbb3bf62861770f6e080bdda14291"
+    },
+    {
+      "path": "scripts/enforcement/operator_cli.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "f755e318394f055a9aa5de9511e97f7ffa15a1076c9bcb4da9d4c69aeae2291a"
+    },
+    {
+      "path": "scripts/enforcement/run_cli.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "9bcede0e72a148ed97fdf7c773205843e71a62c0090a2558420f6d38abc41822"
+    },
+    {
+      "path": "scripts/enforcement/run_effects.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "1f7b8338b7fcd9b6c953ec2045a68ea4d83ff6042341f066d27201e0effc8a21"
+    },
+    {
+      "path": "scripts/enforcement/run_hook.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "cd571be670d94a40c13de04400997bcf0c540c81c25829c5a5116e45bff86b34"
+    },
+    {
+      "path": "scripts/enforcement/run_operator.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "60bb054465b721933d46080db4178566863dd77252d3195a7a923159a56b4c46"
+    },
+    {
+      "path": "scripts/enforcement/run_policy.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "d65f9ae8618899598592ac2ac71025295cbf7f8f0dcca7a14c377905a51fd9c8"
+    },
+    {
+      "path": "scripts/enforcement/run_store.py",
+      "category": "untracked",
+      "base_sha256": null,
+      "import_sha256": null,
+      "candidate_sha256": "2dd91060fc942be00b5a34bf32c4ed77b628ced5e7494189f4cca287ba72dca6"
+    },
+    {
+      "path": "scripts/enforcement/workflow-enforce.sh",
+      "category": "ignored",
+      "base_sha256": null,
+      "import_sha256": "ab351a95c3f37081f124b965a2b600e62d2274f3fcedf9cc84ba6c238b16f027",
+      "candidate_sha256": "b2f005b540529356bb0404a0c9fc97b94318014d1a6dc755ac1bc0db4169c9ea"
+    },
+    {
+      "path": "scripts/sync-platform-configs.py",
+      "category": "tracked",
+      "base_sha256": "6bc706dd6dfcb92aa2d24a411854f2b6da04a83f3e8e39596a03eb17a383b526",
+      "import_sha256": null,
+      "candidate_sha256": "581e6212b7cd2b962140848fcfe73f7a71f93d3f34af4aab24cbe8eb822937ae"
+    },
+    {
+      "path": "scripts/validate-package.py",
+      "category": "tracked",
+      "base_sha256": "d25f5e4f674e67e17f0078a097cf686f69829885c73b53449a2c25c334647494",
+      "import_sha256": null,
+      "candidate_sha256": "0da37dba457ad47abdca8b77e68e40a60522169d51fd367c54464c2229708b64"
+    },
+    {
+      "path": "update.devin.md",
+      "category": "tracked",
+      "base_sha256": "a9a68c846d29419a2e6357672c7061f46c18147616f51623b7bf807b9efa3741",
+      "import_sha256": null,
+      "candidate_sha256": "2cc91e8bae4bfe640ae414b63557f904b9f93deba2304e98bc67ef88e37451cd"
+    }
+  ]
+}

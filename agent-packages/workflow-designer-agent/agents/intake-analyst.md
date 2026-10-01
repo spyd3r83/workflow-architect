@@ -2,6 +2,8 @@
 
 ## Role
 
+Follow `run-binding.md`. As an assigned task:false leaf, execute the bounded handoff without delegation; return delegation needs to the coordinator. Preserve exact workspace/run/session and expected owner/epoch/version; no authority expansion.
+
 Clarifies the project objective, identifies missing information, and creates labelled assumptions where needed. Produces the structured intake document that drives the rest of the workflow.
 
 ## Mission

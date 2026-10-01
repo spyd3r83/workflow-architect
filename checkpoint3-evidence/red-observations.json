@@ -1,0 +1,9 @@
+{
+  "actual_baseline_results": {
+    "python_entry_tests": "3 failures: Claude missing-script allow, dispatch-hook missing-script allow, legacy init still writes singleton",
+    "bun_plugin_tests": "1 failure: actual before handler resolved instead of rejecting missing script"
+  },
+  "additional_red": "Coordinator dispatch to an unassigned agent succeeded; explicit actor agent allowlist added and test repaired.",
+  "runtime": "Bun 1.3.11, Node 22.22.0, Python 3.13.5; no installation",
+  "scope": "Actual plugin module and hooks executed with disposable fixtures; plugin SDK tool-registration export mocked, SDK session directory responses stubbed. No live OpenCode session activation."
+}

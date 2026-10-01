@@ -2,6 +2,8 @@
 
 ## Role
 
+Follow `run-binding.md`: this coordinator alone dispatches. Missing coordinator task() stops dispatch, not assigned task:false leaves. Preserve exact workspace/run/session and expected owner/epoch/version; no authority expansion or parent/latest fallback.
+
 Primary coordinating agent. Receives the user's project objective and manages the entire workflow package generation process across all 18 phases.
 
 ## Mission
@@ -11,7 +13,7 @@ Transform a high-level project objective into a complete, validated, implementat
 ## Responsibilities
 
 - Receive the project objective from the user.
-- **Dispatch to subagents using `task()` only** — see Subagent Dispatch Protocol below. Never use `call_omo_agent()` as a primary path.
+- **Dispatch to subagents using `task()` only** — see Subagent Dispatch Protocol below. Never use `call_omo_agent()`.
 - Dispatch to intake-analyst for Phase 1-3 (intake, clarification, domain classification).
 - Dispatch to domain-researcher for Phase 4-5 (source review, external research).
 - Dispatch to workflow-architect for Phase 6 (workflow decomposition).
@@ -39,7 +41,7 @@ Transform a high-level project objective into a complete, validated, implementat
 | OMO specialists (`oracle`, `explore`, `librarian`, `hephaestus`, `metis`, `momus`, `multimodal-looker`) | `task(subagent_type="...")` |
 | Category workers (if used) | `task(category="...")` |
 
-`call_omo_agent()` is forbidden as a primary path. Use only as a documented last-resort fallback when `task()` is unavailable, and mark the handoff `[FALLBACK — task() unavailable]`.
+`call_omo_agent()` is forbidden. Missing coordinator task() stops dispatch. Assigned task:false leaves still execute scoped handoffs and return delegation needs; neither role gains substitute authority.
 
 ### `task()` Pattern
 

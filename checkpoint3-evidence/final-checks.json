@@ -1,0 +1,63 @@
+{
+  "tests": [
+    {
+      "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff",
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "agent-packages/workflow-designer-agent/tests",
+        "-p",
+        "test_run_store.py"
+      ],
+      "returncode": 0
+    },
+    {
+      "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff",
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "agent-packages/workflow-designer-agent/tests",
+        "-p",
+        "test_runtime_paths.py"
+      ],
+      "returncode": 0
+    },
+    {
+      "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff",
+      "command": [
+        "bun",
+        "test",
+        "agent-packages/workflow-designer-agent/tests/runtime_plugin.test.ts"
+      ],
+      "returncode": 0
+    },
+    {
+      "cwd": "/home/jfi/GitHub/workflow-architect-run-scoped-handoff/generated-workflows/network-infrastructure-execution-workflow",
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/test_enforcement_alignment.py",
+        "-k",
+        "enforcement_alignment_passes or workflow_configs_match"
+      ],
+      "returncode": 0
+    }
+  ],
+  "main_changed": [],
+  "main_status_equal": true,
+  "main_head": "57fe1421573d0e3fa2aea404db15e1ba3db7c32d",
+  "candidate_head": "57fe1421573d0e3fa2aea404db15e1ba3db7c32d",
+  "verified_at": "2026-10-01T09:43:36.017851+00:00"
+}

@@ -126,7 +126,7 @@ def yaml_block_scalar(value: str) -> str:
     if not text:
         return '""'
     lines = text.split("\n")
-    return "|\n" + "\n".join(f"  {line}" for line in lines)
+    return "|\n" + "\n".join(f"  {line}" if line else "" for line in lines)
 
 
 def write_skill_files(skills: list, output_root: Path):
@@ -134,8 +134,8 @@ def write_skill_files(skills: list, output_root: Path):
     skills_out = output_root / ".agents" / "skills"
     claude_skills_out = output_root / ".claude" / "skills"
 
-    if skills_out.exists():
-        shutil.rmtree(skills_out)
+    if skills_out.is_symlink():
+        raise ValueError("skill output must not redirect outside the package")
     skills_out.mkdir(parents=True, exist_ok=True)
 
     for skill in skills:
@@ -146,18 +146,20 @@ def write_skill_files(skills: list, output_root: Path):
         frontmatter = f"---\nname: {skill['name']}\ndescription: {desc}\n---\n\n"
         skill_file.write_text(frontmatter + skill["body"])
 
-    if claude_skills_out.is_symlink() or claude_skills_out.exists():
-        if claude_skills_out.is_symlink() or claude_skills_out.is_dir():
-            try:
-                claude_skills_out.unlink()
-            except OSError:
-                shutil.rmtree(claude_skills_out, ignore_errors=True)
-                claude_skills_out.unlink(missing_ok=True)
-    claude_skills_out.parent.mkdir(parents=True, exist_ok=True)
-    os.symlink(
-        os.path.relpath(skills_out, claude_skills_out.parent),
-        claude_skills_out,
-    )
+    if claude_skills_out.is_symlink():
+        if claude_skills_out.resolve() != skills_out.resolve():
+            raise ValueError("existing Claude skills link targets another package")
+    elif claude_skills_out.exists():
+        for skill in skills:
+            copy_managed(
+                skills_out / skill["name"] / "SKILL.md",
+                claude_skills_out / skill["name"] / "SKILL.md",
+            )
+    else:
+        claude_skills_out.parent.mkdir(parents=True, exist_ok=True)
+        os.symlink(
+            os.path.relpath(skills_out, claude_skills_out.parent), claude_skills_out
+        )
 
     print(f"  Skills: {len(skills)} SKILL.md files in .agents/skills/")
     print(f"  Skills: .claude/skills/ -> .agents/skills/ (symlink)")
@@ -181,7 +183,10 @@ def write_opencode_agents(agents: list, output_root: Path, primary_agent: str):
         filepath = out_dir / f"{agent['name']}.md"
         mode = "primary" if agent["name"] == primary_agent else "subagent"
         desc = yaml_block_scalar(agent["description"])
-        frontmatter = f"---\ndescription: {desc}\nmode: {mode}\n---\n\n"
+        task = "true" if mode == "primary" else "false"
+        frontmatter = (
+            f"---\ndescription: {desc}\nmode: {mode}\ntools:\n  task: {task}\n---\n\n"
+        )
         filepath.write_text(frontmatter + agent["body"])
     print(
         f"  Agents: {len(agents)} files in .opencode/agents/ (primary: {primary_agent})"
@@ -266,7 +271,7 @@ def sync_commands(commands_src: Path, command_names: list[str], output_root: Pat
     )
 
 
-def sync_package(package_dir: Path, output_root: Path, label: str):
+def sync_package(package_dir: Path, output_root: Path, label: str, runtime_source=None):
     """Sync a single package's agents, skills, and commands to platform directories."""
     skills_src = package_dir / "skills"
     agents_src = package_dir / "agents"
@@ -301,118 +306,144 @@ def sync_package(package_dir: Path, output_root: Path, label: str):
         write_codex_agents(agents, output_root)
     if command_names:
         sync_commands(commands_src, command_names, output_root)
-    sync_enforcement(package_dir, output_root)
+    sync_enforcement(package_dir, output_root, runtime_source)
 
 
-def sync_enforcement(package_dir: Path, output_root: Path):
-    enforcement_src = package_dir / "enforcement"
-    if not enforcement_src.exists():
-        enforcement_src = (
-            REPO_ROOT / "agent-packages" / "workflow-designer-agent" / "enforcement"
-        )
-    if not enforcement_src.exists():
+RUNTIME_FILES = [
+    "workflow-enforce.sh",
+    "run_store.py",
+    "run_effects.py",
+    "run_policy.py",
+    "run_operator.py",
+    "operator_cli.py",
+    "run_cli.py",
+    "run_hook.py",
+    "dispatch-gate-hook.sh",
+    "workflow-enforcer.ts",
+    "pre-tool-use.sh",
+    "pre-compact.sh",
+    "settings.json",
+    "run-binding.md",
+]
+
+
+def copy_managed(source, target):
+    if not source.is_file():
+        raise ValueError(f"missing canonical runtime file: {source}")
+    if source.resolve() == target.resolve():
         return
+    target.parent.mkdir(parents=True, exist_ok=True)
+    if target.is_symlink():
+        raise ValueError(f"refuse redirected generated target: {target}")
+    shutil.copy2(source, target)
+    if target.suffix == ".sh":
+        target.chmod(0o755)
 
-    plugins_dir = output_root / ".opencode" / "plugins"
-    plugins_dir.mkdir(parents=True, exist_ok=True)
-    plugin_src = enforcement_src / "workflow-enforcer.ts"
-    if plugin_src.exists():
-        shutil.copy2(plugin_src, plugins_dir / "workflow-enforcer.ts")
 
-    hooks_dir = output_root / ".claude" / "hooks"
-    hooks_dir.mkdir(parents=True, exist_ok=True)
-    for hook in ["pre-tool-use.sh", "pre-compact.sh"]:
-        src = enforcement_src / hook
-        if src.exists():
-            shutil.copy2(src, hooks_dir / hook)
-            os.chmod(hooks_dir / hook, 0o755)
-
-    settings_src = enforcement_src / "settings.json"
-    settings_dest = output_root / ".claude" / "settings.json"
-    if settings_src.exists() and not settings_dest.exists():
-        shutil.copy2(settings_src, settings_dest)
-
-    scripts_dir = output_root / "scripts" / "enforcement"
-    scripts_dir.mkdir(parents=True, exist_ok=True)
-    enforce_src = enforcement_src / "workflow-enforce.sh"
-    if enforce_src.exists():
-        shutil.copy2(enforce_src, scripts_dir / "workflow-enforce.sh")
-        os.chmod(scripts_dir / "workflow-enforce.sh", 0o755)
-
-    config_src = enforcement_src / "workflow-config.json"
-    config_dest = output_root / ".opencode" / "workflow-config.json"
-    if config_src.exists():
-        import json as _json
-
-        config_text = config_src.read_text(encoding="utf-8")
-        config_data = _json.loads(config_text)
-        config_data["workflow_package"] = output_root.name
-        config_dest.parent.mkdir(parents=True, exist_ok=True)
-        config_dest.write_text(
-            _json.dumps(config_data, indent=2) + "\n", encoding="utf-8"
-        )
-
-    preflight_src = REPO_ROOT / "scripts" / "preflight-task-check.sh"
-    preflight_dest = output_root / "scripts" / "preflight-task-check.sh"
-    if preflight_src.exists():
-        preflight_dest.parent.mkdir(parents=True, exist_ok=True)
-        if preflight_src.resolve() != preflight_dest.resolve():
-            shutil.copy2(preflight_src, preflight_dest)
-        os.chmod(preflight_dest, 0o755)
-
-    docs_src = enforcement_src / "enforcement.md"
-    if docs_src.exists():
-        shutil.copy2(docs_src, output_root / "enforcement.md")
-
-    gate_hook_src = enforcement_src / "dispatch-gate-hook.sh"
-    if gate_hook_src.exists():
-        gate_hook_dest = scripts_dir / "dispatch-gate-hook.sh"
-        shutil.copy2(gate_hook_src, gate_hook_dest)
-        os.chmod(gate_hook_dest, 0o755)
-
-    gate_spec_src = enforcement_src / "dispatch-gate.md"
-    if gate_spec_src.exists():
-        shutil.copy2(gate_spec_src, output_root / "dispatch-gate.md")
-
-    hooks_src = enforcement_src / "hooks"
-    if hooks_src.is_dir():
-        claude_fragment_src = hooks_src / "claude-dispatch-gate-fragment.json"
-        if claude_fragment_src.exists():
-            import json as _json
-
-            settings_dest = output_root / ".claude" / "settings.json"
-            settings_dest.parent.mkdir(parents=True, exist_ok=True)
-            fragment = _json.loads(claude_fragment_src.read_text(encoding="utf-8"))
-            if settings_dest.exists():
-                existing = _json.loads(settings_dest.read_text(encoding="utf-8"))
-            else:
-                existing = {}
-            existing_hooks = existing.get("hooks", {})
-            for event, groups in fragment.get("hooks", {}).items():
-                if event in existing_hooks:
-                    existing_hooks[event].extend(groups)
-                else:
-                    existing_hooks[event] = groups
-            existing["hooks"] = existing_hooks
-            settings_dest.write_text(
-                _json.dumps(existing, indent=2) + "\n", encoding="utf-8"
+def runtime_sources(package_dir, upstream):
+    local = package_dir / "enforcement"
+    default = REPO_ROOT / "agent-packages/workflow-designer-agent/enforcement"
+    source = (
+        Path(upstream).resolve() if upstream else (local if local.is_dir() else default)
+    )
+    if upstream:
+        if not (local / "workflow-config.json").is_file():
+            raise ValueError(
+                "local phase/config policy required before shared runtime refresh"
             )
+        for name in RUNTIME_FILES:
+            copy_managed(source / name, local / name)
+    return local if local.is_dir() else source
 
-        for mapping in [
+
+LEGACY_HOOK_COMMANDS = {
+    "${CLAUDE_PROJECT_DIR}/.claude/hooks/pre-tool-use.sh",
+    "${CLAUDE_PROJECT_DIR}/.claude/hooks/pre-compact.sh",
+    "${CLAUDE_PROJECT_DIR}/scripts/enforcement/dispatch-gate-hook.sh",
+    'bash "$CLAUDE_PROJECT_DIR/.claude/hooks/pre-tool-use.sh"',
+    'bash "$CLAUDE_PROJECT_DIR/.claude/hooks/pre-compact.sh"',
+    "bash .claude/hooks/pre-tool-use.sh",
+    "bash .claude/hooks/pre-compact.sh",
+}
+
+
+def hook_signature(hook):
+    return json.dumps(
+        [hook.get("type"), hook.get("command"), hook.get("args")], sort_keys=True
+    )
+
+
+def merge_hook_groups(old, wanted):
+    owned = {hook_signature(h) for group in wanted for h in group["hooks"]}
+    owned.update(
+        hook_signature(dict(type="command", command=c)) for c in LEGACY_HOOK_COMMANDS
+    )
+    groups = [
+        dict(g, hooks=[h for h in g.get("hooks", []) if hook_signature(h) not in owned])
+        for g in old
+    ]
+    for desired in wanted:
+        metadata = {k: v for k, v in desired.items() if k != "hooks"}
+        group = next(
             (
-                "copilot-dispatch-gate.json",
-                output_root / ".github" / "hooks" / "dispatch-gate.json",
+                g
+                for g in groups
+                if {k: v for k, v in g.items() if k != "hooks"} == metadata
             ),
-            ("codex-dispatch-gate.json", output_root / ".codex" / "hooks.json"),
-            ("devin-dispatch-gate.json", output_root / ".devin" / "hooks.v1.json"),
-        ]:
-            src_file = hooks_src / mapping[0]
-            dest_file = mapping[1]
-            if src_file.exists():
-                dest_file.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(src_file, dest_file)
+            None,
+        )
+        if group is None:
+            group = dict(metadata, hooks=[])
+            groups.append(group)
+        group["hooks"].extend(desired["hooks"])
+    return groups
 
-    print(f"  Enforcement: plugin + hooks + state manager synced")
+
+def merge_runtime_hooks(source, target):
+    wanted = json.loads(source.read_text())["hooks"]
+    settings = json.loads(target.read_text()) if target.exists() else {}
+    for event, groups in wanted.items():
+        old = settings.setdefault("hooks", {}).get(event, [])
+        settings["hooks"][event] = merge_hook_groups(old, groups)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(json.dumps(settings, indent=2) + "\n")
+
+
+def sync_runtime_config(source, output_root):
+    config = json.loads((source / "workflow-config.json").read_text())
+    config["workflow_package"] = output_root.name
+    target = output_root / ".opencode/workflow-config.json"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(json.dumps(config, indent=2) + "\n")
+
+
+def sync_enforcement(package_dir: Path, output_root: Path, runtime_source=None):
+    source = runtime_sources(package_dir, runtime_source)
+    for name in RUNTIME_FILES:
+        if name.endswith(".py") or name in {
+            "workflow-enforce.sh",
+            "dispatch-gate-hook.sh",
+        }:
+            copy_managed(source / name, output_root / "scripts/enforcement" / name)
+    for extra in source.glob("*_policy.py"):
+        copy_managed(extra, output_root / "scripts/enforcement" / extra.name)
+    copy_managed(
+        source / "workflow-enforcer.ts",
+        output_root / ".opencode/plugins/workflow-enforcer.ts",
+    )
+    for name in ["pre-tool-use.sh", "pre-compact.sh"]:
+        copy_managed(source / name, output_root / ".claude/hooks" / name)
+    merge_runtime_hooks(source / "settings.json", output_root / ".claude/settings.json")
+    sync_runtime_config(source, output_root)
+    for name in ["run-binding.md", "enforcement.md", "dispatch-gate.md"]:
+        if (source / name).is_file():
+            copy_managed(source / name, output_root / name)
+    preflight = REPO_ROOT / "scripts/preflight-task-check.sh"
+    if preflight.is_file() and not (output_root / "scripts" / preflight.name).exists():
+        copy_managed(preflight, output_root / "scripts" / preflight.name)
+    print(
+        "  Enforcement: complete run-scoped runtime; local phase/specialist policy preserved"
+    )
 
 
 def main():
@@ -431,6 +462,10 @@ def main():
         default=None,
         help="Path to the package to sync (alternative to positional argument)",
     )
+    parser.add_argument(
+        "--runtime-source",
+        help="Explicit shared runtime source; preserves package-local config/policy",
+    )
     args = parser.parse_args()
 
     package_arg = args.package_flag or args.package
@@ -441,14 +476,14 @@ def main():
             print(f"ERROR: Package directory does not exist: {package_dir}")
             sys.exit(1)
         print(f"Syncing package: {package_dir}")
-        sync_package(package_dir, package_dir, package_dir.name)
+        sync_package(package_dir, package_dir, package_dir.name, args.runtime_source)
     else:
         package_dir = REPO_ROOT / "agent-packages" / "workflow-designer-agent"
         if not package_dir.exists():
             print(f"ERROR: Default meta-package not found at {package_dir}")
             sys.exit(1)
         print(f"Syncing meta-package: {package_dir}")
-        sync_package(package_dir, REPO_ROOT, "meta-package")
+        sync_package(package_dir, REPO_ROOT, "meta-package", args.runtime_source)
 
     print("\nDone. Platform configs synced.")
     print("\nNext steps:")

@@ -6,7 +6,7 @@ This file defines the end-to-end workflow that the Workflow Designer Agent execu
 
 **One delegation primitive: `task()`.** See `dispatch-protocol.md`.
 
-Use `task(subagent_type=...)` for package agents and OMO specialists (`oracle`, `explore`, `librarian`, `hephaestus`, `momus`). Never use `call_omo_agent()` as a primary path.
+The coordinator uses `task(subagent_type=...)` for package agents and supported specialists. Never use `call_omo_agent()`. Assigned task:false leaves execute bounded handoffs under `run-binding.md`; missing coordinator task() stops dispatch, not leaf work. Provider availability is separately verified, not inferred from registration.
 
 **Dispatch table** (full version in `dispatch-protocol.md`):
 

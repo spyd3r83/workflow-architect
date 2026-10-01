@@ -1,0 +1,9 @@
+{
+  "source": "Observed synchronous test output before repairs",
+  "failures": [
+    "Mutation-class action executed in phase 2 without phase authority and changed state",
+    "Signed revoked approval left an earlier grant executable",
+    "Signed phase=true approval matched integer phase 1"
+  ],
+  "boundary": "Candidate fixtures only; no original/live state initialization or activation"
+}
