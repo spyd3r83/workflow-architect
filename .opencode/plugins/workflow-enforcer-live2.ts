@@ -171,8 +171,5 @@ export const WorkflowEnforcer: Plugin = async ({ client }: any) => ({
       args: { action: tool.schema.enum(["status", "advance", "pass_gate", "fail_gate"]), expected: tool.schema.string().optional(),
         evidence: tool.schema.string().optional(), deliverable_digest: tool.schema.string().optional() },
       execute: (args: any, context: any) => statusTool(client, args, context) }),
-    workflow_action: tool({ description: "Run an operator-pinned exact action without a shell; mutation actions require exact human approval.",
-      args: { action_id: tool.schema.string(), expected: tool.schema.string(), call_id: tool.schema.string().optional() },
-      execute: (args: any, context: any) => actionTool(client, args, context) }),
   },
 })
