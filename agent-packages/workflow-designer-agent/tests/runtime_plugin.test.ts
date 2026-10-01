@@ -37,12 +37,29 @@ function fixture(role = "coordinator", taskAvailable = true) {
   writeFileSync(join(store, "active.json"), JSON.stringify({ schema_version: 1, workspace: root, run_id: "one" }))
   writeFileSync(join(store, "s1.binding.json"), JSON.stringify({ schema_version: 1, workspace: root, run_id: "one", session_id: "s1", owner: "owner", owner_epoch: 1 }))
   const sessions: any = { s1: { id: "s1", directory: root } }
-  const client: any = { session: { get: async ({ path }: any) => ({ data: sessions[path.sessionID] }), create: async ({ body }: any) => {
+  const lookups: any[] = []
+
+  const client: any = { session: { get: async ({ path }: any) => { lookups.push(path); return { data: sessions[path.id] } }, create: async ({ body }: any) => {
     const child = { id: "child1", directory: root, parentID: body.parentID }; sessions.child1 = child; return { data: child }
   } } }
-  return { root, store, state, client, read: () => JSON.parse(readFileSync(join(store, "one.run.json"), "utf8")),
+  return { root, store, state, client, lookups, read: () => JSON.parse(readFileSync(join(store, "one.run.json"), "utf8")),
     plugin: () => WorkflowEnforcer({ directory: root, client } as any) as Promise<any>, clean: () => rmSync(root, { recursive: true }) }
 }
+
+test("session lookup uses SDK path id and rejects unknown sessions before enforcement", async () => {
+  const f = fixture()
+  try {
+    const plugin = await f.plugin()
+    await plugin.tool.workflow_status.execute({ action: "status" }, { sessionID: "s1", directory: f.root })
+    expect(f.lookups).toEqual([{ id: "s1" }])
+    const before = readFileSync(join(f.store, "one.run.json"), "utf8")
+    await expect(plugin.tool.workflow_status.execute({ action: "status" }, { sessionID: "unknown", directory: f.root })).rejects.toThrow("Ambiguous session workspace")
+    expect(f.lookups.at(-1)).toEqual({ id: "unknown" })
+    expect(readFileSync(join(f.store, "one.run.json"), "utf8")).toBe(before)
+  } finally { f.clean() }
+})
+
+
 
 test("actual task:false worker writes within handoff and completes", async () => {
   const loaded = readFileSync(resolve(import.meta.dir, "../../../.opencode/agents/implementation-planner.md"), "utf8")
