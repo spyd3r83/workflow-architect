@@ -45,7 +45,7 @@ function envelope(state: any, session: string, action: string, extra = {}): any 
 
 async function bound(client: any, session: string): Promise<any> {
   if (!session) throw new Error("Session binding required")
-  const res = await client.session.get({ path: { sessionID: session } })
+  const res = await client.session.get({ path: { id: session } })
   const directory = res?.data?.directory ?? res?.directory
   if (typeof directory !== "string") throw new Error("Ambiguous session workspace")
   return invoke(directory, { action: "bound", session_id: session })
