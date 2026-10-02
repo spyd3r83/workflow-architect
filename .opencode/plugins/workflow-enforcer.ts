@@ -61,6 +61,37 @@ function findPackageRoot(startDir: string): string | null {
   return null
 }
 
+function readLegacyState(directory: string): any | null {
+  const statePath = getStatePath(directory)
+  if (!existsSync(statePath)) return null
+  try {
+    return JSON.parse(readFileSync(statePath, "utf-8"))
+  } catch {
+    return null
+  }
+}
+
+function isLegacyStateBoundToSession(directory: string, sessionID: string): boolean {
+  const state = readLegacyState(directory)
+  if (!state) return false
+  const boundSession = state.session_id ?? state.sessionID ?? state.binding?.session_id
+  return typeof boundSession === "string" && boundSession === sessionID
+}
+
+function legacyStateSummary(directory: string): string {
+  const state = readLegacyState(directory)
+  return JSON.stringify({
+    workflow_package: state?.workflow_package ?? "unknown",
+    current_phase: state?.current_phase ?? null,
+    current_gate: state?.phases?.[String(state?.current_phase)]?.gate ?? null,
+    updated_at: state?.updated_at ?? null,
+    binding: "legacy_unbound",
+    applied: false,
+    warning:
+      "Preserved package-wide legacy state is not applied to this session. Use explicit run-scoped enrollment before enforcing or mutating workflow state.",
+  })
+}
+
 /**
  * Resolve the session's project directory from a sessionID using the SDK client.
  * Returns the session directory string, or null if resolution fails.
@@ -68,7 +99,8 @@ function findPackageRoot(startDir: string): string | null {
 async function resolveSessionDir(client: any, sessionID: string): Promise<string | null> {
   if (!sessionID) return null
   try {
-    const session = await client.session.get({ path: { sessionID } })
+    const response = await client.session.get({ path: { id: sessionID } })
+    const session = (response as any)?.data ?? response
     return (session as any)?.directory ?? null
   } catch {
     return null
@@ -77,9 +109,9 @@ async function resolveSessionDir(client: any, sessionID: string): Promise<string
 
 /**
  * Resolve the effective enforcement directory for a given session.
- * Uses a cache to avoid repeated SDK calls within the same session lifecycle.
- * Falls back to the plugin-init directory only for non-enforcement operations
- * (e.g., workflow_status display). Enforcement hooks fail closed on ambiguity.
+ * Uses a cache to avoid repeated SDK calls for explicitly bound sessions.
+ * Unbound legacy state is never cached, so later run-scoped enrollment can take
+ * effect without restarting the service. Display-only status remains available.
  */
 function makeDirResolver(client: any, pluginDir: string) {
   const enfCache = new Map<string, string>()
@@ -96,9 +128,9 @@ function makeDirResolver(client: any, pluginDir: string) {
     const pkgRoot = sessionDir ? findPackageRoot(sessionDir) : null
 
     let resolved: string
-    if (pkgRoot) {
+    if (pkgRoot && isLegacyStateBoundToSession(pkgRoot, sessionID)) {
       resolved = pkgRoot
-    } else if (sessionDir && existsSync(getEnforceScript(sessionDir))) {
+    } else if (sessionDir && isLegacyStateBoundToSession(sessionDir, sessionID)) {
       // Session directory has its own enforcement script but no opencode.json marker.
       // Use it directly — this handles edge cases like the canonical workflow-designer-agent package.
       resolved = sessionDir
@@ -108,7 +140,7 @@ function makeDirResolver(client: any, pluginDir: string) {
       resolved = ""
     }
 
-    enfCache.set(sessionID, resolved)
+    if (resolved) enfCache.set(sessionID, resolved)
     return resolved
   }
 
@@ -183,29 +215,6 @@ export const WorkflowEnforcer: Plugin = async ({ directory, client }) => {
       }
     },
 
-    "tool.execute.after": async (input, output) => {
-      if (input.tool !== "task") return
-      const enforceDir = await resolver.resolveEnforcementDir(input.sessionID)
-      if (!enforceDir) return
-      const outStr = [
-        typeof output.output === "string" ? output.output : "",
-        typeof output.title === "string" ? output.title : "",
-        output.metadata ? JSON.stringify(output.metadata) : "",
-      ].join(" ")
-      const errorPatterns = [
-        "Skills not found",
-        "TASK_DISPATCH_UNAVAILABLE",
-        "dispatch failed",
-        "Error:",
-        "error:",
-        "not found",
-        "unavailable",
-      ]
-      if (errorPatterns.some((p) => outStr.includes(p))) {
-        runEnforce(enforceDir, ["dispatch-failed"])
-      }
-    },
-
     "experimental.session.compacting": async (input, output) => {
       const enforceDir = await resolver.resolveEnforcementDir(input.sessionID)
       if (!enforceDir) return
@@ -217,6 +226,11 @@ export const WorkflowEnforcer: Plugin = async ({ directory, client }) => {
     },
 
     event: async ({ event }) => {
+      const part = event.type === "message.part.updated" ? (event as any).properties?.part : null
+      if (part?.type === "tool" && part.tool === "task" && part.state?.status === "error") {
+        const enforceDir = await resolver.resolveEnforcementDir(part.sessionID)
+        if (enforceDir) runEnforce(enforceDir, ["dispatch-failed"])
+      }
       if (event.type === "session.created") {
         // Invalidate cache for new sessions
         const sid = (event as any).properties?.sessionID ?? (event as any).sessionID
@@ -241,6 +255,14 @@ export const WorkflowEnforcer: Plugin = async ({ directory, client }) => {
         async execute(args, context) {
           // Use ToolContext.directory (the session's project directory) for status operations.
           const enforceDir = await resolver.resolveDisplayDir(context.sessionID, context.directory)
+          const sessionBound = isLegacyStateBoundToSession(enforceDir, context.sessionID)
+
+          if (!sessionBound) {
+            if (args.action === "status") return legacyStateSummary(enforceDir)
+            throw new Error(
+              "[workflow-enforcer] Legacy package state is not bound to this session and is read-only. Use explicit run-scoped enrollment."
+            )
+          }
 
           switch (args.action) {
             case "status":

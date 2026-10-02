@@ -63,6 +63,31 @@ def test_enforcer_has_session_aware_workflow_status():
     assert "context.sessionID" in text, "workflow_status must use context.sessionID"
 
 
+def test_sdk_session_lookup_uses_path_id_and_unwraps_data():
+    text = ENFORCER.read_text()
+    assert "client.session.get({ path: { id: sessionID } })" in text
+    assert "(response as any)?.data ?? response" in text
+    assert "path: { sessionID }" not in text
+
+
+def test_legacy_state_requires_explicit_session_binding():
+    text = ENFORCER.read_text()
+    assert "isLegacyStateBoundToSession" in text
+    assert 'binding: "legacy_unbound"' in text
+    assert "Use explicit run-scoped enrollment" in text
+    assert "if (pkgRoot && isLegacyStateBoundToSession(pkgRoot, sessionID))" in text
+    assert "if (resolved) enfCache.set(sessionID, resolved)" in text
+
+
+def test_dispatch_failure_uses_structured_tool_error_event():
+    text = ENFORCER.read_text()
+    assert 'event.type === "message.part.updated"' in text
+    assert 'part.tool === "task"' in text
+    assert 'part.state?.status === "error"' in text
+    assert "errorPatterns" not in text
+    assert "outStr.includes" not in text
+
+
 def test_enforcer_fails_closed_on_ambiguity():
     text = ENFORCER.read_text()
     assert '""' in text or "empty string" in text.lower(), (

@@ -8,7 +8,7 @@ A required named specialist dispatch must succeed before protected phase advance
 
 Two hooks work together:
 
-1. **PostToolUse on dispatch/subagent tool** (`task` in OpenCode/Copilot/Devin, `Agent` in Claude Code): Inspects the dispatch output. If the output contains error patterns (`Skills not found`, `TASK_DISPATCH_UNAVAILABLE`, `Error:`, `error:`), the hook calls `workflow-enforce.sh dispatch-failed`, which sets `dispatch_failed: true` in the workflow state file.
+1. **Dispatch failure event**: OpenCode records `dispatch_failed` only from a structured `message.part.updated` event whose `task` tool state is `error`. Successful task output is never classified by words in the agent's report. Other harnesses use their documented structured failure signal.
 
 2. **PreToolUse on mutating tools**: Calls `workflow-enforce.sh check <tool> <arg>`. The `check` command checks `dispatch_failed`. If true, it returns `block:Dispatch failure detected...` and the hook denies the tool call. Also checks `pass_gate` and `advance_phase` — both blocked while `dispatch_failed` is true.
 
