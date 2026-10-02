@@ -165,6 +165,7 @@ Must include:
 - **Purpose** — the workflow's purpose.
 - **Agent hierarchy** — visual tree of agents.
 - **Collaboration model** — how agents hand off work.
+- **Dispatch-role scope** — state that only the primary orchestrator invokes `task()`. A specialist created by that call treats the successful parent call as its dispatch receipt, executes with its own exposed tools, and never requires nested `task()`. Scope `TASK_DISPATCH_UNAVAILABLE` to an orchestrator whose own `task()` tool is unavailable or whose real dispatch call fails.
 - **Research behaviour** — when research is required (reference to research-protocol.md).
 - **QC rules** — reference to quality-control.md.
 - **Red-team rules** — reference to red-team-review.md.

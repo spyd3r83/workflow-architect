@@ -70,6 +70,17 @@ class DispatchContractTests(unittest.TestCase):
             "dispatch-protocol must not advertise call_omo_agent fallback for OpenCode",
         )
 
+    def test_generated_package_spec_scopes_dispatch_to_orchestrator(self):
+        spec = (PKG / "package-output-spec.md").read_text(encoding="utf-8")
+        template = (PKG / "templates" / "workflow-package-template.md").read_text(
+            encoding="utf-8"
+        )
+
+        for text in (spec, template):
+            self.assertIn("only the primary orchestrator invokes `task()`", text)
+            self.assertIn("nested `task()`", text)
+            self.assertIn("TASK_DISPATCH_UNAVAILABLE", text)
+
     def test_enforcer_blocks_call_omo_agent(self):
         import subprocess
 
