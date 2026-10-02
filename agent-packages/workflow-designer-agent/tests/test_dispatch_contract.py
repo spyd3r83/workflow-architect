@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import importlib.util
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -75,11 +77,40 @@ class DispatchContractTests(unittest.TestCase):
         template = (PKG / "templates" / "workflow-package-template.md").read_text(
             encoding="utf-8"
         )
+        guidance = (PKG / "AGENTS.md").read_text(encoding="utf-8")
 
-        for text in (spec, template):
-            self.assertIn("only the primary orchestrator invokes `task()`", text)
-            self.assertIn("nested `task()`", text)
-            self.assertIn("TASK_DISPATCH_UNAVAILABLE", text)
+        for text in (spec, template, guidance):
+            normalized = text.lower()
+            self.assertIn("only the primary orchestrator invokes `task()`", normalized)
+            self.assertIn("does not require nested `task()`", normalized)
+            self.assertIn(
+                "only the primary orchestrator returns `task_dispatch_unavailable`",
+                normalized,
+            )
+
+    def test_validator_rejects_ambiguous_leaf_dispatch_guidance(self):
+        module_spec = importlib.util.spec_from_file_location(
+            "validate_package", REPO / "scripts" / "validate-package.py"
+        )
+        self.assertIsNotNone(module_spec)
+        self.assertIsNotNone(module_spec.loader)
+        module = importlib.util.module_from_spec(module_spec)
+        module_spec.loader.exec_module(module)
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = Path(temp_dir)
+            agents = package / "AGENTS.md"
+            agents.write_text(
+                "All agents return TASK_DISPATCH_UNAVAILABLE when task() is absent.",
+                encoding="utf-8",
+            )
+            result = module.validate_package(str(package))
+            check = next(
+                item
+                for item in result["checks"]
+                if item["name"] == "dispatch_role_scope"
+            )
+            self.assertEqual(check["status"], "FAIL")
 
     def test_enforcer_blocks_call_omo_agent(self):
         import subprocess

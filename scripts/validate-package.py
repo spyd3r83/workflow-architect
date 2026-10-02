@@ -272,6 +272,30 @@ def validate_package(package_path: str) -> dict:
         else "",
     )
 
+    agents_guidance = pkg / "AGENTS.md"
+    if agents_guidance.exists():
+        guidance = agents_guidance.read_text(encoding="utf-8").lower()
+        dispatch_scope_markers = [
+            "only the primary orchestrator invokes `task()`",
+            "does not require nested `task()`",
+            "only the primary orchestrator returns `task_dispatch_unavailable`",
+        ]
+        missing_markers = [
+            marker for marker in dispatch_scope_markers if marker not in guidance
+        ]
+        check(
+            "dispatch_role_scope",
+            not missing_markers,
+            "Orchestrator and leaf dispatch responsibilities are explicit"
+            if not missing_markers
+            else f"Missing dispatch-role markers: {missing_markers}",
+            "State that only the primary orchestrator invokes task(), delivered "
+            "specialists do not require nested task(), and only the primary "
+            "orchestrator may return TASK_DISPATCH_UNAVAILABLE."
+            if missing_markers
+            else "",
+        )
+
     all_md = list(pkg.rglob("*.md"))
     placeholder_files = []
     placeholder_exempt = {

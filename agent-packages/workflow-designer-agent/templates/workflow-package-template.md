@@ -65,7 +65,7 @@ This template defines the structure for a complete generated workflow package. F
 ### Top-Level Files
 
 - [ ] **README.md** — includes: workflow purpose, when to use, inputs, outputs, how to run, file structure, assumptions, limitations, see also.
-- [ ] **AGENTS.md** — includes: purpose, agent hierarchy, collaboration model, dispatch-role scope, research behaviour, QC rules, red-team rules, final packaging requirements. Dispatch-role scope states that only the primary orchestrator invokes `task()`; delivered specialists execute with their own exposed tools and do not require nested `task()`. Only an orchestrator whose own dispatch is unavailable or fails returns `TASK_DISPATCH_UNAVAILABLE`.
+- [ ] **AGENTS.md** — includes: purpose, agent hierarchy, collaboration model, dispatch-role scope, research behaviour, QC rules, red-team rules, final packaging requirements. Dispatch-role scope states that only the primary orchestrator invokes `task()`; a delivered specialist executes with its own exposed tools and does not require nested `task()`. Only the primary orchestrator returns `TASK_DISPATCH_UNAVAILABLE`, and only when its own dispatch is unavailable or fails.
 - [ ] **workflow.md** — includes: all phases with purpose, inputs, outputs, responsible agent, validation criteria. Revision loop defined.
 - [ ] **intake.md** — includes: intake fields, assumption labelling format, when to ask vs assume.
 - [ ] **research-protocol.md** — includes: when research is required, source hierarchy, citation format, conflict handling, tagging rules, time-sensitive claims.
